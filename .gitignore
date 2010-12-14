@@ -1,0 +1,8 @@
+*.iws
+*.iml
+*.ipr
+.classpath
+.project
+.settings
+target
+velocity.log
