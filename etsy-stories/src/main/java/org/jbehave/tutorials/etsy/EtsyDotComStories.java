@@ -1,7 +1,7 @@
 package org.jbehave.tutorials.etsy;
 
+import groovy.lang.MetaClass;
 import org.jbehave.core.configuration.Configuration;
-import org.jbehave.core.configuration.groovy.GroovyContext;
 import org.jbehave.core.configuration.groovy.GroovyResourceFinder;
 import org.jbehave.core.failures.FailingUponPendingStep;
 import org.jbehave.core.io.CodeLocations;
@@ -12,7 +12,7 @@ import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.SilentStepMonitor;
 import org.jbehave.core.steps.Steps;
-import org.jbehave.core.steps.groovy.GroovyStepsFactory;
+import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.selenium.ContextView;
 import org.jbehave.web.selenium.LocalFrameContextView;
 import org.jbehave.web.selenium.PerStoriesWebDriverSteps;
@@ -23,10 +23,23 @@ import org.jbehave.web.selenium.SeleniumStepMonitor;
 import org.jbehave.web.selenium.TypeWebDriverProvider;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
+import org.picocontainer.Characteristics;
+import org.picocontainer.ComponentAdapter;
+import org.picocontainer.ComponentMonitor;
+import org.picocontainer.LifecycleStrategy;
+import org.picocontainer.Parameter;
+import org.picocontainer.PicoCompositionException;
+import org.picocontainer.classname.ClassLoadingPicoContainer;
+import org.picocontainer.classname.ClassName;
+import org.picocontainer.classname.DefaultClassLoadingPicoContainer;
+import org.picocontainer.injectors.CompositeInjection;
+import org.picocontainer.injectors.ConstructorInjection;
+import org.picocontainer.injectors.SetterInjection;
+import org.picocontainer.injectors.SetterInjector;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Properties;
 
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
@@ -82,33 +95,34 @@ public class EtsyDotComStories extends JUnitStories {
 
     public static List<CandidateSteps> makeGroovyCandidateSteps(final Configuration configuration, GroovyResourceFinder resourceFinder, final WebDriverProvider webDriverProvider) {
 
-        GroovyContext context = new GroovyContext(resourceFinder) {
-            @Override
-            public Object newInstance(Class<?> parsedClass) {
-                if (parsedClass.getName().contains("pages.")) {
-                    return new Object();
-                }
-                try {
-                    Object inst = null;
-                    try {
-                        inst = parsedClass.newInstance();
-                        Method declaredMethod = parsedClass.getDeclaredMethod("setWebDriverProvider", WebDriverProvider.class);
-                        declaredMethod.invoke(inst, webDriverProvider);
-                    } catch (NoSuchMethodException e) {
-                        // fine, it does not need a WebDriverProvider via setter.
-                    }
-                    return inst;
-                } catch (IllegalAccessException e) {
-                    return ""; // not a steps class, discard for the sake of steps registration
-                } catch (InvocationTargetException e) {
-                    return ""; // not a steps class, discard for the sake of steps registration
-                } catch (InstantiationException e) {
-                    return ""; // not a steps class, discard for the sake of steps registration
-                }
-            }
-        };
+        ClassLoadingPicoContainer comps = new DefaultClassLoadingPicoContainer(                new CompositeInjection(
+                        new ConstructorInjection(),
+                        new SetterInjection(){
+                            @Override
+                            public <T> ComponentAdapter<T> createComponentAdapter(ComponentMonitor monitor, LifecycleStrategy lifecycleStrategy, Properties componentProperties, Object componentKey, Class<T> componentImplementation, Parameter... parameters) throws PicoCompositionException {
+                                return new SetterInjector<T>(componentKey, componentImplementation, parameters, monitor, "set", true) {
+                                    @Override
+                                    protected boolean isInjectorMethod(Method method) {
+                                        // this could go into PicoContainer itself
+                                        boolean b = method.getParameterTypes()[0] != MetaClass.class;
+                                        return b && super.isInjectorMethod(method);
+                                    }
+                                };
+                            }
+                        }));
+        comps.change(Characteristics.USE_NAMES);
+        comps.addComponent(WebDriverProvider.class, webDriverProvider);
+        comps.addComponent(new ClassName("pages.AdvancedSearch"));
+        comps.addComponent(new ClassName("pages.CartContents"));
+        comps.addComponent(new ClassName("pages.Home"));
+        comps.addComponent(new ClassName("pages.SearchResults"));
+        comps.addComponent(new ClassName("pages.Site"));
 
-        return new GroovyStepsFactory(configuration, context).createCandidateSteps();
+        ClassLoadingPicoContainer steps = comps.makeChildContainer("steps");
+        steps.addComponent(new ClassName("housekeeping.EmptyCartIfNotAlready"));
+        steps.addComponent(new ClassName("EtsyDotComSteps"));
+
+        return new PicoStepsFactory(configuration, steps).createCandidateSteps();
     }
 
     @Override

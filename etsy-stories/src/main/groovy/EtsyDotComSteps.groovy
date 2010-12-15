@@ -12,9 +12,11 @@ import pages.Site
 
 public class EtsyDotComSteps {
 
-  WebDriverProvider webDriverProvider;
-
-  private AdvancedSearch advancedSearch
+  AdvancedSearch advancedSearch
+  Home home
+  Site site
+  SearchResults searchResults
+  CartContents cartContents
 
   def EtsyDotComSteps() {
     GrooBe.activate()
@@ -22,20 +24,18 @@ public class EtsyDotComSteps {
 
   @Given("I am shopping for a \$thing in \$section on Etsy.com")
   def shoppingForSomethingOnEtsyDotCom(String thing, String section) {
-    def home = new Home(getWebDriverProvider())
     home.go(section)
     home.search(thing)
   }
 
   @Given("I am searching on Etsy.com")
   def advancedSearchingOnEtsyDotCom() {
-    advancedSearch = new AdvancedSearch(getWebDriverProvider())
     advancedSearch.go()
   }
 
   @Given("the cart is empty")
   def cartIsEmpty() {
-    new Site(getWebDriverProvider()).cartIsEmpty()
+    site.cartIsEmpty()
   }
 
   @Given("an Item in an Etsy.com shopping cart")
@@ -48,12 +48,12 @@ public class EtsyDotComSteps {
 
   @When("a \$thing is placed in the cart")
   def putThingInCart(String thing) {
-    new SearchResults(getWebDriverProvider()).buyFirst(thing)
+    searchResults.buyFirst(thing)
   }
 
   @When("the item is removed")
   def removeItem() {
-    new CartContents(getWebDriverProvider()).removeItem()
+    cartContents.removeItem()
   }
 
   @When("I specify the \$subCat sub category")
@@ -70,7 +70,7 @@ public class EtsyDotComSteps {
   @Then("the cart has \$num items")
   @Alias("the cart has \$num item")
   def cartNotEmpty() {
-    new Site(getWebDriverProvider()).cartHasItems("1")
+    site.cartHasItems("1")
   }
 
   @Then("the cart is empty")
@@ -81,7 +81,7 @@ public class EtsyDotComSteps {
 
   @Then("there are search results")
   def thereAreSearchResults() {
-    new SearchResults(webDriverProvider).someResults()
+    searchResults.someResults()
   }
 
 }
