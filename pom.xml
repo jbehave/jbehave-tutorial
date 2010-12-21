@@ -11,7 +11,7 @@
 
   <properties>
     <jbehave.core.version>3.2-beta-2</jbehave.core.version>
-    <jbehave.web.version>3.2-SNAPSHOT</jbehave.web.version>
+    <jbehave.web.version>3.2-beta-1</jbehave.web.version>
     <selenium.version>2.0a7</selenium.version>
   </properties>
 
