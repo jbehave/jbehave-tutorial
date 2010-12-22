@@ -55,9 +55,6 @@ public class EtsyDotComStories extends JUnitStories {
     private static ContextView contextView = new LocalFrameContextView().sized(640,120);
     private static SeleniumContext seleniumContext = new SeleniumContext();
 
-    static {
-        System.setProperty("webdriver.firefox.profile", "WebDriver");
-    }
 
     @Override
     public Configuration configuration() {
