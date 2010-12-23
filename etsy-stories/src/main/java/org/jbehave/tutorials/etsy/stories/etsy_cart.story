@@ -1,3 +1,6 @@
+Meta:
+@category basic
+
 Scenario: Place item in cart
 
 Given I am shopping for a hat in Knitting on Etsy.com

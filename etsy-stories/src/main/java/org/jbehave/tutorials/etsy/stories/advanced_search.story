@@ -1,3 +1,6 @@
+Meta:
+@category advanced
+
 Scenario: Advanced Search
 
 Given I am searching on Etsy.com
