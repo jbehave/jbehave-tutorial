@@ -11,7 +11,7 @@ class AdvancedSearch extends BasePage{
   }
 
   def go() {
-    get("http://etsy.com/search_advanced.php")
+    get("http://www.etsy.com/search_advanced.php")
   }
 
   def go(String section) {

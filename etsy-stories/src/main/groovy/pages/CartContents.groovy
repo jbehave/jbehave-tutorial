@@ -10,7 +10,7 @@ class CartContents extends BasePage{
   }
 
   def removeItem() {
-    get("http://etsy.com/cartcheckout.php")
+    get("http://www.etsy.com/cartcheckout.php")
     findElement(By.xpath("//a[@rel = 'remove']")).click()
   }
 }

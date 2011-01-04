@@ -10,7 +10,7 @@ class Home extends BasePage{
   }
 
   def go() {
-    get("http://etsy.com")
+    get("http://www.etsy.com")
   }
 
   def go(String section) {
