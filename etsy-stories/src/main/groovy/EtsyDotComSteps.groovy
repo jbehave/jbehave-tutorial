@@ -86,7 +86,7 @@ public class EtsyDotComSteps {
   }
 
   @Then("the cart is empty")
-  def cartIsEmpty2() {
+  def thenCartIsEmpty() {
     cartIsEmpty()
 
   }
