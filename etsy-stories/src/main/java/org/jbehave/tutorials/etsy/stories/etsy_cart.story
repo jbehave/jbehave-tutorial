@@ -1,15 +1,14 @@
 Meta:
 @category basic
 
-Scenario: Place item in cart
+Scenario: Item can be added to cart
 
-Given I am shopping for a hat in Knitting on Etsy.com
-And the cart is empty
-When a hat is placed in the cart
-Then the cart has 1 item
+Given that the cart is empty
+When an item is added to the cart
+Then the cart contains that item
 
-Scenario: Remove item from cart
+Scenario: Item can be removed from cart
 
-Given an Item in an Etsy.com shopping cart
+Given an item is in the cart
 When the item is removed
 Then the cart is empty

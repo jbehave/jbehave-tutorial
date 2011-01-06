@@ -21,8 +21,11 @@ class SearchResults extends BasePage{
       def title = elem.getAttribute("title")
       if (title.contains(thing)) {
         elem.click()
-        findElements(By.xpath("//input[@value = 'Add to Cart']")).get(0).click()
-        return
+        def ix = getCurrentUrl().indexOf("/listing/") + 9
+        def id = getCurrentUrl().substring(ix, ix+8)
+        def buyButton = findElements(By.xpath("//input[@value = 'Add to Cart']")).get(0)
+        buyButton.click()
+        return id
       }
     }
     fail("no $thing in search results")

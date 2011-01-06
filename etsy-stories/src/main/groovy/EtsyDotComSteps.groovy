@@ -17,6 +17,7 @@ public class EtsyDotComSteps {
   Site site
   SearchResults searchResults
   CartContents cartContents
+  private String justBought = "";
 
   def EtsyDotComSteps() {
     GrooBe.activate()
@@ -33,22 +34,27 @@ public class EtsyDotComSteps {
     advancedSearch.go()
   }
 
-  @Given("the cart is empty")
+  @Given("that the cart is empty")
   def cartIsEmpty() {
     site.cartIsEmpty()
   }
 
-  @Given("an Item in an Etsy.com shopping cart")
+  @Given("an item is in the cart")
   def anItemInTheEtsyCart() {
     shoppingForSomethingOnEtsyDotCom("hat", "Knitting")
     cartIsEmpty()
     putThingInCart("hat")
-    cartNotEmpty()
+    cartNotEmpty("1")
+  }
+
+  @When("an item is added to the cart")
+  def putThingInCart() {
+    putThingInCart("hat")
   }
 
   @When("a \$thing is placed in the cart")
   def putThingInCart(String thing) {
-    searchResults.buyFirst(thing)
+    justBought = searchResults.buyFirst(thing)
   }
 
   @When("the item is removed")
@@ -67,10 +73,16 @@ public class EtsyDotComSteps {
   }
 
 
+  @Then("the cart contains that item")
+  def cartHasThatItem() {
+    cartContents.hasItem(justBought)
+  }
+
+
   @Then("the cart has \$num items")
   @Alias("the cart has \$num item")
-  def cartNotEmpty() {
-    site.cartHasItems("1")
+  def cartNotEmpty(String num) {
+    site.cartHasItems(num)
   }
 
   @Then("the cart is empty")
