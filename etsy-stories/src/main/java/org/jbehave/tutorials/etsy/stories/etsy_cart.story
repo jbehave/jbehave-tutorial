@@ -9,6 +9,6 @@ Then the cart contains that item
 
 Scenario: Item can be removed from cart
 
-Given an item is in the cart
+Given the cart contains one item
 When the item is removed
-Then the cart is empty
+Then the cart will be empty

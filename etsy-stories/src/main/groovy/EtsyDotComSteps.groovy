@@ -39,7 +39,7 @@ public class EtsyDotComSteps {
     site.cartIsEmpty()
   }
 
-  @Given("an item is in the cart")
+  @Given("the cart contains one item")
   def anItemInTheEtsyCart() {
     shoppingForSomethingOnEtsyDotCom("hat", "Knitting")
     cartIsEmpty()
@@ -85,7 +85,7 @@ public class EtsyDotComSteps {
     site.cartHasItems(num)
   }
 
-  @Then("the cart is empty")
+  @Then("the cart will be empty")
   def thenCartIsEmpty() {
     cartIsEmpty()
 
