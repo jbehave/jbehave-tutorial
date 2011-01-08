@@ -23,6 +23,19 @@
     </dependency>
     <dependency>
       <groupId>org.jbehave</groupId>
+      <artifactId>jbehave-core</artifactId>
+      <version>${jbehave.core.version}</version>
+      <classifier>resources</classifier>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.jbehave.site</groupId>
+      <artifactId>jbehave-site-resources</artifactId>
+      <version>${jbehave.site.version}</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.jbehave</groupId>
       <artifactId>jbehave-groovy</artifactId>
       <version>${jbehave.core.version}</version>
     </dependency>
