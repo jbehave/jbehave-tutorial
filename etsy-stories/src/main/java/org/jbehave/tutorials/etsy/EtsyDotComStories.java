@@ -3,12 +3,13 @@ package org.jbehave.tutorials.etsy;
 import groovy.lang.MetaClass;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.configuration.Configuration;
-import org.jbehave.core.configuration.groovy.GroovyResourceFinder;
 import org.jbehave.core.failures.FailingUponPendingStep;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.LoadFromClasspath;
@@ -16,8 +17,8 @@ import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.CandidateSteps;
+import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.SilentStepMonitor;
-import org.jbehave.core.steps.Steps;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.selenium.ContextView;
 import org.jbehave.web.selenium.LocalFrameContextView;
@@ -59,12 +60,11 @@ public class EtsyDotComStories extends JUnitStories {
 
     @Override
     public Configuration configuration() {
-        configuration = makeConfiguration(this.getClass(), driverProvider);
+        configuration = seleniumConfiguration(this.getClass(), driverProvider);
         return configuration;
     }
 
-    public static Configuration makeConfiguration(Class<?> embeddableClass, WebDriverProvider driverProvider) {
-
+    private Configuration seleniumConfiguration(Class<?> embeddableClass, WebDriverProvider driverProvider) {
         return new SeleniumConfiguration()
                 .useWebDriverProvider(driverProvider)
                 .useSeleniumContext(seleniumContext)
@@ -80,26 +80,20 @@ public class EtsyDotComStories extends JUnitStories {
 
     @Override
     public List<CandidateSteps> candidateSteps() {
-        List<CandidateSteps> steps = makeGroovyCandidateSteps(configuration(), new GroovyResourceFinder(),
-                driverProvider);
-        steps.add(0, stepify(new PerStoriesWebDriverSteps(driverProvider))); // before
-                                                                             // other
-                                                                             // Groovy
-                                                                             // steps
-        steps.add(stepify(new WebDriverScreenshotOnFailure(driverProvider)));
-        steps.add(stepify(new PerStoriesContextView()));
+        List<CandidateSteps> steps = new ArrayList<CandidateSteps>();
+        steps.addAll(beforeAndAfterSteps());
+        steps.addAll(groovySteps());
         return steps;
     }
 
-    private Steps stepify(final Object object) {
-        return new Steps(configuration, object);
+    private Collection<? extends CandidateSteps> beforeAndAfterSteps() {
+        return new InstanceStepsFactory(configuration, new PerStoriesWebDriverSteps(driverProvider),
+                new PerStoriesContextView(), new WebDriverScreenshotOnFailure(driverProvider)).createCandidateSteps();
     }
 
     @SuppressWarnings("serial")
-    public static List<CandidateSteps> makeGroovyCandidateSteps(final Configuration configuration,
-            GroovyResourceFinder resourceFinder, final WebDriverProvider webDriverProvider) {
-
-        ClassLoadingPicoContainer comps = new DefaultClassLoadingPicoContainer(new CompositeInjection(
+    public List<CandidateSteps> groovySteps() {
+        ClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(new CompositeInjection(
                 new ConstructorInjection(), new SetterInjection() {
                     @Override
                     public <T> ComponentAdapter<T> createComponentAdapter(ComponentMonitor monitor,
@@ -116,17 +110,17 @@ public class EtsyDotComStories extends JUnitStories {
                         };
                     }
                 }));
-        comps.change(Characteristics.USE_NAMES);
-        comps.addComponent(WebDriverProvider.class, webDriverProvider);
-        comps.addComponent(new ClassName("pages.AdvancedSearch"));
-        comps.addComponent(new ClassName("pages.CartContents"));
-        comps.addComponent(new ClassName("pages.Home"));
-        comps.addComponent(new ClassName("pages.SearchResults"));
-        comps.addComponent(new ClassName("pages.Site"));
-        comps.addComponent(new ClassName("pages.Buy"));
-        comps.addComponent(new ClassName("pages.Treasury"));
+        container.change(Characteristics.USE_NAMES);
+        container.addComponent(WebDriverProvider.class, driverProvider);
+        container.addComponent(new ClassName("pages.AdvancedSearch"));
+        container.addComponent(new ClassName("pages.CartContents"));
+        container.addComponent(new ClassName("pages.Home"));
+        container.addComponent(new ClassName("pages.SearchResults"));
+        container.addComponent(new ClassName("pages.Site"));
+        container.addComponent(new ClassName("pages.Buy"));
+        container.addComponent(new ClassName("pages.Treasury"));
 
-        ClassLoadingPicoContainer steps = comps.makeChildContainer("steps");
+        ClassLoadingPicoContainer steps = container.makeChildContainer("steps");
         steps.addComponent(new ClassName("housekeeping.EmptyCartIfNotAlready"));
         steps.addComponent(new ClassName("EtsyDotComSteps"));
 
@@ -138,8 +132,7 @@ public class EtsyDotComStories extends JUnitStories {
         return new StoryFinder()
                 .findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/*.story"), null);
     }
-    
-    
+
     public static class PerStoriesContextView {
 
         @AfterStories
