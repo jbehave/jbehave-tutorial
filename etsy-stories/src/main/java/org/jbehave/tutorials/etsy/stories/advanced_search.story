@@ -1,3 +1,10 @@
+Narrative: 
+
+In order to show the advance cart functionality
+As a user
+I want to search for an item in a sub category
+
+
 Meta:
 @category advanced
 
