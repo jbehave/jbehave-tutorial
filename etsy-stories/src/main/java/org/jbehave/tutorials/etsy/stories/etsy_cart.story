@@ -1,11 +1,11 @@
+Meta:
+@category basic
+
 Narrative: 
 
 In order to show the basic cart functionality
 As a user
 I want to add and remove items from the cart
-
-Meta:
-@category basic
 
 Scenario: Item can be added to cart
 

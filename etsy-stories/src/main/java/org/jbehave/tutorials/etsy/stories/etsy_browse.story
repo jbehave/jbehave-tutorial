@@ -1,11 +1,11 @@
+Meta:
+@category browsing
+
 Narrative: 
 
 In order to show the browsing cart functionality
 As a user
 I want to browse in a gallery
-
-Meta:
-@category browsing
 
 Scenario: Browsing around the site for items
 
