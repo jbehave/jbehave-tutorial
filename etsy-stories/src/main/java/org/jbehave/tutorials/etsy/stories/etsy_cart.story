@@ -4,7 +4,8 @@ Meta:
 Scenario: Item can be added to cart
 
 Given that the cart is empty
-When an item is added to the cart
+When I search for an item
+And an item is added to the cart
 Then the cart contains that item
 
 Scenario: Item can be removed from cart

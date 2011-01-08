@@ -23,6 +23,8 @@ class Home extends BasePage{
   }
 
   def search(String thing) {
+    findElement(By.id("search-facet")).click()
+    findElement(By.className("all")).click()
     findElement(By.id("search-query")).sendKeys(thing)
     findElement(By.id("search_submit")).click()
   }
