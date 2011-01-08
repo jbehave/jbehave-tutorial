@@ -61,6 +61,11 @@ public class EtsyDotComSteps {
     putThingInCart("hat")
   }
 
+  @When("I search for an item")
+  def searchForItem(){
+    home.search("hat")
+  }
+
   @When("I want to browse through a treasury gallery")
   @Composite(steps = [
           "When I want to buy something from etsy.com",
