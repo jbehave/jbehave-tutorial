@@ -26,4 +26,8 @@ class Home extends BasePage{
     findElement(By.id("search-query")).sendKeys(thing)
     findElement(By.id("search_submit")).click()
   }
+
+  def goToBuySection() {
+    findElement(By.linkText("Buy")).click()
+  }
 }

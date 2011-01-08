@@ -3,12 +3,14 @@ import org.jbehave.core.annotations.Alias
 import org.jbehave.core.annotations.Given
 import org.jbehave.core.annotations.Then
 import org.jbehave.core.annotations.When
-import org.jbehave.web.selenium.WebDriverProvider
 import pages.AdvancedSearch
 import pages.CartContents
 import pages.Home
 import pages.SearchResults
 import pages.Site
+import org.jbehave.core.annotations.Composite
+import pages.Buy
+import pages.Treasury
 
 public class EtsyDotComSteps {
 
@@ -18,6 +20,8 @@ public class EtsyDotComSteps {
   SearchResults searchResults
   CartContents cartContents
   private String justBought = "";
+  Buy buy
+  Treasury treasury
 
   def EtsyDotComSteps() {
     GrooBe.activate()
@@ -27,6 +31,11 @@ public class EtsyDotComSteps {
   def shoppingForSomethingOnEtsyDotCom(String thing, String section) {
     home.go(section)
     home.search(thing)
+  }
+
+  @Given("I am on etsy.com")
+  def homepageOnEtsyDotCom() {
+    home.go()
   }
 
   @Given("I am searching on Etsy.com")
@@ -52,6 +61,29 @@ public class EtsyDotComSteps {
     putThingInCart("hat")
   }
 
+  @When("I want to browse through a treasury gallery")
+  @Composite(steps = [
+          "When I want to buy something from etsy.com",
+          "When I want to browse the treasury",
+          "When I choose the first treasury gallery"
+  ])
+  def browseToFirstTreasuryGallery() {}
+
+  @When("I want to buy something from etsy.com")
+  def selectBuyTabAtTop(){
+    home.goToBuySection()
+  }
+
+  @When("I want to browse the treasury")
+  def browseTreasury(){
+    buy.selectTreasury()
+  }
+
+  @When("I choose the first treasury gallery")
+  def selectFirstTreasuryGallery(){
+    treasury.chooseFirstGallery()
+  }
+
   @When("a \$thing is placed in the cart")
   def putThingInCart(String thing) {
     justBought = searchResults.buyFirst(thing)
@@ -72,6 +104,10 @@ public class EtsyDotComSteps {
     advancedSearch.searchFor(thing)
   }
 
+  @When("I choose to only look at baby hats")
+  def narrowToBaby(){
+    searchResults.chooseBabySubCategory()
+  }
 
   @Then("the cart contains that item")
   def cartHasThatItem() {
@@ -92,6 +128,7 @@ public class EtsyDotComSteps {
   }
 
   @Then("there are search results")
+  @Alias("results will be displayed in the gallery")
   def thereAreSearchResults() {
     searchResults.someResults()
   }

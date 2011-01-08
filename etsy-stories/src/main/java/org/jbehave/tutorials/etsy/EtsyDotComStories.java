@@ -114,6 +114,8 @@ public class EtsyDotComStories extends JUnitStories {
         comps.addComponent(new ClassName("pages.Home"));
         comps.addComponent(new ClassName("pages.SearchResults"));
         comps.addComponent(new ClassName("pages.Site"));
+        comps.addComponent(new ClassName("pages.Buy"));
+        comps.addComponent(new ClassName("pages.Treasury"));
 
         ClassLoadingPicoContainer steps = comps.makeChildContainer("steps");
         steps.addComponent(new ClassName("housekeeping.EmptyCartIfNotAlready"));
