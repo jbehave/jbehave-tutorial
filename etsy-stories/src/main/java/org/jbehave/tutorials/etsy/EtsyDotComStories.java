@@ -92,7 +92,8 @@ public class EtsyDotComStories extends JUnitStories {
 
     public static List<CandidateSteps> makeGroovyCandidateSteps(final Configuration configuration, GroovyResourceFinder resourceFinder, final WebDriverProvider webDriverProvider) {
 
-        ClassLoadingPicoContainer comps = new DefaultClassLoadingPicoContainer(                new CompositeInjection(
+        ClassLoadingPicoContainer comps = new DefaultClassLoadingPicoContainer(
+                new CompositeInjection(
                         new ConstructorInjection(),
                         new SetterInjection(){
                             @Override
