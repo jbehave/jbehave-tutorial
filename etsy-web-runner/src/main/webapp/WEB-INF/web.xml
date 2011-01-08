@@ -11,7 +11,7 @@
     <servlet-class>org.apache.wicket.protocol.http.WicketServlet</servlet-class>
     <init-param>
       <param-name>applicationClassName</param-name>
-      <param-value>com.paulhammant.jbehave.scenarios.web.ExamplesStoriesWebApplication</param-value>
+      <param-value>org.jbehave.tutorials.etsy.webrunner.ExamplesStoriesWebApplication</param-value>
     </init-param>
     <init-param>
       <!-- Use system property "wicket.configuration" to override to "development" when needed -->
