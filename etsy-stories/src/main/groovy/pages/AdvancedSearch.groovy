@@ -16,11 +16,7 @@ class AdvancedSearch extends BasePage{
 
   def go(String section) {
     go()
-    try {
-      findElement(By.xpath("//a[@title = '$section']")).click()
-    } catch (Throwable t) {
-      Thread.currentThread().sleep(10000)
-    }
+    findElement(By.xpath("//a[@title = '$section']")).click()
   }
 
   def search(String thing) {

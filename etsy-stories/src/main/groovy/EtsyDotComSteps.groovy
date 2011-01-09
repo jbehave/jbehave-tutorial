@@ -11,6 +11,7 @@ import pages.Site
 import org.jbehave.core.annotations.Composite
 import pages.Buy
 import pages.Treasury
+import static org.junit.Assert.*
 
 public class EtsyDotComSteps {
 
@@ -19,9 +20,10 @@ public class EtsyDotComSteps {
   Site site
   SearchResults searchResults
   CartContents cartContents
-  private String justBought = "";
   Buy buy
   Treasury treasury
+
+  private String justBought = ""
 
   def EtsyDotComSteps() {
     GrooBe.activate()
@@ -44,8 +46,9 @@ public class EtsyDotComSteps {
   }
 
   @Given("that the cart is empty")
+  @Then("the cart will be empty")
   def cartIsEmpty() {
-    site.cartIsEmpty()
+    site.cartSize().shouldBe("0", "cart not empty")
   }
 
   @Given("the cart contains one item")
@@ -109,33 +112,20 @@ public class EtsyDotComSteps {
     advancedSearch.searchFor(thing)
   }
 
-  @When("I choose to only look at baby hats")
-  def narrowToBaby(){
-    searchResults.chooseBabySubCategory()
-  }
-
   @Then("the cart contains that item")
   def cartHasThatItem() {
-    cartContents.hasItem(justBought)
+    assertTrue cartContents.hasItem(justBought)
   }
-
 
   @Then("the cart has \$num items")
   @Alias("the cart has \$num item")
   def cartNotEmpty(String num) {
-    site.cartHasItems(num)
-  }
-
-  @Then("the cart will be empty")
-  def thenCartIsEmpty() {
-    cartIsEmpty()
-
+    site.cartSize().shouldBe(num, "cart does not have $num elems")
   }
 
   @Then("there are search results")
   @Alias("results will be displayed in the gallery")
   def thereAreSearchResults() {
-    searchResults.someResults()
+    searchResults.getElems().shouldNotBe 0
   }
-
 }
