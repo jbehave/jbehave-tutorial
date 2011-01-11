@@ -183,6 +183,21 @@
               <goal>run-stories-as-embeddables</goal>
             </goals>
           </execution>
+            <execution>
+                <id>map-stories</id>
+                <phase>integration-test</phase>
+                <configuration>
+                    <includes>
+                        <include>**/stories/*.story</include>
+                    </includes>
+                    <metaFilters>
+                        <metaFilter>+category *</metaFilter>
+                    </metaFilters>
+                </configuration>
+                <goals>
+                    <goal>map-stories-as-paths</goal>
+                </goals>
+            </execution>
         </executions>
       </plugin>
       <plugin>
