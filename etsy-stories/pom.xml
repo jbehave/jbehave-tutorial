@@ -85,9 +85,9 @@
       <resource>
         <directory>${basedir}/src/main/java</directory>
         <filtering>false</filtering>
-        <excludes>
-          <exclude>**/*.java</exclude>
-        </excludes>
+        <!--<excludes>-->
+          <!--<exclude>**/*.java</exclude>-->
+        <!--</excludes>-->
       </resource>
       <resource>
         <directory>${basedir}/src/main/resources</directory>
@@ -188,7 +188,7 @@
                 <phase>integration-test</phase>
                 <configuration>
                     <includes>
-                        <include>**/stories/*.story</include>
+                        <include>**/*StoryMaps.java</include>
                     </includes>
                     <metaFilters>
                         <metaFilter>+category *</metaFilter>
