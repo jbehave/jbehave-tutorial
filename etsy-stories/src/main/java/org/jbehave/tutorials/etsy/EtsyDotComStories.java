@@ -1,13 +1,6 @@
 package org.jbehave.tutorials.etsy;
 
 import groovy.lang.MetaClass;
-
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
-
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.failures.FailingUponPendingStep;
@@ -16,26 +9,10 @@ import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.StoryReporterBuilder;
-import org.jbehave.core.steps.CandidateSteps;
-import org.jbehave.core.steps.InstanceStepsFactory;
-import org.jbehave.core.steps.SilentStepMonitor;
+import org.jbehave.core.steps.*;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
-import org.jbehave.web.selenium.ContextView;
-import org.jbehave.web.selenium.LocalFrameContextView;
-import org.jbehave.web.selenium.PerStoriesWebDriverSteps;
-import org.jbehave.web.selenium.SeleniumConfiguration;
-import org.jbehave.web.selenium.SeleniumContext;
-import org.jbehave.web.selenium.SeleniumContextOutput;
-import org.jbehave.web.selenium.SeleniumStepMonitor;
-import org.jbehave.web.selenium.TypeWebDriverProvider;
-import org.jbehave.web.selenium.WebDriverProvider;
-import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
-import org.picocontainer.Characteristics;
-import org.picocontainer.ComponentAdapter;
-import org.picocontainer.ComponentMonitor;
-import org.picocontainer.LifecycleStrategy;
-import org.picocontainer.Parameter;
-import org.picocontainer.PicoCompositionException;
+import org.jbehave.web.selenium.*;
+import org.picocontainer.*;
 import org.picocontainer.classname.ClassLoadingPicoContainer;
 import org.picocontainer.classname.ClassName;
 import org.picocontainer.classname.DefaultClassLoadingPicoContainer;
@@ -44,19 +21,35 @@ import org.picocontainer.injectors.ConstructorInjection;
 import org.picocontainer.injectors.SetterInjection;
 import org.picocontainer.injectors.SetterInjector;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Properties;
+
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
-import static org.jbehave.core.reporters.Format.CONSOLE;
-import static org.jbehave.core.reporters.Format.HTML;
-import static org.jbehave.core.reporters.Format.TXT;
-import static org.jbehave.core.reporters.Format.XML;
+import static org.jbehave.core.reporters.Format.*;
 
 public class EtsyDotComStories extends JUnitStories {
 
+    private StepMonitor stepMonitor = new SilentStepMonitor();
     private WebDriverProvider driverProvider = new TypeWebDriverProvider();
     private Configuration configuration;
-    private static ContextView contextView = new LocalFrameContextView().sized(640, 120);
-    private static SeleniumContext seleniumContext = new SeleniumContext();
+    private ContextView contextView = new LocalFrameContextView().sized(640, 120);
+    private SeleniumContext seleniumContext = new SeleniumContext();
+    private boolean shouldDoDryRun = false;
+    private org.jbehave.core.reporters.Format[] outputFormats = new org.jbehave.core.reporters.Format[]
+            {new SeleniumContextOutput(seleniumContext), CONSOLE, TXT, HTML, XML} ;
+    private XRefCapturingFormatAndStepMonitor xRefCapturingFormatAndStepMonitor = new XRefCapturingFormatAndStepMonitor();
+
+    public EtsyDotComStories() {
+        if (System.getProperty("jb-xref") != null) {
+            shouldDoDryRun = true;
+            outputFormats = new org.jbehave.core.reporters.Format[] {xRefCapturingFormatAndStepMonitor};
+            stepMonitor = xRefCapturingFormatAndStepMonitor;
+        }
+    }
 
     @Override
     public Configuration configuration() {
@@ -68,14 +61,15 @@ public class EtsyDotComStories extends JUnitStories {
         return new SeleniumConfiguration()
                 .useWebDriverProvider(driverProvider)
                 .useSeleniumContext(seleniumContext)
+                .doDryRun(shouldDoDryRun)
                 .useFailureStrategy(new FailingUponPendingStep())
-                .useStepMonitor(new SeleniumStepMonitor(contextView, new SeleniumContext(), new SilentStepMonitor()))
+                .useStepMonitor(new SeleniumStepMonitor(contextView, new SeleniumContext(), stepMonitor))
                 .useStoryLoader(new LoadFromClasspath(embeddableClass.getClassLoader()))
                 .useStoryReporterBuilder(
                         new StoryReporterBuilder()
                                 .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
                                 .withDefaultFormats()
-                                .withFormats(new SeleniumContextOutput(seleniumContext), CONSOLE, TXT, HTML, XML));
+                                .withFormats(outputFormats));
     }
 
     @Override
@@ -88,7 +82,8 @@ public class EtsyDotComStories extends JUnitStories {
 
     private Collection<? extends CandidateSteps> beforeAndAfterSteps() {
         return new InstanceStepsFactory(configuration, new PerStoriesWebDriverSteps(driverProvider),
-                new PerStoriesContextView(), new WebDriverScreenshotOnFailure(driverProvider)).createCandidateSteps();
+                new PerStoriesContextView(contextView), new WebDriverScreenshotOnFailure(driverProvider))
+                .createCandidateSteps();
     }
 
     @SuppressWarnings("serial")
@@ -135,9 +130,24 @@ public class EtsyDotComStories extends JUnitStories {
 
     public static class PerStoriesContextView {
 
+        private final ContextView contextView;
+
+        public PerStoriesContextView(ContextView contextView) {
+            this.contextView = contextView;
+        }
+
         @AfterStories
         public void afterStory() {
             contextView.close();
+        }
+    }
+
+    @Override
+    public void run() throws Throwable {
+        try {
+            super.run();
+        } finally {
+            xRefCapturingFormatAndStepMonitor.outputToFiles();
         }
     }
 

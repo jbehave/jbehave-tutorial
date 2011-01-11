@@ -35,11 +35,6 @@
       <type>zip</type>
     </dependency>
     <dependency>
-      <groupId>org.jbehave</groupId>
-      <artifactId>jbehave-groovy</artifactId>
-      <version>${jbehave.core.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.jbehave.web</groupId>
       <artifactId>jbehave-web-selenium</artifactId>
       <version>${jbehave.web.version}</version>
@@ -48,6 +43,11 @@
       <groupId>org.jbehave</groupId>
       <artifactId>jbehave-pico</artifactId>
       <version>${jbehave.core.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.3.1</version>
     </dependency>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
