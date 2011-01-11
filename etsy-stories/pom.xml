@@ -183,21 +183,38 @@
               <goal>run-stories-as-embeddables</goal>
             </goals>
           </execution>
-            <execution>
-                <id>map-stories</id>
-                <phase>integration-test</phase>
-                <configuration>
-                    <includes>
-                        <include>**/*StoryMaps.java</include>
-                    </includes>
-                    <metaFilters>
-                        <metaFilter>+category *</metaFilter>
-                    </metaFilters>
-                </configuration>
-                <goals>
-                    <goal>map-stories-as-paths</goal>
-                </goals>
-            </execution>
+
+            <!-- I WANT TO GET THIS WORKING - PAUL -->
+
+            <!--<execution>-->
+                <!--<id>map-stories</id>-->
+                <!--<phase>integration-test</phase>-->
+                <!--<configuration>-->
+                    <!--<includes>-->
+                        <!--<include>**/*StoryMaps.java</include>-->
+                    <!--</includes>-->
+                    <!--<metaFilters>-->
+                        <!--<metaFilter>+category *</metaFilter>-->
+                    <!--</metaFilters>-->
+                <!--</configuration>-->
+                <!--<goals>-->
+                    <!--<goal>map-stories-as-paths</goal>-->
+                <!--</goals>-->
+            <!--</execution>-->
+
+            <!-- I WANT TO GET THIS WORKING - PAUL -->
+
+            <!--<execution>-->
+                <!--<id>report-stepdocs</id>-->
+                <!--<phase>integration-test</phase>-->
+                <!--<configuration>-->
+                    <!--<embedderClass>org.jbehave.tutorials.etsy.EtsyDotComStories</embedderClass>-->
+                <!--</configuration>-->
+                <!--<goals>-->
+                    <!--<goal>report-stepdocs</goal>-->
+                <!--</goals>-->
+            <!--</execution>-->
+
         </executions>
       </plugin>
       <plugin>
