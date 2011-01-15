@@ -9,7 +9,10 @@ import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.StoryReporterBuilder;
-import org.jbehave.core.steps.*;
+import org.jbehave.core.steps.CandidateSteps;
+import org.jbehave.core.steps.InstanceStepsFactory;
+import org.jbehave.core.steps.SilentStepMonitor;
+import org.jbehave.core.steps.StepMonitor;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.selenium.*;
 import org.picocontainer.*;
@@ -30,6 +33,7 @@ import java.util.Properties;
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 import static org.jbehave.core.reporters.Format.*;
+import static org.jbehave.web.selenium.WebDriverHtmlOutput.WEB_DRIVER_HTML;
 
 public class EtsyDotComStories extends JUnitStories {
 
@@ -40,7 +44,7 @@ public class EtsyDotComStories extends JUnitStories {
     private SeleniumContext seleniumContext = new SeleniumContext();
     private boolean shouldDoDryRun = false;
     private org.jbehave.core.reporters.Format[] outputFormats = new org.jbehave.core.reporters.Format[]
-            {new SeleniumContextOutput(seleniumContext), CONSOLE, TXT, HTML, XML} ;
+            {new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML} ;
     private XRefCapturingFormatAndStepMonitor xRefCapturingFormatAndStepMonitor = new XRefCapturingFormatAndStepMonitor();
 
     public EtsyDotComStories() {
