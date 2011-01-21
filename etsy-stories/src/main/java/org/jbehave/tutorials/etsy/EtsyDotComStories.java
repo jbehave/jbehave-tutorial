@@ -1,6 +1,13 @@
 package org.jbehave.tutorials.etsy;
 
 import groovy.lang.MetaClass;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Properties;
+
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.failures.FailingUponPendingStep;
@@ -8,14 +15,29 @@ import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
+import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.SilentStepMonitor;
 import org.jbehave.core.steps.StepMonitor;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
-import org.jbehave.web.selenium.*;
-import org.picocontainer.*;
+import org.jbehave.web.selenium.ContextView;
+import org.jbehave.web.selenium.LocalFrameContextView;
+import org.jbehave.web.selenium.PerStoriesWebDriverSteps;
+import org.jbehave.web.selenium.SeleniumConfiguration;
+import org.jbehave.web.selenium.SeleniumContext;
+import org.jbehave.web.selenium.SeleniumContextOutput;
+import org.jbehave.web.selenium.SeleniumStepMonitor;
+import org.jbehave.web.selenium.TypeWebDriverProvider;
+import org.jbehave.web.selenium.WebDriverProvider;
+import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
+import org.picocontainer.Characteristics;
+import org.picocontainer.ComponentAdapter;
+import org.picocontainer.ComponentMonitor;
+import org.picocontainer.LifecycleStrategy;
+import org.picocontainer.Parameter;
+import org.picocontainer.PicoCompositionException;
 import org.picocontainer.classname.ClassLoadingPicoContainer;
 import org.picocontainer.classname.ClassName;
 import org.picocontainer.classname.DefaultClassLoadingPicoContainer;
@@ -24,15 +46,9 @@ import org.picocontainer.injectors.ConstructorInjection;
 import org.picocontainer.injectors.SetterInjection;
 import org.picocontainer.injectors.SetterInjector;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
-
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
-import static org.jbehave.core.reporters.Format.*;
+import static org.jbehave.core.reporters.Format.CONSOLE;
 import static org.jbehave.web.selenium.WebDriverHtmlOutput.WEB_DRIVER_HTML;
 
 public class EtsyDotComStories extends JUnitStories {
@@ -43,14 +59,14 @@ public class EtsyDotComStories extends JUnitStories {
     private ContextView contextView = new LocalFrameContextView().sized(640, 120);
     private SeleniumContext seleniumContext = new SeleniumContext();
     private boolean shouldDoDryRun = false;
-    private org.jbehave.core.reporters.Format[] outputFormats = new org.jbehave.core.reporters.Format[]
-            {new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML} ;
+    private Format[] outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE,
+            WEB_DRIVER_HTML };
     private XRefCapturingFormatAndStepMonitor xRefCapturingFormatAndStepMonitor = new XRefCapturingFormatAndStepMonitor();
 
     public EtsyDotComStories() {
         if (System.getProperty("jb-xref") != null) {
             shouldDoDryRun = true;
-            outputFormats = new org.jbehave.core.reporters.Format[] {xRefCapturingFormatAndStepMonitor};
+            outputFormats = new Format[] { xRefCapturingFormatAndStepMonitor };
             stepMonitor = xRefCapturingFormatAndStepMonitor;
         }
     }
@@ -72,8 +88,7 @@ public class EtsyDotComStories extends JUnitStories {
                 .useStoryReporterBuilder(
                         new StoryReporterBuilder()
                                 .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
-                                .withDefaultFormats()
-                                .withFormats(outputFormats));
+                                .withDefaultFormats().withFormats(outputFormats));
     }
 
     @Override

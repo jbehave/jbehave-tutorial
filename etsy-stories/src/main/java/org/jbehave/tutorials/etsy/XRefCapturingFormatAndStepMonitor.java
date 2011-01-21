@@ -1,18 +1,5 @@
 package org.jbehave.tutorials.etsy;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.json.JsonHierarchicalStreamDriver;
-import org.jbehave.core.model.ExamplesTable;
-import org.jbehave.core.model.Scenario;
-import org.jbehave.core.model.Story;
-import org.jbehave.core.reporters.FilePrintStreamFactory;
-import org.jbehave.core.reporters.NullStoryReporter;
-import org.jbehave.core.reporters.StoryReporter;
-import org.jbehave.core.reporters.StoryReporterBuilder;
-import org.jbehave.core.steps.SilentStepMonitor;
-import org.jbehave.core.steps.StepMonitor;
-import org.jbehave.core.steps.StepType;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -21,7 +8,22 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-class XRefCapturingFormatAndStepMonitor extends org.jbehave.core.reporters.Format implements StepMonitor {
+import org.jbehave.core.model.ExamplesTable;
+import org.jbehave.core.model.Scenario;
+import org.jbehave.core.model.Story;
+import org.jbehave.core.reporters.FilePrintStreamFactory;
+import org.jbehave.core.reporters.Format;
+import org.jbehave.core.reporters.NullStoryReporter;
+import org.jbehave.core.reporters.StoryReporter;
+import org.jbehave.core.reporters.StoryReporterBuilder;
+import org.jbehave.core.steps.SilentStepMonitor;
+import org.jbehave.core.steps.StepMonitor;
+import org.jbehave.core.steps.StepType;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.json.JsonHierarchicalStreamDriver;
+
+class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
 
     private Root root = new Root();
     public String currStoryPath;
@@ -32,6 +34,7 @@ class XRefCapturingFormatAndStepMonitor extends org.jbehave.core.reporters.Forma
         public List<StepMatch> stepMatches = new ArrayList<StepMatch>();
     }
 
+    @SuppressWarnings("unused")
     private static class StepMatch {
         private final String storyPath;
         private final String scenarioTitle;
@@ -53,10 +56,10 @@ class XRefCapturingFormatAndStepMonitor extends org.jbehave.core.reporters.Forma
     }
 
     public void outputToFiles() throws FileNotFoundException {
-        new PrintStream(new FileOutputStream("target/jbehave/xref.xml"))
-                .println(withAliasesEtc(new XStream()).toXML(root));
-        new PrintStream(new FileOutputStream("target/jbehave/xref.json"))
-                .println(withAliasesEtc(new XStream(new JsonHierarchicalStreamDriver())).toXML(root));
+        new PrintStream(new FileOutputStream("target/jbehave/xref.xml")).println(withAliasesEtc(new XStream()).toXML(
+                root));
+        new PrintStream(new FileOutputStream("target/jbehave/xref.json")).println(withAliasesEtc(
+                new XStream(new JsonHierarchicalStreamDriver())).toXML(root));
     }
 
     private XStream withAliasesEtc(XStream xStream) {
@@ -64,7 +67,8 @@ class XRefCapturingFormatAndStepMonitor extends org.jbehave.core.reporters.Forma
         xStream.alias("xref", Root.class);
         xStream.alias("StepMatch", StepMatch.class);
         xStream.alias("Story", Story.class);
-        //xStream.addImplicitCollection(Scenario.class, "steps", "step", List.class);
+        // xStream.addImplicitCollection(Scenario.class, "steps", "step",
+        // List.class);
         xStream.useAttributeFor(Story.class, "path");
         xStream.useAttributeFor(StepMatch.class, "storyPath");
         xStream.useAttributeFor(Scenario.class, "title");
@@ -98,8 +102,10 @@ class XRefCapturingFormatAndStepMonitor extends org.jbehave.core.reporters.Forma
         delegateStepMonitor.stepMatchesPattern(step, matches, pattern, method, stepsInstance);
     }
 
-    public void stepMatchesType(String stepAsString, String previousAsString, boolean matchesType, StepType stepType, Method method, Object stepsInstance) {
-        delegateStepMonitor.stepMatchesType(stepAsString, previousAsString, matchesType, stepType, method, stepsInstance);
+    public void stepMatchesType(String stepAsString, String previousAsString, boolean matchesType, StepType stepType,
+            Method method, Object stepsInstance) {
+        delegateStepMonitor.stepMatchesType(stepAsString, previousAsString, matchesType, stepType, method,
+                stepsInstance);
     }
 
     public void convertedValueOfType(String value, Type type, Object converted, Class<?> converterClass) {
