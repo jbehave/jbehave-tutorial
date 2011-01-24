@@ -72,6 +72,7 @@ public class EtsyDotComStories extends JUnitStories {
                 .useStoryReporterBuilder(
                         new StoryReporterBuilder()
                                 .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
+                                .withFailureTrace(true)
                                 .withDefaultFormats()
                                 .withFormats(outputFormats));
     }
