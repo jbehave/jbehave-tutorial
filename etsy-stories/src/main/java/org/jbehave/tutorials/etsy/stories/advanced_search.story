@@ -1,3 +1,5 @@
+Advanced Search for a hat
+
 Meta:
 @category advanced
 
@@ -7,7 +9,7 @@ In order to show the advance cart functionality
 As a user
 I want to search for an item in a sub category
 
-Scenario: Advanced Search
+Scenario: Advanced Search for a hat
 
 Given I am searching on Etsy.com
 When I specify the Knitting sub category

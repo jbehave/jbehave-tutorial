@@ -1,3 +1,5 @@
+ShoppingCart functionality for Etsy.com
+
 Meta:
 @category basic
 
