@@ -8,6 +8,7 @@ import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
+import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
@@ -32,7 +33,7 @@ import java.util.Properties;
 
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
-import static org.jbehave.core.reporters.Format.*;
+import static org.jbehave.core.reporters.Format.CONSOLE;
 import static org.jbehave.web.selenium.WebDriverHtmlOutput.WEB_DRIVER_HTML;
 
 public class EtsyDotComStories extends JUnitStories {
@@ -43,14 +44,14 @@ public class EtsyDotComStories extends JUnitStories {
     private ContextView contextView = new LocalFrameContextView().sized(640, 120);
     private SeleniumContext seleniumContext = new SeleniumContext();
     private boolean shouldDoDryRun = false;
-    private org.jbehave.core.reporters.Format[] outputFormats = new org.jbehave.core.reporters.Format[]
-            {new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML} ;
+    private Format[] outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE,
+            WEB_DRIVER_HTML };
     private XRefCapturingFormatAndStepMonitor xRefCapturingFormatAndStepMonitor = new XRefCapturingFormatAndStepMonitor();
 
     public EtsyDotComStories() {
         if (System.getProperty("jb-xref") != null) {
             shouldDoDryRun = true;
-            outputFormats = new org.jbehave.core.reporters.Format[] {xRefCapturingFormatAndStepMonitor};
+            outputFormats = new Format[] { xRefCapturingFormatAndStepMonitor };
             stepMonitor = xRefCapturingFormatAndStepMonitor;
         }
     }
@@ -74,7 +75,7 @@ public class EtsyDotComStories extends JUnitStories {
                                 .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
                                 .withFailureTrace(true)
                                 .withDefaultFormats()
-                                .withFormats(outputFormats));
+                                .withDefaultFormats().withFormats(outputFormats));
     }
 
     @Override
