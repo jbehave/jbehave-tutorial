@@ -29,7 +29,6 @@ class AdvancedSearch extends BasePage{
     def List options = select.findElements(By.tagName("option"))
     for (int i = 0; i < options.size(); i++) {
       def WebElement o =  options.get(i);
-      System.out.println("--> " + o.getValue());
       if (o.isSelected()) {
         o.setSelected()
       }

@@ -2,7 +2,6 @@ package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
 import org.openqa.selenium.By
-import static org.junit.Assert.fail
 
 class SearchResults extends BasePage{
 
@@ -24,7 +23,7 @@ class SearchResults extends BasePage{
         return id
       }
     }
-    fail("no $thing in search results")
+    "<not-bought>"
   }
 
   public getElems() {

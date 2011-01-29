@@ -1,17 +1,6 @@
 import com.github.tanob.groobe.GrooBe
-import org.jbehave.core.annotations.Alias
-import org.jbehave.core.annotations.Given
-import org.jbehave.core.annotations.Then
-import org.jbehave.core.annotations.When
-import pages.AdvancedSearch
-import pages.CartContents
-import pages.Home
-import pages.SearchResults
-import pages.Site
-import org.jbehave.core.annotations.Composite
-import pages.Buy
-import pages.Treasury
-import static org.junit.Assert.*
+import org.jbehave.core.annotations.*
+import pages.*
 
 public class EtsyDotComSteps {
 
@@ -95,6 +84,7 @@ public class EtsyDotComSteps {
   @When("a \$thing is placed in the cart")
   def putThingInCart(String thing) {
     justBought = searchResults.buyFirst(thing)
+    justBought.shouldNotBe "<not-bought>"
   }
 
   @When("the item is removed")
@@ -114,13 +104,13 @@ public class EtsyDotComSteps {
 
   @Then("the cart contains that item")
   def cartHasThatItem() {
-    assertTrue cartContents.hasItem(justBought)
+    cartContents.hasItem(justBought).shouldBe true, "cart should have contained $justBought"
   }
 
   @Then("the cart has \$num items")
   @Alias("the cart has \$num item")
   def cartNotEmpty(String num) {
-    site.cartSize().shouldBe(num, "cart does not have $num elems")
+    site.cartSize().shouldBe num, "cart does not have $num elems"
   }
 
   @Then("there are search results")
