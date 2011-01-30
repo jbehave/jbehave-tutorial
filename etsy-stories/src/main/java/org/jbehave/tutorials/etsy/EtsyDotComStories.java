@@ -88,7 +88,7 @@ public class EtsyDotComStories extends JUnitStories {
 
     private Collection<? extends CandidateSteps> beforeAndAfterSteps() {
         return new InstanceStepsFactory(configuration, new PerStoriesWebDriverSteps(driverProvider),
-                new PerStoriesContextView(contextView), new WebDriverScreenshotOnFailure(driverProvider))
+                new PerStoriesContextView(contextView), new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()))
                 .createCandidateSteps();
     }
 
