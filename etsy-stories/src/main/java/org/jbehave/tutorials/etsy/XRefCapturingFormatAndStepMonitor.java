@@ -1,13 +1,14 @@
 package org.jbehave.tutorials.etsy;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.model.ExamplesTable;
 import org.jbehave.core.model.Scenario;
 import org.jbehave.core.model.Story;
@@ -55,27 +56,31 @@ class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
         super("xref collecting");
     }
 
-    public void outputToFiles() throws FileNotFoundException {
-        new PrintStream(new FileOutputStream("target/jbehave/xref.xml")).println(withAliasesEtc(new XStream()).toXML(
-                root));
-        new PrintStream(new FileOutputStream("target/jbehave/xref.json")).println(withAliasesEtc(
-                new XStream(new JsonHierarchicalStreamDriver())).toXML(root));
+    public void outputToFiles() throws IOException {
+        outputFile("xref.xml", new XStream());
+        outputFile("xref.json", new XStream(new JsonHierarchicalStreamDriver()));
     }
 
-    private XStream withAliasesEtc(XStream xStream) {
-        xStream.setMode(XStream.NO_REFERENCES);
-        xStream.alias("xref", Root.class);
-        xStream.alias("StepMatch", StepMatch.class);
-        xStream.alias("Story", Story.class);
+    private void outputFile(String name, XStream xstream) throws IOException {        
+        File outputDir = new StoryReporterBuilder().withCodeLocation(CodeLocations.codeLocationFromClass(this.getClass())).outputDirectory();
+        outputDir.mkdirs();
+        new FileWriter(new File(outputDir, name)).write(configure(xstream).toXML(root));        
+    }
+
+    private XStream configure(XStream xstream) {
+        xstream.setMode(XStream.NO_REFERENCES);
+        xstream.alias("xref", Root.class);
+        xstream.alias("StepMatch", StepMatch.class);
+        xstream.alias("Story", Story.class);
         // xStream.addImplicitCollection(Scenario.class, "steps", "step",
         // List.class);
-        xStream.useAttributeFor(Story.class, "path");
-        xStream.useAttributeFor(StepMatch.class, "storyPath");
-        xStream.useAttributeFor(Scenario.class, "title");
-        xStream.alias("Scenario", Scenario.class);
-        xStream.omitField(ExamplesTable.class, "parameterConverters");
-        xStream.omitField(ExamplesTable.class, "defaults");
-        return xStream;
+        xstream.useAttributeFor(Story.class, "path");
+        xstream.useAttributeFor(StepMatch.class, "storyPath");
+        xstream.useAttributeFor(Scenario.class, "title");
+        xstream.alias("Scenario", Scenario.class);
+        xstream.omitField(ExamplesTable.class, "parameterConverters");
+        xstream.omitField(ExamplesTable.class, "defaults");
+        return xstream;
     }
 
     @Override
