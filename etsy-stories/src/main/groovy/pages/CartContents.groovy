@@ -12,7 +12,7 @@ class CartContents extends BasePage{
   def hasItem(String item) {
     get("http://www.etsy.com/cartcheckout.php")
     try {
-      findElement(By.id("listing-$item-ship"))
+      findElement(By.id("listinggggggg-$item-ship"))
     } catch (ex) {
       return false
     }

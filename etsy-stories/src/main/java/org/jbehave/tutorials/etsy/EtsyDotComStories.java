@@ -122,7 +122,6 @@ public class EtsyDotComStories extends JUnitStories {
         container.addComponent(new ClassName("pages.Treasury"));
 
         ClassLoadingPicoContainer steps = container.makeChildContainer("steps");
-        steps.addComponent(StoryReporterBuilder.class, configuration.storyReporterBuilder());
         steps.addComponent(new ClassName("housekeeping.EmptyCartIfNotAlready"));
         steps.addComponent(new ClassName("EtsyDotComSteps"));
 
