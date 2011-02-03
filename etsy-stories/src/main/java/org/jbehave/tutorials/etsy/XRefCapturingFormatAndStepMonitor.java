@@ -22,7 +22,7 @@ class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
     public String currScenarioTitle;
 
     private static class Root {
-        private Map<String, Set<String>> metaMap = new HashMap<String, Set<String>>();
+        private Set<String> meta = new HashSet<String>();
         private List<Stori> stories = new ArrayList<Stori>();
         public List<StepMatch> stepMatches = new ArrayList<StepMatch>();
     }
@@ -46,15 +46,11 @@ class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
             this.description = story.getDescription().asString();
             this.name = story.getName();
             this.path = story.getPath();
-            for (String next : story.getMeta().getPropertyNames()) {
-                Set<String> vals = root.metaMap.get(next);
-                if (vals == null) {
-                    vals = new HashSet<String>();
-                    root.metaMap.put(next, vals);
-                }
-                String val = story.getMeta().getProperty(next);
-                vals.add(val);
-                meta = meta + next + "=" + val + "\n";
+            Meta meta1 = story.getMeta();
+            for (String next : meta1.getPropertyNames()) {
+                String s = meta + next + "=" + meta1.getProperty(next);
+                root.meta.add(s);
+                meta = s + "\n";
 
             }
             List<Scenario> scenarios1 = story.getScenarios();
