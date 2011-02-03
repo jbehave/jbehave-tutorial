@@ -29,27 +29,32 @@ class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
 
     @SuppressWarnings("unused")
     private static class Stori {
-        private String description = "";
+        private String description;
         private String narrative = "";
-        private Meta meta;
+        private String name;
+        private String path;
+        private String meta = "";
         private List<Scenari0> scenarios = new ArrayList<Scenari0>();
 
         public Stori(Story story, Root root) {
             Narrative narrative = story.getNarrative();
-            if (narrative.isEmpty()) {
+            if (!narrative.isEmpty()) {
                 this.narrative = "In order to " + narrative.inOrderTo() + "\n" +
                         "As a " + narrative.asA() + "\n" +
                         "I want to " + narrative.iWantTo() + "\n";
             }
             this.description = story.getDescription().asString();
-            this.meta = story.getMeta();
-            for (String next : meta.getPropertyNames()) {
+            this.name = story.getName();
+            this.path = story.getPath();
+            for (String next : story.getMeta().getPropertyNames()) {
                 Set<String> vals = root.metaMap.get(next);
                 if (vals == null) {
                     vals = new HashSet<String>();
                     root.metaMap.put(next, vals);
                 }
-                vals.add(meta.getProperty(next));
+                String val = story.getMeta().getProperty(next);
+                vals.add(val);
+                meta = meta + next + "=" + val + "\n";
 
             }
             List<Scenario> scenarios1 = story.getScenarios();
@@ -123,9 +128,9 @@ class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
         xstream.alias("Story", Story.class);
         // xStream.addImplicitCollection(Scenario.class, "steps", "step",
         // List.class);
-        xstream.useAttributeFor(Story.class, "path");
-        xstream.useAttributeFor(StepMatch.class, "storyPath");
-        xstream.useAttributeFor(Scenario.class, "title");
+//        xstream.useAttributeFor(Story.class, "path");
+//        xstream.useAttributeFor(StepMatch.class, "storyPath");
+//        xstream.useAttributeFor(Scenario.class, "title");
         xstream.alias("Scenario", Scenario.class);
         xstream.omitField(ExamplesTable.class, "parameterConverters");
         xstream.omitField(ExamplesTable.class, "defaults");
