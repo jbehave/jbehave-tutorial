@@ -2,10 +2,7 @@ package org.jbehave.tutorials.etsy;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JsonHierarchicalStreamDriver;
-import org.jbehave.core.model.ExamplesTable;
-import org.jbehave.core.model.Narrative;
-import org.jbehave.core.model.Scenario;
-import org.jbehave.core.model.Story;
+import org.jbehave.core.model.*;
 import org.jbehave.core.reporters.*;
 import org.jbehave.core.steps.SilentStepMonitor;
 import org.jbehave.core.steps.StepMonitor;
@@ -16,8 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
 
@@ -26,6 +22,7 @@ class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
     public String currScenarioTitle;
 
     private static class Root {
+        private Map<String, Set<String>> metaMap = new HashMap<String, Set<String>>();
         private List<Stori> stories = new ArrayList<Stori>();
         public List<StepMatch> stepMatches = new ArrayList<StepMatch>();
     }
@@ -34,9 +31,10 @@ class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
     private static class Stori {
         private String description = "";
         private String narrative = "";
+        private Meta meta;
         private List<Scenari0> scenarios = new ArrayList<Scenari0>();
 
-        public Stori(Story story) {
+        public Stori(Story story, Root root) {
             Narrative narrative = story.getNarrative();
             if (narrative.isEmpty()) {
                 this.narrative = "In order to " + narrative.inOrderTo() + "\n" +
@@ -44,6 +42,16 @@ class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
                         "I want to " + narrative.iWantTo() + "\n";
             }
             this.description = story.getDescription().asString();
+            this.meta = story.getMeta();
+            for (String next : meta.getPropertyNames()) {
+                Set<String> vals = root.metaMap.get(next);
+                if (vals == null) {
+                    vals = new HashSet<String>();
+                    root.metaMap.put(next, vals);
+                }
+                vals.add(meta.getProperty(next));
+
+            }
             List<Scenario> scenarios1 = story.getScenarios();
             for (Scenario scenario : scenarios1) {
                 scenarios.add(new Scenari0(scenario));
@@ -130,7 +138,7 @@ class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
 
             @Override
             public void beforeStory(Story story, boolean givenStory) {
-                root.stories.add(new Stori(story));
+                root.stories.add(new Stori(story, root));
                 currStoryPath = story.getPath();
             }
 
