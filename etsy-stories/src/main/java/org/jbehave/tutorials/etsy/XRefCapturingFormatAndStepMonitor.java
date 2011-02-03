@@ -1,5 +1,16 @@
 package org.jbehave.tutorials.etsy;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.json.JsonHierarchicalStreamDriver;
+import org.jbehave.core.model.ExamplesTable;
+import org.jbehave.core.model.Narrative;
+import org.jbehave.core.model.Scenario;
+import org.jbehave.core.model.Story;
+import org.jbehave.core.reporters.*;
+import org.jbehave.core.steps.SilentStepMonitor;
+import org.jbehave.core.steps.StepMonitor;
+import org.jbehave.core.steps.StepType;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,22 +19,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jbehave.core.io.CodeLocations;
-import org.jbehave.core.model.ExamplesTable;
-import org.jbehave.core.model.Scenario;
-import org.jbehave.core.model.Story;
-import org.jbehave.core.reporters.FilePrintStreamFactory;
-import org.jbehave.core.reporters.Format;
-import org.jbehave.core.reporters.NullStoryReporter;
-import org.jbehave.core.reporters.StoryReporter;
-import org.jbehave.core.reporters.StoryReporterBuilder;
-import org.jbehave.core.steps.SilentStepMonitor;
-import org.jbehave.core.steps.StepMonitor;
-import org.jbehave.core.steps.StepType;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.json.JsonHierarchicalStreamDriver;
-
 class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
 
     private Root root = new Root();
@@ -31,8 +26,44 @@ class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
     public String currScenarioTitle;
 
     private static class Root {
-        private List<Story> stories = new ArrayList<Story>();
+        private List<Stori> stories = new ArrayList<Stori>();
         public List<StepMatch> stepMatches = new ArrayList<StepMatch>();
+    }
+
+    @SuppressWarnings("unused")
+    private static class Stori {
+        private String description = "";
+        private String narrative = "";
+        private List<Scenari0> scenarios = new ArrayList<Scenari0>();
+
+        public Stori(Story story) {
+            Narrative narrative = story.getNarrative();
+            if (narrative.isEmpty()) {
+                this.narrative = "In order to " + narrative.inOrderTo() + "\n" +
+                        "As a " + narrative.asA() + "\n" +
+                        "I want to " + narrative.iWantTo() + "\n";
+            }
+            this.description = story.getDescription().asString();
+            List<Scenario> scenarios1 = story.getScenarios();
+            for (Scenario scenario : scenarios1) {
+                scenarios.add(new Scenari0(scenario));
+            }
+        }
+    }
+
+    @SuppressWarnings("unused")
+    private static class Scenari0 {
+        private String title;
+        private String body;
+
+        public Scenari0(Scenario scenario) {
+            title = scenario.getTitle();
+            body = "Scenario:" + scenario.getTitle() + "\n";
+            List<String> steps = scenario.getSteps();
+            for (String s : steps) {
+                body = body + s + "\n";
+            }
+        }
     }
 
     @SuppressWarnings("unused")
@@ -56,15 +87,25 @@ class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
         super("xref collecting");
     }
 
-    public void outputToFiles() throws IOException {
-        outputFile("xref.xml", new XStream());
-        outputFile("xref.json", new XStream(new JsonHierarchicalStreamDriver()));
+    public void outputToFiles(StoryReporterBuilder storyReporterBuilder) throws IOException {
+        try {
+            outputFile("xref.xml", new XStream(), storyReporterBuilder);
+            outputFile("xref.json", new XStream(new JsonHierarchicalStreamDriver()), storyReporterBuilder);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("eeee " + e.getMessage());
+        }
     }
 
-    private void outputFile(String name, XStream xstream) throws IOException {        
-        File outputDir = new StoryReporterBuilder().withCodeLocation(CodeLocations.codeLocationFromClass(this.getClass())).outputDirectory();
+    private void outputFile(String name, XStream xstream, StoryReporterBuilder storyReporterBuilder) throws IOException {
+        File outputDir = storyReporterBuilder.outputDirectory();
+        System.out.println("---->OD " + outputDir.getCanonicalPath());
         outputDir.mkdirs();
-        new FileWriter(new File(outputDir, name)).write(configure(xstream).toXML(root));        
+        FileWriter fileWriter = new FileWriter(new File(outputDir, name));
+        fileWriter.write(configure(xstream).toXML(root));
+        fileWriter.flush();
+        fileWriter.close();
+
     }
 
     private XStream configure(XStream xstream) {
@@ -89,7 +130,7 @@ class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
 
             @Override
             public void beforeStory(Story story, boolean givenStory) {
-                root.stories.add(story);
+                root.stories.add(new Stori(story));
                 currStoryPath = story.getPath();
             }
 

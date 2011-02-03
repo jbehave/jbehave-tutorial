@@ -34,6 +34,7 @@ import java.util.Properties;
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 import static org.jbehave.core.reporters.Format.CONSOLE;
+import static org.jbehave.core.reporters.Format.XML;
 import static org.jbehave.web.selenium.WebDriverHtmlOutput.WEB_DRIVER_HTML;
 
 public class EtsyDotComStories extends JUnitStories {
@@ -45,7 +46,7 @@ public class EtsyDotComStories extends JUnitStories {
     private SeleniumContext seleniumContext = new SeleniumContext();
     private boolean shouldDoDryRun = false;
     private Format[] outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE,
-            WEB_DRIVER_HTML };
+            WEB_DRIVER_HTML, XML };
     private XRefCapturingFormatAndStepMonitor xRefCapturingFormatAndStepMonitor = new XRefCapturingFormatAndStepMonitor();
 
     public EtsyDotComStories() {
@@ -153,7 +154,7 @@ public class EtsyDotComStories extends JUnitStories {
         try {
             super.run();
         } finally {
-            xRefCapturingFormatAndStepMonitor.outputToFiles();
+            xRefCapturingFormatAndStepMonitor.outputToFiles(configuration.storyReporterBuilder());
         }
     }
 
