@@ -34,7 +34,7 @@ class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
         private String name;
         private String path;
         private String meta = "";
-        private List<Scenari0> scenarios = new ArrayList<Scenari0>();
+        private String scenarios = "";
 
         public Stori(Story story, Root root) {
             Narrative narrative = story.getNarrative();
@@ -55,22 +55,12 @@ class XRefCapturingFormatAndStepMonitor extends Format implements StepMonitor {
             }
             List<Scenario> scenarios1 = story.getScenarios();
             for (Scenario scenario : scenarios1) {
-                scenarios.add(new Scenari0(scenario));
-            }
-        }
-    }
-
-    @SuppressWarnings("unused")
-    private static class Scenari0 {
-        private String title;
-        private String body;
-
-        public Scenari0(Scenario scenario) {
-            title = scenario.getTitle();
-            body = "Scenario:" + scenario.getTitle() + "\n";
-            List<String> steps = scenario.getSteps();
-            for (String s : steps) {
-                body = body + s + "\n";
+                String body = "Scenario:" + scenario.getTitle() + "\n";
+                List<String> steps = scenario.getSteps();
+                for (String s : steps) {
+                    body = body + s + "\n";
+                }
+                scenarios = scenarios + body + "\n\n";
             }
         }
     }
