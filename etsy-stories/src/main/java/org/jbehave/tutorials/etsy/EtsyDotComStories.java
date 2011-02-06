@@ -13,8 +13,6 @@ import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
-import org.jbehave.core.steps.SilentStepMonitor;
-import org.jbehave.core.steps.StepMonitor;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.selenium.*;
 import org.picocontainer.*;
@@ -40,22 +38,13 @@ import static org.jbehave.web.selenium.WebDriverHtmlOutput.WEB_DRIVER_HTML;
 
 public class EtsyDotComStories extends JUnitStories {
 
-    private StepMonitor stepMonitor = new SilentStepMonitor();
     private WebDriverProvider driverProvider = new TypeWebDriverProvider();
     private Configuration configuration;
     private ContextView contextView = new LocalFrameContextView().sized(640, 120);
     private SeleniumContext seleniumContext = new SeleniumContext();
-    private boolean shouldDoDryRun = false;
     private Format[] outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE,
             WEB_DRIVER_HTML, XML };
     private CrossReference crossReference = new CrossReference();
-
-    public EtsyDotComStories() {
-        if (System.getProperty("dry-run") != null) {
-            shouldDoDryRun = true;
-            stepMonitor = crossReference.getStepMonitor();
-        }
-    }
 
     @Override
     public Configuration configuration() {
@@ -67,9 +56,8 @@ public class EtsyDotComStories extends JUnitStories {
         return new SeleniumConfiguration()
                 .useWebDriverProvider(driverProvider)
                 .useSeleniumContext(seleniumContext)
-                .doDryRun(shouldDoDryRun)
                 .useFailureStrategy(new FailingUponPendingStep())
-                .useStepMonitor(new SeleniumStepMonitor(contextView, new SeleniumContext(), stepMonitor))
+                .useStepMonitor(new SeleniumStepMonitor(contextView, new SeleniumContext(), crossReference.getStepMonitor()))
                 .useStoryLoader(new LoadFromClasspath(embeddableClass.getClassLoader()))
                 .useStoryReporterBuilder(
                         new StoryReporterBuilder()
@@ -147,17 +135,6 @@ public class EtsyDotComStories extends JUnitStories {
         @AfterStories
         public void afterStory() {
             contextView.close();
-        }
-    }
-
-    @Override
-    public void run() throws Throwable {
-        try {
-            super.run();
-        } finally {
-            if (System.getProperty("jb-xref") != null) {
-                crossReference.outputToFiles(configuration.storyReporterBuilder());
-            }
         }
     }
 
