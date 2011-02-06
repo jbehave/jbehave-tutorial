@@ -8,7 +8,7 @@ import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
-import org.jbehave.core.reporters.CrossReferenceOutput;
+import org.jbehave.core.reporters.CrossReference;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.CandidateSteps;
@@ -48,7 +48,7 @@ public class EtsyDotComStories extends JUnitStories {
     private boolean shouldDoDryRun = false;
     private Format[] outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE,
             WEB_DRIVER_HTML, XML };
-    private CrossReferenceOutput crossReferenceOutput = new CrossReferenceOutput();
+    private CrossReference crossReferenceOutput = new CrossReference();
 
     public EtsyDotComStories() {
         if (System.getProperty("jb-xref") != null) {
