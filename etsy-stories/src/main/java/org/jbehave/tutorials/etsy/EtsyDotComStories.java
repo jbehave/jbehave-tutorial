@@ -48,13 +48,12 @@ public class EtsyDotComStories extends JUnitStories {
     private boolean shouldDoDryRun = false;
     private Format[] outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE,
             WEB_DRIVER_HTML, XML };
-    private CrossReference crossReferenceOutput = new CrossReference();
+    private CrossReference crossReference = new CrossReference();
 
     public EtsyDotComStories() {
-        if (System.getProperty("jb-xref") != null) {
+        if (System.getProperty("dry-run") != null) {
             shouldDoDryRun = true;
-            outputFormats = new Format[] { crossReferenceOutput };
-            stepMonitor = crossReferenceOutput.getStepMonitor();
+            stepMonitor = crossReference.getStepMonitor();
         }
     }
 
@@ -77,7 +76,8 @@ public class EtsyDotComStories extends JUnitStories {
                                 .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
                                 .withFailureTrace(true)
                                 .withDefaultFormats()
-                                .withDefaultFormats().withFormats(outputFormats));
+                                .withFormats(outputFormats)
+                                .withCrossReference(crossReference));
     }
 
     @Override
@@ -156,7 +156,7 @@ public class EtsyDotComStories extends JUnitStories {
             super.run();
         } finally {
             if (System.getProperty("jb-xref") != null) {
-                crossReferenceOutput.outputToFiles(configuration.storyReporterBuilder());
+                crossReference.outputToFiles(configuration.storyReporterBuilder());
             }
         }
     }
