@@ -2,6 +2,8 @@ Browse Etsy.com
 
 Meta:
 @category browsing
+@color red
+
 
 Narrative: 
 

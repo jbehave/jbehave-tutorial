@@ -2,6 +2,7 @@ Advanced Search for a hat
 
 Meta:
 @category advanced
+@color red
 
 Narrative: 
 
