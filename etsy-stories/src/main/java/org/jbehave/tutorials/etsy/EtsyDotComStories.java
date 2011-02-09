@@ -14,8 +14,22 @@ import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
-import org.jbehave.web.selenium.*;
-import org.picocontainer.*;
+import org.jbehave.web.selenium.ContextView;
+import org.jbehave.web.selenium.LocalFrameContextView;
+import org.jbehave.web.selenium.PerStoriesWebDriverSteps;
+import org.jbehave.web.selenium.SeleniumConfiguration;
+import org.jbehave.web.selenium.SeleniumContext;
+import org.jbehave.web.selenium.SeleniumContextOutput;
+import org.jbehave.web.selenium.SeleniumStepMonitor;
+import org.jbehave.web.selenium.TypeWebDriverProvider;
+import org.jbehave.web.selenium.WebDriverProvider;
+import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
+import org.picocontainer.Characteristics;
+import org.picocontainer.ComponentAdapter;
+import org.picocontainer.ComponentMonitor;
+import org.picocontainer.LifecycleStrategy;
+import org.picocontainer.Parameter;
+import org.picocontainer.PicoCompositionException;
 import org.picocontainer.classname.ClassLoadingPicoContainer;
 import org.picocontainer.classname.ClassName;
 import org.picocontainer.classname.DefaultClassLoadingPicoContainer;
@@ -138,4 +152,13 @@ public class EtsyDotComStories extends JUnitStories {
         }
     }
 
+
+    @Override
+    public void run() throws Throwable {
+        try {
+            super.run();
+        } finally {
+            configuredEmbedder().generateNavigatorView();
+        }
+    }
 }
