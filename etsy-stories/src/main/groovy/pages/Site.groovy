@@ -10,6 +10,7 @@ class Site extends BasePage{
   }
 
   def cartSize() {
-    findElement(By.xpath("//li[@id = 'meta-cart']/a/em")).getText()
+      def text = findElement(By.xpath("//li[@id = 'meta-cart']/a")).getText()
+      return text.substring("Cart ".length())
   }
 }

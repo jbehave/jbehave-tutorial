@@ -35,6 +35,11 @@ public class EtsyDotComSteps {
   }
 
   @Given("that the cart is empty")
+  def cartIsEmptyAndOnStartPage() {
+    home.go()
+    cartIsEmpty();
+  }
+
   @Then("the cart will be empty")
   def cartIsEmpty() {
     site.cartSize().shouldBe("0", "cart not empty")
