@@ -9,6 +9,7 @@ class Treasury extends BasePage{
   }
 
   def chooseFirstGallery() {
-    findElement(By.xpath("//td[@class='name']/h4/a")).click()
+      def element = findElement(By.xpath("//div[@class='item-treasury-info-box']/h3/a"))
+      element.click()
   }
 }
