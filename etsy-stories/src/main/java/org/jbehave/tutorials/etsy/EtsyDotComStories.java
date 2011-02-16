@@ -152,14 +152,4 @@ public class EtsyDotComStories extends JUnitStories {
         }
     }
 
-
-    // remove this method when http://jira.codehaus.org/browse/JBEHAVE-428 is fixed.
-    @Override
-    public void run() throws Throwable {
-        try {
-            super.run();
-        } finally {
-            configuredEmbedder().generateNavigatorView();
-        }
-    }
 }
