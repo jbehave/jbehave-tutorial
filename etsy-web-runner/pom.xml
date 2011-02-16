@@ -36,9 +36,9 @@
       <artifactId>etsy-stories</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency>
+    <!--dependency>
       <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium</artifactId>
+      <artifactId>selenium-remote-control</artifactId>
       <version>${selenium.version}</version>
       <exclusions>
         <exclusion>
@@ -46,7 +46,7 @@
           <artifactId>apache-mime4j</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
+    </dependency-->
   </dependencies>
   <build>
     <pluginManagement>
