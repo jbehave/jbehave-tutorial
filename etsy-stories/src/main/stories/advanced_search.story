@@ -16,3 +16,10 @@ Given I am searching on Etsy.com
 When I specify the Knitting sub category
 And I search for hat
 Then there are search results
+
+Scenario: Advanced Search for a ring
+
+Given I am searching on Etsy.com
+When I specify the Jewelry sub category
+And I search for ring
+Then there are search results
