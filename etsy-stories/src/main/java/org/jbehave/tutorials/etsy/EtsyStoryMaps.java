@@ -36,7 +36,7 @@ public class EtsyStoryMaps extends JUnitStoryMaps {
 
     @Override
     protected List<String> metaFilters() {
-        return asList("+category *");
+        return asList(); // will be specified by values in the pom.xml file when run from Maven
     }
 
     @Override
