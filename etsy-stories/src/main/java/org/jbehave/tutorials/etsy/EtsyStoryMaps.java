@@ -36,12 +36,12 @@ public class EtsyStoryMaps extends JUnitStoryMaps {
 
     @Override
     protected List<String> metaFilters() {
-        return asList("+category *");
+        return asList(); // will be specified by values in the pom.xml file when run from Maven
     }
 
     @Override
     protected List<String> storyPaths() {
-        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/*.story", "");
+        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/stories/*.story", "");
 
     }
 
