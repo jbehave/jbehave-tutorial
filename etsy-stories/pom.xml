@@ -172,6 +172,7 @@
               <generateViewAfterStories>true</generateViewAfterStories>
               <ignoreFailureInStories>true</ignoreFailureInStories>
               <ignoreFailureInView>false</ignoreFailureInView>
+              <skip>false</skip>
               <metaFilters>
                 <metaFilter>${meta.filter}</metaFilter>
               </metaFilters>
@@ -196,20 +197,18 @@
               <goal>map-stories-as-embeddables</goal>
             </goals>
           </execution>
-
-          <!-- I WANT TO GET THIS WORKING - PAUL -->
-
-          <!--<execution> -->
-          <!--<id>report-stepdocs</id> -->
-          <!--<phase>integration-test</phase> -->
-          <!--<configuration> -->
-          <!--<embedderClass>org.jbehave.tutorials.etsy.EtsyDotComStories</embedderClass> -->
-          <!--</configuration> -->
-          <!--<goals> -->
-          <!--<goal>report-stepdocs</goal> -->
-          <!--</goals> -->
-          <!--</execution> -->
-
+          <execution>
+            <id>report-stepdocs</id>
+            <phase>integration-test</phase>
+            <configuration>
+              <includes>
+                <include>**/*Stories.java</include>
+              </includes>
+            </configuration>
+            <goals>
+              <goal>report-stepdocs-as-embeddables</goal>
+            </goals>
+          </execution>
         </executions>
       </plugin>
       <plugin>
