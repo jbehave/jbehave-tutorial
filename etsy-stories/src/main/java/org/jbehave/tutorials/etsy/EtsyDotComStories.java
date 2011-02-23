@@ -17,6 +17,8 @@ import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.selenium.ContextView;
 import org.jbehave.web.selenium.LocalFrameContextView;
 import org.jbehave.web.selenium.PerStoriesWebDriverSteps;
+import org.jbehave.web.selenium.PerStoryWebDriverSteps;
+import org.jbehave.web.selenium.SauceWebDriverProvider;
 import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.SeleniumContext;
 import org.jbehave.web.selenium.SeleniumContextOutput;
@@ -52,13 +54,23 @@ import static org.jbehave.web.selenium.WebDriverHtmlOutput.WEB_DRIVER_HTML;
 
 public class EtsyDotComStories extends JUnitStories {
 
-    private WebDriverProvider driverProvider = new TypeWebDriverProvider();
+    private WebDriverProvider driverProvider;
     private Configuration configuration;
-    private ContextView contextView = new LocalFrameContextView().sized(640, 120);
+    private ContextView contextView;
     private SeleniumContext seleniumContext = new SeleniumContext();
     private Format[] outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE,
             WEB_DRIVER_HTML, XML };
     private CrossReference crossReference = new CrossReference();
+
+    public EtsyDotComStories() {
+        if (System.getProperty("SAUCE_USERNAME") != null) {
+            driverProvider = new SauceWebDriverProvider();
+            contextView = new ContextView.NULL();
+        } else {
+            driverProvider = new TypeWebDriverProvider();
+            contextView = new LocalFrameContextView().sized(640, 120);
+        }
+    }
 
     @Override
     public Configuration configuration() {
@@ -67,6 +79,7 @@ public class EtsyDotComStories extends JUnitStories {
     }
 
     private Configuration seleniumConfiguration(Class<?> embeddableClass, WebDriverProvider driverProvider) {
+
         return new SeleniumConfiguration()
                 .useWebDriverProvider(driverProvider)
                 .useSeleniumContext(seleniumContext)
@@ -91,7 +104,7 @@ public class EtsyDotComStories extends JUnitStories {
     }
 
     private Collection<? extends CandidateSteps> beforeAndAfterSteps() {
-        return new InstanceStepsFactory(configuration, new PerStoriesWebDriverSteps(driverProvider),
+        return new InstanceStepsFactory(configuration, new PerStoryWebDriverSteps(driverProvider),
                 new PerStoriesContextView(contextView), new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()))
                 .createCandidateSteps();
     }
@@ -135,7 +148,16 @@ public class EtsyDotComStories extends JUnitStories {
     @Override
     protected List<String> storyPaths() {
         return new StoryFinder()
-                .findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/*.story"), null);
+                .findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/stories/**/"+storyFilter()+".story"), null);
+    }
+
+    private String storyFilter() {
+        String storyFilter = System.getProperty("storyFilter");
+        if (storyFilter != null) {
+            return storyFilter;
+        } else {
+            return "*";
+        }
     }
 
     public static class PerStoriesContextView {
