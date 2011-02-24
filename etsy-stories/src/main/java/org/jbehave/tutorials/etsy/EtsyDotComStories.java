@@ -66,7 +66,6 @@ public class EtsyDotComStories extends JUnitStories {
         if (System.getProperty("SAUCE_USERNAME") != null) {
             driverProvider = new SauceWebDriverProvider();
             contextView = new ContextView.NULL();
-            super.configuredEmbedder().embedderControls().useThreads(5);
         } else {
             driverProvider = new TypeWebDriverProvider();
             contextView = new LocalFrameContextView().sized(640, 120);

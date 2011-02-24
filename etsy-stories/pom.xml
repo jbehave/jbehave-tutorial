@@ -13,6 +13,7 @@
 
   <properties>
     <meta.filter></meta.filter>
+    <threads></threads>
   </properties>
 
   <dependencies>
@@ -172,6 +173,7 @@
               <generateViewAfterStories>true</generateViewAfterStories>
               <ignoreFailureInStories>true</ignoreFailureInStories>
               <ignoreFailureInView>false</ignoreFailureInView>
+              <threads>${threads}</threads>
               <skip>false</skip>
               <metaFilters>
                 <metaFilter>${meta.filter}</metaFilter>
