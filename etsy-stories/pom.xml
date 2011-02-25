@@ -13,7 +13,7 @@
 
   <properties>
     <meta.filter></meta.filter>
-    <threads></threads>
+    <threads>1</threads>
   </properties>
 
   <dependencies>
@@ -251,5 +251,19 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>saucelabs</id>
+      <activation>
+        <property>
+          <name>SAUCE_USERNAME</name>
+        </property>
+      </activation>
+      <properties>
+        <threads>5</threads>
+      </properties>
+    </profile>
+  </profiles>
 
 </project>
