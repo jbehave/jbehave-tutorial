@@ -114,22 +114,7 @@ public class EtsyDotComStories extends JUnitStories {
     @SuppressWarnings("serial")
     public List<CandidateSteps> groovySteps() {
         ClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(new CompositeInjection(
-                new ConstructorInjection(), new SetterInjection() {
-                    @Override
-                    public <T> ComponentAdapter<T> createComponentAdapter(ComponentMonitor monitor,
-                            LifecycleStrategy lifecycleStrategy, Properties componentProperties, Object componentKey,
-                            Class<T> componentImplementation, Parameter... parameters) throws PicoCompositionException {
-                        return new SetterInjector<T>(componentKey, componentImplementation, parameters, monitor, "set",
-                                true) {
-                            @Override
-                            protected boolean isInjectorMethod(Method method) {
-                                // this could go into PicoContainer itself
-                                boolean b = method.getParameterTypes()[0] != MetaClass.class;
-                                return b && super.isInjectorMethod(method);
-                            }
-                        };
-                    }
-                }));
+                new ConstructorInjection(), new SetterInjection().withInjectionOptional()));
         container.change(Characteristics.USE_NAMES);
         container.addComponent(WebDriverProvider.class, driverProvider);
         container.addComponent(new ClassName("pages.AdvancedSearch"));
