@@ -42,7 +42,7 @@ public class EtsyDotComSteps {
 
   @Then("the cart will be empty")
   def cartIsEmpty() {
-    site.cartSize().shouldBe("0", "cart not empty")
+    site.cartSize().shouldBe "", "cart not empty"
   }
 
   @Given("the cart contains one item")
