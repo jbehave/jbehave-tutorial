@@ -113,17 +113,16 @@ public class EtsyDotComStories extends JUnitStories {
 
     @SuppressWarnings("serial")
     public List<CandidateSteps> groovySteps() {
-        ClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(new CompositeInjection(
+        final DefaultClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(new CompositeInjection(
                 new ConstructorInjection(), new SetterInjection().withInjectionOptional()));
         container.change(Characteristics.USE_NAMES);
         container.addComponent(WebDriverProvider.class, driverProvider);
-        container.addComponent(new ClassName("pages.AdvancedSearch"));
-        container.addComponent(new ClassName("pages.CartContents"));
-        container.addComponent(new ClassName("pages.Home"));
-        container.addComponent(new ClassName("pages.SearchResults"));
-        container.addComponent(new ClassName("pages.Site"));
-        container.addComponent(new ClassName("pages.Buy"));
-        container.addComponent(new ClassName("pages.Treasury"));
+        // This loads all the Groovy classes in pages.*
+        container.visit(new ClassName("pages.Home"), ".*\\.class", true, new DefaultClassLoadingPicoContainer.ClassNameVisitor() {
+            public void classFound(Class clazz) {
+                container.addComponent(clazz);
+            }
+        });
 
         ClassLoadingPicoContainer steps = container.makeChildContainer("steps");
         steps.addComponent(new ClassName("housekeeping.EmptyCartIfNotAlready"));
