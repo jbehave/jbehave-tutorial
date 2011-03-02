@@ -32,6 +32,7 @@ import org.picocontainer.ComponentMonitor;
 import org.picocontainer.LifecycleStrategy;
 import org.picocontainer.Parameter;
 import org.picocontainer.PicoCompositionException;
+import org.picocontainer.behaviors.ThreadCaching;
 import org.picocontainer.classname.ClassLoadingPicoContainer;
 import org.picocontainer.classname.ClassName;
 import org.picocontainer.classname.DefaultClassLoadingPicoContainer;
@@ -113,8 +114,8 @@ public class EtsyDotComStories extends JUnitStories {
 
     @SuppressWarnings("serial")
     public List<CandidateSteps> groovySteps() {
-        final DefaultClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(new CompositeInjection(
-                new ConstructorInjection(), new SetterInjection().withInjectionOptional()));
+        final DefaultClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(
+                new ThreadCaching().wrap(new CompositeInjection(new ConstructorInjection(), new SetterInjection().withInjectionOptional())));
         container.change(Characteristics.USE_NAMES);
         container.addComponent(WebDriverProvider.class, driverProvider);
         // This loads all the Groovy classes in pages.*

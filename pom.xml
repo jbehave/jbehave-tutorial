@@ -10,8 +10,8 @@
   <name>JBehave Tutorial using Etsy.com - Parent</name>
 
   <properties>
-    <jbehave.core.version>3.3-beta-1</jbehave.core.version>
-    <jbehave.web.version>3.3-beta-1</jbehave.web.version>
+    <jbehave.core.version>3.3-SNAPSHOT</jbehave.core.version>
+    <jbehave.web.version>3.3-SNAPSHOT</jbehave.web.version>
     <jbehave.site.version>3.1.1</jbehave.site.version>
     <gmaven.version>1.3</gmaven.version>
     <groovy.version>1.8.0-rc-1</groovy.version>
