@@ -72,6 +72,8 @@ public class EtsyDotComStories extends JUnitStories {
             contextView = new LocalFrameContextView().sized(640, 120);
         }
 
+        crossReference.excludeStoriesWithoutExecutedScenarios(true);
+
     }
 
     @Override
