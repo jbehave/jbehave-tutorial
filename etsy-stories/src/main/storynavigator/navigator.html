@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ng="http://angularjs.org" xml:lang="en" lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" ng:autobind src="js/angular-0.9.11.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min-1.7.1.js"></script>
+    <script type="text/javascript" src="js/jquery-framedialog-1.1.2.js"></script>
+    <link rel="stylesheet" type="text/css" href="style/navigator.css"/>
+    <link rel="stylesheet" type="text/css" href="style/jquery-ui.css"/>
+    <title>Story Navigator</title>
+</head>
+<body ng:controller="MyController">
+
+<script type="text/javascript">
+    function MyController($resource) {
+        this.Story = $resource("xref.json");
+        this.data = this.Story.get({});
+    }
+    MyController.$inject = ["$resource"];
+    MyController.prototype = {
+        showResults: function(story) {
+            jQuery.FrameDialog.create({
+                width: 1000,
+                height: 600,
+                closeText: 'foo',
+                url: story.html,
+                title: 'Results For ' + story.path,
+                closeOnEscape: true,
+                buttons: [
+                    {
+                    }
+                ]
+            })
+        },
+
+        showUsages: function(match) {
+            this.s2.type = match.type;
+            this.s2.annotatedPattern = match.annotatedPattern;
+            $( "#usagesDialog" ).dialog();
+        },
+
+        openEditTab: function(story) {
+            alert("TODO");
+        }
+    };
+    angular.filter('newlines', function(text) {
+        return text.replace(/\n/g, '<br/>');
+    });
+
+    $(document).ready(function() {
+        //RESET and SORT-HEADER HANDLER
+        $('thead th a').click(function() {
+            //INIT
+            var parentId = $(this).parent().parent().parent().parent().parent().attr("id");
+            var thisId = this.id.substring(0, (this.id.length - 4));
+            var thisIdObj = ((this.id).indexOf('-des') != -1) ? '#' + thisId + '-asc' : '#' + thisId + '-des';
+            //RESET
+            $('#' + parentId + ' thead th a').each(function() {
+                $(this).attr('class', 'reset');
+            });
+            $(this).hide();
+            //SORT-HANDLER
+            $(thisIdObj).attr('class', 'ascending');
+            $(thisIdObj).show();
+        });
+        $("#tabs").tabs();
+        $(".show_hide").click(function() {
+        	if ($(this).is(":checked")) {
+        	   $("." + this.value).show();
+            } else {
+               $("." + this.value).hide();
+            }
+        });
+    });
+</script>
+
+<div id="usagesDialog" title="Usages of Step">
+    <table summary="usages" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th class="section">Story</th>
+            <th class="section">Scenario</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng:repeat="use in data.xref.stepMatches.$filter(s2).usages">
+            <td class="section">{{use.story}}</td>
+            <td class="section">{{use.scenario}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="page-wrap">
+    <div id="inside">
+        <div id="header">
+            <a href="http://www.jbehave.org"><img src="images/jbehave-logo.png" alt="header"/></a>
+        </div>
+        <div id="main-content">
+
+            <div id="tabs">
+                <ul>
+                    <li><a href="#tabs-1">Stories</a></li>
+                    <li><a href="#tabs-2">Steps</a></li>
+                </ul>
+                <div>View:<br/>
+                <input type="checkbox" class="show_hide" value="status" checked="true"> Status</input>
+                <input type="checkbox" class="show_hide" value="path" checked="true"> Path</input>
+                <input type="checkbox" class="show_hide" value="description" checked="true"> Description</input>
+                <input type="checkbox" class="show_hide" value="meta" checked="true"> Meta</input>
+                <input type="checkbox" class="show_hide" value="narrative" checked="true"> Narrative</input>
+                <input type="checkbox" class="show_hide" value="duration" checked="true"> Duration </input>                </div>
+                <!-- The Story List Tab -->
+
+                <div id="tabs-1">
+		            <span>Total Duration: {{data.xref.stories.$filter(search).$sum('duration') /1000 | number:0}} secs</span>
+	
+                    <table summary="Navigator" cellspacing="0" cellpadding="0">
+                        <thead>
+                        <tr>
+                            <th colspan="2" class="section">Stories</th>
+                            <th colspan="4" class="section filter">Filter scenarios<input name="search.scenarios" class="filterInput"/></th>
+                        </tr>
+                        <tr class="columnTitles">
+                            <th class="status first">
+                                <a href id="status-asc" class="ascending" ng:click="predicate = 'passed'">Status</a>
+                                <a href id="status-des" class="descending" ng:click="predicate = '-passed'">Status</a>
+                            </th>
+                            <th class="path">
+                                <a href id="path-asc" class="ascending" ng:click="predicate = 'path'">Path</a>
+                                <a href id="path-des" class="descending" ng:click="predicate = '-path'">Path</a>
+                            </th>
+                            <th class="description">
+                                <a href id="description-asc" class="ascending" ng:click="predicate = 'description'">Description</a>
+                                <a href id="description-des" class="descending" ng:click="predicate = '-description'">Description</a>
+                            </th>
+                            <th class="meta">
+                                <a href id="meta-asc" class="ascending" ng:click="predicate = 'meta'">Meta</a>
+                                <a href id="meta-des" class="descending" ng:click="predicate = '-meta'">Meta</a>
+                            </th>
+                            <th class="narrative">
+                                <a href id="narrative-asc" class="ascending" ng:click="predicate = 'narrative'">Narrative</a>
+                                <a href id="narrative-des" class="descending" ng:click="predicate = '-narrative'">Narrative</a>
+                            </th>
+                            <th class="duration last">
+                                <a href id="duration-asc" class="ascending" ng:click="predicate = 'duration'">Duration</a>
+                                <a href id="duration-des" class="descending" ng:click="predicate = '-duration'">Duration</a>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="status filterLabel">Filter</th>
+                            <th class="path"><input name="search.path" class="filterInput"/></th>
+                            <th class="description"><input name="search.description" class="filterInput"/></th>
+                            <th class="meta">
+                                <select name="search.meta" class="filterInput">
+                                    <option value="=" selected="selected">- All -</option>
+                                    <option ng:repeat="permutation in data.xref.meta">{{permutation}}</option>
+                                </select></th>
+                            <th class="narrative"><input name="search.narrative" class="filterInput"/></th>
+                            <th class="duration"/>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <td colspan="6">&nbsp;</td>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        <tr ng:repeat="story in data.xref.stories.$filter(search).$orderBy(predicate)"
+                            ng:click="showResults(story)" title="Click to view the story details">
+                            <td class="status"><img src="images/passed-{{story.passed}}.png"
+                                                    alt="Story Passed == {{story.passed}}"/></td>
+                            <td class="path">{{story.path}}</td>
+                            <td class="description">{{story.description}}</td>
+                            <td class="meta">{{story.meta}}</td>
+                            <td class="narrative">{{story.narrative | newlines | html}}</td>
+                            <td class="duration">{{story.duration / 1000 | number:1}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- The Step-Match List Tab -->
+
+                <div id="tabs-2">
+                    <table cellspacing="0" cellpadding="0">
+                        <thead>
+                        <tr>
+                            <th colspan="3" class="section">Steps</th>
+                        </tr>
+                        <tr class="columnTitles">
+                            <th class="type first">
+                                <a href id="type-asc" class="ascending" ng:click="stepPredicate = 'type'">Type</a>
+                                <a href id="type-des" class="descending" ng:click="stepPredicate = '-type'">Type</a>
+                            </th>
+                            <th class="pattern">
+                                <a href id="pattern-asc" class="ascending"
+                                   ng:click="stepPredicate = 'annotatedPattern'">Pattern</a>
+                                <a href id="pattern-des" class="descending"
+                                   ng:click="stepPredicate = '-annotatedPattern'">Pattern</a>
+                            </th>
+                            <th class="usages last">
+                                <a href id="usages-asc" class="ascending" ng:click="stepPredicate = 'usages.$size()'">Usages</a>
+                                <a href id="usages-des" class="descending" ng:click="stepPredicate = '-usages.$size()'">Usages</a>
+                            </th>
+                        </tr>
+                        <tr class="filters">
+                            <th>
+                                <select ng:init="stepSearch.type = ''" name="stepSearch.type" class="filterInput">
+                                    <option value="" selected="selected">- All -</option>
+                                    <option selected>Given</option>
+                                    <option selected>When</option>
+                                    <option selected>Then</option>
+                                </select>
+                            </th>
+                            <th><input name="stepSearch.annotatedPattern" class="filterInput"/></th>
+                            <th>&nbsp;</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng:repeat="match in data.xref.stepMatches.$filter(stepSearch).$orderBy(stepPredicate)" ng:click="showUsages(match)">
+                            <td class="type">{{match.type}}</td>
+                            <td class="pattern">{{match.annotatedPattern}}</td>
+                            <td class="size">{{match.usages.$size()}}</td>
+                            <!-- <td class="size">{{match.usages[0].story}}</td> -->
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer">
+            <div class="left">Data Generated by {{data.xref.whatMadeThis}} on {{ data.xref.whenMade | date:'yyyy-MM-dd
+                HH:mm:ss'}}
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div style="clear: both;"></div>
+    </div>
+</div>
+</body>
+</html>

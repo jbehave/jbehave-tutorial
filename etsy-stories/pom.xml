@@ -113,6 +113,11 @@
         <directory>${project.build.directory}/resources</directory>
         <filtering>false</filtering>
       </resource>
+      <resource>
+        <directory>${basedir}/src/main/storynavigator</directory>
+        <targetPath>${project.build.directory}/jbehave/view</targetPath>
+        <filtering>false</filtering>
+      </resource>
     </resources>
     <testResources>
       <testResource>
