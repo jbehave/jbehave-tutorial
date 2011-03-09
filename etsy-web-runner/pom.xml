@@ -13,7 +13,7 @@
 
   <properties>
     <!-- also check parent project for property values -->
-    <jbehave.webapp.name>/</jbehave.webapp.name>
+    <jbehave.webapp.name>runner</jbehave.webapp.name>
   </properties>
   <dependencies>
     <dependency>
@@ -36,17 +36,11 @@
       <artifactId>etsy-stories</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <!--dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-remote-control</artifactId>
-      <version>${selenium.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.james</groupId>
-          <artifactId>apache-mime4j</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency-->
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.3.1</version>
+    </dependency>
   </dependencies>
   <build>
     <pluginManagement>

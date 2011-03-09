@@ -69,11 +69,15 @@ public class EtsyDotComStories extends JUnitStories {
             contextView = new ContextView.NULL();
         } else {
             driverProvider = new TypeWebDriverProvider();
-            contextView = new LocalFrameContextView().sized(640, 120);
+            setContextView(new LocalFrameContextView().sized(640, 120));
         }
 
         crossReference.excludeStoriesWithoutExecutedScenarios(true);
 
+    }
+
+    protected void setContextView(ContextView contextView) {
+        this.contextView = contextView;
     }
 
     @Override
@@ -108,9 +112,11 @@ public class EtsyDotComStories extends JUnitStories {
         return steps;
     }
 
-    private Collection<? extends CandidateSteps> beforeAndAfterSteps() {
-        return new InstanceStepsFactory(configuration, new PerStoryWebDriverSteps(driverProvider),
-                new PerStoriesContextView(contextView), new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()))
+    protected Collection<? extends CandidateSteps> beforeAndAfterSteps() {
+        return new InstanceStepsFactory(configuration,
+                  new PerStoryWebDriverSteps(driverProvider),
+                  new PerStoriesContextView(contextView),
+                  new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()))
                 .createCandidateSteps();
     }
 
@@ -121,8 +127,11 @@ public class EtsyDotComStories extends JUnitStories {
         container.change(Characteristics.USE_NAMES);
         container.addComponent(WebDriverProvider.class, driverProvider);
         // This loads all the Groovy classes in pages.*
-        container.visit(new ClassName("pages.Home"), ".*\\.class", true, new DefaultClassLoadingPicoContainer.ClassNameVisitor() {
+        System.out.println("********************** ???");
+
+        container.visit(new ClassName("pages.Home"), ".*\\.class", true, new DefaultClassLoadingPicoContainer.ClassVisitor() {
             public void classFound(Class clazz) {
+                System.out.println("********************** " + clazz.getName());
                 container.addComponent(clazz);
             }
         });
@@ -147,6 +156,10 @@ public class EtsyDotComStories extends JUnitStories {
         } else {
             return "*";
         }
+    }
+
+    public WebDriverProvider getDriverProvider() {
+        return driverProvider;
     }
 
     public static class PerStoriesContextView {
