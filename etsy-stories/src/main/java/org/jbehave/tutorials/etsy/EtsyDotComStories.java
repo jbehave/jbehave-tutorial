@@ -1,6 +1,5 @@
 package org.jbehave.tutorials.etsy;
 
-import groovy.lang.MetaClass;
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.failures.FailingUponPendingStep;
@@ -13,10 +12,10 @@ import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
+import org.jbehave.core.steps.StepMonitor;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.selenium.ContextView;
 import org.jbehave.web.selenium.LocalFrameContextView;
-import org.jbehave.web.selenium.PerStoriesWebDriverSteps;
 import org.jbehave.web.selenium.PerStoryWebDriverSteps;
 import org.jbehave.web.selenium.SauceWebDriverProvider;
 import org.jbehave.web.selenium.SeleniumConfiguration;
@@ -27,11 +26,6 @@ import org.jbehave.web.selenium.TypeWebDriverProvider;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
 import org.picocontainer.Characteristics;
-import org.picocontainer.ComponentAdapter;
-import org.picocontainer.ComponentMonitor;
-import org.picocontainer.LifecycleStrategy;
-import org.picocontainer.Parameter;
-import org.picocontainer.PicoCompositionException;
 import org.picocontainer.behaviors.ThreadCaching;
 import org.picocontainer.classname.ClassLoadingPicoContainer;
 import org.picocontainer.classname.ClassName;
@@ -39,13 +33,10 @@ import org.picocontainer.classname.DefaultClassLoadingPicoContainer;
 import org.picocontainer.injectors.CompositeInjection;
 import org.picocontainer.injectors.ConstructorInjection;
 import org.picocontainer.injectors.SetterInjection;
-import org.picocontainer.injectors.SetterInjector;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Properties;
 
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
@@ -88,20 +79,31 @@ public class EtsyDotComStories extends JUnitStories {
 
     private Configuration seleniumConfiguration(Class<?> embeddableClass, WebDriverProvider driverProvider) {
 
+        StoryReporterBuilder storyReporterBuilder = new StoryReporterBuilder()
+                .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
+                .withFailureTrace(true)
+                .withFailureTraceCompression(true)
+                .withDefaultFormats()
+                .withFormats(outputFormats)
+                .withCrossReference(crossReference);
+        addCrossReference(storyReporterBuilder, crossReference);
+
         return new SeleniumConfiguration()
                 .useWebDriverProvider(driverProvider)
                 .useSeleniumContext(seleniumContext)
                 .useFailureStrategy(new FailingUponPendingStep())
-                .useStepMonitor(new SeleniumStepMonitor(contextView, new SeleniumContext(), crossReference.getStepMonitor()))
+                .useStepMonitor(createStepMonitor())
                 .useStoryLoader(new LoadFromClasspath(embeddableClass.getClassLoader()))
                 .useStoryReporterBuilder(
-                        new StoryReporterBuilder()
-                                .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
-                                .withFailureTrace(true)
-                                .withFailureTraceCompression(true)
-                                .withDefaultFormats()
-                                .withFormats(outputFormats)
-                                .withCrossReference(crossReference));
+                        storyReporterBuilder);
+    }
+
+    protected StepMonitor createStepMonitor() {
+        return new SeleniumStepMonitor(contextView, new SeleniumContext(), crossReference.getStepMonitor());
+    }
+
+    protected void addCrossReference(StoryReporterBuilder storyReporterBuilder, CrossReference crossReference) {
+        storyReporterBuilder.withCrossReference(crossReference);
     }
 
     @Override
@@ -127,11 +129,9 @@ public class EtsyDotComStories extends JUnitStories {
         container.change(Characteristics.USE_NAMES);
         container.addComponent(WebDriverProvider.class, driverProvider);
         // This loads all the Groovy classes in pages.*
-        System.out.println("********************** ???");
 
         container.visit(new ClassName("pages.Home"), ".*\\.class", true, new DefaultClassLoadingPicoContainer.ClassVisitor() {
             public void classFound(Class clazz) {
-                System.out.println("********************** " + clazz.getName());
                 container.addComponent(clazz);
             }
         });
