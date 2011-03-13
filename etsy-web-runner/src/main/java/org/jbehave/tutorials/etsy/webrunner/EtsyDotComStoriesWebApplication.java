@@ -21,15 +21,6 @@ public class EtsyDotComStoriesWebApplication extends WebRunnerApplication {
     private Configuration configuration;
     private EtsyDotComStories mainEtsyStories = new EtsyDotComStories() {
 
-        /**
-         * Overridden as we do not want the context view dialog to come up.
-         * @return
-         */
-        @Override
-        protected void setContextView(ContextView ignore) {
-            super.setContextView(new ContextView.NULL());
-        }
-
         @Override
         protected void addCrossReference(StoryReporterBuilder storyReporterBuilder, CrossReference crossReference) {
             // let's not for the web-runner.

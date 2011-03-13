@@ -50,25 +50,25 @@ public class EtsyDotComStories extends JUnitStories {
     private Configuration configuration;
     private ContextView contextView;
     private SeleniumContext seleniumContext = new SeleniumContext();
-    private Format[] outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE,
-            WEB_DRIVER_HTML, XML };
+    private Format[] outputFormats;
     private CrossReference crossReference = new CrossReference();
 
     public EtsyDotComStories() {
         if (System.getProperty("SAUCE_USERNAME") != null) {
+            outputFormats = new Format[] { WEB_DRIVER_HTML };
             driverProvider = new SauceWebDriverProvider();
             contextView = new ContextView.NULL();
         } else {
+            outputFormats = new Format[] {
+                    new SeleniumContextOutput(seleniumContext),
+                    CONSOLE,
+                    WEB_DRIVER_HTML };
             driverProvider = new TypeWebDriverProvider();
-            setContextView(new LocalFrameContextView().sized(640, 120));
+            contextView = new LocalFrameContextView().sized(640, 120);
         }
 
         crossReference.excludeStoriesWithoutExecutedScenarios(true);
 
-    }
-
-    protected void setContextView(ContextView contextView) {
-        this.contextView = contextView;
     }
 
     @Override
