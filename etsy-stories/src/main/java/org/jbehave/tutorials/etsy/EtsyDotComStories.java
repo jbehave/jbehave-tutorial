@@ -17,6 +17,7 @@ import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.selenium.ContextView;
 import org.jbehave.web.selenium.LocalFrameContextView;
 import org.jbehave.web.selenium.PerStoryWebDriverSteps;
+import org.jbehave.web.selenium.SauceContextOutput;
 import org.jbehave.web.selenium.SauceWebDriverProvider;
 import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.SeleniumContext;
@@ -55,8 +56,8 @@ public class EtsyDotComStories extends JUnitStories {
 
     public EtsyDotComStories() {
         if (System.getProperty("SAUCE_USERNAME") != null) {
-            outputFormats = new Format[] { WEB_DRIVER_HTML };
             driverProvider = new SauceWebDriverProvider();
+            outputFormats = new Format[] { WEB_DRIVER_HTML, new SauceContextOutput(driverProvider) };
             contextView = new ContextView.NULL();
         } else {
             outputFormats = new Format[] {
