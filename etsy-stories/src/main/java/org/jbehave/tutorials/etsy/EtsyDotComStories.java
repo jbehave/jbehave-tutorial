@@ -57,7 +57,8 @@ public class EtsyDotComStories extends JUnitStories {
     public EtsyDotComStories() {
         if (System.getProperty("SAUCE_USERNAME") != null) {
             driverProvider = new SauceWebDriverProvider();
-            outputFormats = new Format[] { WEB_DRIVER_HTML, new SauceContextOutput(driverProvider) };
+            outputFormats = new Format[] { WEB_DRIVER_HTML };
+            crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider));
             contextView = new ContextView.NULL();
         } else {
             outputFormats = new Format[] {
