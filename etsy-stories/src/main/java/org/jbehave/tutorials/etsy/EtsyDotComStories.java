@@ -52,7 +52,7 @@ public class EtsyDotComStories extends JUnitStories {
     private ContextView contextView;
     private SeleniumContext seleniumContext = new SeleniumContext();
     private Format[] outputFormats;
-    private CrossReference crossReference = new CrossReference();
+    private final CrossReference crossReference = new CrossReference().withJsonOnly().writeCrossReferenceAfterEachStory();
 
     public EtsyDotComStories() {
         if (System.getProperty("SAUCE_USERNAME") != null) {
