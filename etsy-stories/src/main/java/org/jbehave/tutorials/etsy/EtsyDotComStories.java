@@ -120,7 +120,7 @@ public class EtsyDotComStories extends JUnitStories {
             String absPath = codeLocationFromClass(EtsyDotComStories.class).getPath();
             JBehaveListener listener = null;
             try {
-                File file = new File(new File(absPath).getParentFile().getParentFile(), "src/main/storynavigator");
+                File file = new File(absPath).getParentFile().getParentFile();
                 listener = new JBehaveListener(embedderControls, configuration, steps,
                         batchFailures, futures, embedder, file);
                 listener.start();
@@ -135,17 +135,16 @@ public class EtsyDotComStories extends JUnitStories {
             super.runStoriesAsPaths(embedder, storyPaths);
 
         }
-
     }
 
     @Override
     public List<CandidateSteps> candidateSteps() {
         // Before And After Steps
-        steps.addAll(new InstanceStepsFactory(configuration,
-                new PerStoryWebDriverSteps(driverProvider),
-                new PerStoriesContextView(contextView),
-                new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()))
-                .createCandidateSteps());
+        steps.addAll(steps(new PerStoryWebDriverSteps(driverProvider)));
+        if (System.getProperty("JBEHAVE_LISTENER") == null) {
+            steps.addAll(steps(new PerStoriesContextView(contextView)));
+        }
+        steps.addAll(steps(new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder())));
         // Groovy Steps
         final DefaultClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(
                 new ThreadCaching().wrap(new CompositeInjection(new ConstructorInjection(), new SetterInjection().withInjectionOptional())));
@@ -164,6 +163,10 @@ public class EtsyDotComStories extends JUnitStories {
 
         steps.addAll(new PicoStepsFactory(configuration, steps1).createCandidateSteps());
         return steps;
+    }
+
+    private List<CandidateSteps> steps(Object stepsObject) {
+        return new InstanceStepsFactory(configuration, stepsObject).createCandidateSteps();
     }
 
     @Override
