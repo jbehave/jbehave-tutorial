@@ -93,6 +93,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
+        <version>2.1.1</version>
         <configuration>
           <webResources>
             <resource>
@@ -113,7 +114,6 @@
           <webAppConfig>
             <contextPath>/${jbehave.webapp.name}</contextPath>
           </webAppConfig>
-          <webApp>${project.build.directory}/${jbehave.webapp.name}.war</webApp>
         </configuration>
       </plugin>
     </plugins>
