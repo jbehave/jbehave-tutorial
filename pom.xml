@@ -19,6 +19,7 @@
 
   <modules>
     <module>etsy-stories</module>
+    <module>etsy-web-runner</module>
   </modules>
 
 </project>
