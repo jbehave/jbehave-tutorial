@@ -1,5 +1,10 @@
 package org.jbehave.tutorials.etsy;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Future;
+
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.embedder.Embedder;
@@ -17,7 +22,7 @@ import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.StepMonitor;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
-import org.jbehave.web.listener.JBehaveListener;
+import org.jbehave.web.queue.WebQueue;
 import org.jbehave.web.selenium.ContextView;
 import org.jbehave.web.selenium.LocalFrameContextView;
 import org.jbehave.web.selenium.PerStoryWebDriverSteps;
@@ -39,11 +44,6 @@ import org.picocontainer.injectors.CompositeInjection;
 import org.picocontainer.injectors.ConstructorInjection;
 import org.picocontainer.injectors.SetterInjection;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Future;
-
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 import static org.jbehave.core.reporters.Format.CONSOLE;
@@ -56,7 +56,8 @@ public class EtsyDotComStories extends JUnitStories {
     private ContextView contextView;
     private SeleniumContext seleniumContext = new SeleniumContext();
     private Format[] outputFormats;
-    private final CrossReference crossReference = new CrossReference().withJsonOnly().writeCrossReferenceAfterEachStory();
+    private final CrossReference crossReference = new CrossReference().withJsonOnly()
+            .writeCrossReferenceAfterEachStory();
     private List<CandidateSteps> steps = new ArrayList<CandidateSteps>();
 
     public EtsyDotComStories() {
@@ -66,10 +67,7 @@ public class EtsyDotComStories extends JUnitStories {
             crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider));
             contextView = new ContextView.NULL();
         } else {
-            outputFormats = new Format[] {
-                    new SeleniumContextOutput(seleniumContext),
-                    CONSOLE,
-                    WEB_DRIVER_HTML };
+            outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
             driverProvider = new TypeWebDriverProvider();
             contextView = new LocalFrameContextView().sized(640, 120);
         }
@@ -83,22 +81,16 @@ public class EtsyDotComStories extends JUnitStories {
         Class<?> embeddableClass = this.getClass();
 
         StoryReporterBuilder storyReporterBuilder = new StoryReporterBuilder()
-                .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
-                .withFailureTrace(true)
-                .withFailureTraceCompression(true)
-                .withDefaultFormats()
-                .withFormats(outputFormats)
+                .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass)).withFailureTrace(true)
+                .withFailureTraceCompression(true).withDefaultFormats().withFormats(outputFormats)
                 .withCrossReference(crossReference);
         addCrossReference(storyReporterBuilder, crossReference);
 
-        configuration = new SeleniumConfiguration()
-                .useWebDriverProvider(driverProvider)
-                .useSeleniumContext(seleniumContext)
-                .useFailureStrategy(new FailingUponPendingStep())
+        configuration = new SeleniumConfiguration().useWebDriverProvider(driverProvider)
+                .useSeleniumContext(seleniumContext).useFailureStrategy(new FailingUponPendingStep())
                 .useStepMonitor(createStepMonitor())
                 .useStoryLoader(new LoadFromClasspath(embeddableClass.getClassLoader()))
-                .useStoryReporterBuilder(
-                        storyReporterBuilder);
+                .useStoryReporterBuilder(storyReporterBuilder);
         return configuration;
     }
 
@@ -111,19 +103,18 @@ public class EtsyDotComStories extends JUnitStories {
     }
 
     @Override
-    public void runStoriesAsPaths(Embedder embedder, List<String> storyPaths) {
+    public void run() {
 
-        if (System.getProperty("JBEHAVE_LISTENER") != null) {
+        Embedder embedder = configuredEmbedder();
+        if (System.getProperty("WEB_QUEUE") != null) {
             List<Future<Throwable>> futures = new ArrayList<Future<Throwable>>();
             BatchFailures batchFailures = new BatchFailures();
-            EmbedderControls embedderControls = new EmbedderControls();
-            String absPath = codeLocationFromClass(EtsyDotComStories.class).getPath();
-            JBehaveListener listener = null;
+            String path = codeLocationFromClass(EtsyDotComStories.class).getPath();
+            WebQueue queue = null;
             try {
-                File file = new File(new File(absPath).getParentFile().getParentFile(), "src/main/storynavigator");
-                listener = new JBehaveListener(embedderControls, configuration, steps,
-                        batchFailures, futures, embedder, file);
-                listener.start();
+                File navigatorDir = new File(new File(path).getParentFile().getParentFile(), "src/main/storynavigator");
+                queue = new WebQueue(embedder, batchFailures, futures, navigatorDir);
+                queue.start();
             } catch (Throwable e) {
                 e.printStackTrace();
             }
@@ -132,8 +123,7 @@ public class EtsyDotComStories extends JUnitStories {
             } catch (InterruptedException e) {
             }
         } else {
-            super.runStoriesAsPaths(embedder, storyPaths);
-
+            embedder.runStoriesAsPaths(storyPaths());
         }
 
     }
@@ -141,22 +131,22 @@ public class EtsyDotComStories extends JUnitStories {
     @Override
     public List<CandidateSteps> candidateSteps() {
         // Before And After Steps
-        steps.addAll(new InstanceStepsFactory(configuration,
-                new PerStoryWebDriverSteps(driverProvider),
-                new PerStoriesContextView(contextView),
-                new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()))
-                .createCandidateSteps());
+        steps.addAll(new InstanceStepsFactory(configuration, new PerStoryWebDriverSteps(driverProvider),
+                new PerStoriesContextView(contextView), new WebDriverScreenshotOnFailure(driverProvider, configuration
+                        .storyReporterBuilder())).createCandidateSteps());
         // Groovy Steps
         final DefaultClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(
-                new ThreadCaching().wrap(new CompositeInjection(new ConstructorInjection(), new SetterInjection().withInjectionOptional())));
+                new ThreadCaching().wrap(new CompositeInjection(new ConstructorInjection(), new SetterInjection()
+                        .withInjectionOptional())));
         container.change(Characteristics.USE_NAMES);
         container.addComponent(WebDriverProvider.class, driverProvider);
         // This loads all the Groovy classes in the 'pages' package
-        container.visit(new ClassName("pages.Home"), ".*\\.class", true, new DefaultClassLoadingPicoContainer.ClassVisitor() {
-            public void classFound(Class clazz) {
-                container.addComponent(clazz);
-            }
-        });
+        container.visit(new ClassName("pages.Home"), ".*\\.class", true,
+                new DefaultClassLoadingPicoContainer.ClassVisitor() {
+                    public void classFound(Class clazz) {
+                        container.addComponent(clazz);
+                    }
+                });
 
         ClassLoadingPicoContainer steps1 = container.makeChildContainer("steps");
         steps1.addComponent(new ClassName("housekeeping.EmptyCartIfNotAlready"));
@@ -168,12 +158,11 @@ public class EtsyDotComStories extends JUnitStories {
 
     @Override
     protected List<String> storyPaths() {
-        if (System.getProperty("JBEHAVE_LISTENER") != null) {
+        if (System.getProperty("WEB_QUEUE") != null) {
             return new ArrayList<String>();
         }
-        return new StoryFinder()
-                .findPaths(codeLocationFromClass(this.getClass()).getFile(),
-                        asList("**/stories/**/"+storyFilter()+".story"), null);
+        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/stories/**/"
+                + storyFilter() + ".story"), null);
     }
 
     private String storyFilter() {

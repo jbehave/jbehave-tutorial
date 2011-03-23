@@ -38,7 +38,7 @@
     </dependency>
     <dependency>
       <groupId>org.jbehave.web</groupId>
-      <artifactId>jbehave-web-listener</artifactId>
+      <artifactId>jbehave-web-queue</artifactId>
       <version>${jbehave.web.version}</version>
     </dependency>
     <dependency>
