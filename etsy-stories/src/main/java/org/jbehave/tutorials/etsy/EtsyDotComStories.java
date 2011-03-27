@@ -1,14 +1,11 @@
 package org.jbehave.tutorials.etsy;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Future;
 
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.embedder.Embedder;
-import org.jbehave.core.failures.BatchFailures;
 import org.jbehave.core.failures.FailingUponPendingStep;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.LoadFromClasspath;
@@ -21,12 +18,9 @@ import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.StepMonitor;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
-import org.jbehave.web.queue.WebQueue;
 import org.jbehave.web.selenium.ContextView;
 import org.jbehave.web.selenium.LocalFrameContextView;
 import org.jbehave.web.selenium.PerStoryWebDriverSteps;
-import org.jbehave.web.selenium.SauceContextOutput;
-import org.jbehave.web.selenium.SauceWebDriverProvider;
 import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.SeleniumContext;
 import org.jbehave.web.selenium.SeleniumContextOutput;
@@ -60,19 +54,10 @@ public class EtsyDotComStories extends JUnitStories {
     private List<CandidateSteps> steps = new ArrayList<CandidateSteps>();
 
     public EtsyDotComStories() {
-        if (System.getProperty("SAUCE_USERNAME") != null) {
-            driverProvider = new SauceWebDriverProvider();
-            outputFormats = new Format[] { WEB_DRIVER_HTML };
-            crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider));
-            contextView = new ContextView.NULL();
-        } else {
-            outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
-            driverProvider = new TypeWebDriverProvider();
-            contextView = new LocalFrameContextView().sized(640, 120);
-        }
-
+        outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
+        driverProvider = new TypeWebDriverProvider();
+        contextView = new LocalFrameContextView().sized(640, 120);
         crossReference.excludeStoriesWithoutExecutedScenarios(true);
-
     }
 
     @Override
@@ -105,25 +90,7 @@ public class EtsyDotComStories extends JUnitStories {
     public void run() {
 
         Embedder embedder = configuredEmbedder();
-        if (System.getProperty("WEB_QUEUE") != null) {
-            List<Future<Embedder.ThrowableStory>> futures = new ArrayList<Future<Embedder.ThrowableStory>>();
-            BatchFailures batchFailures = new BatchFailures();
-            String path = codeLocationFromClass(EtsyDotComStories.class).getPath();
-            WebQueue queue = null;
-            try {
-                File navigatorDir = new File(new File(path).getParentFile().getParentFile(), "src/main/storynavigator");
-                queue = new WebQueue(embedder, batchFailures, futures, navigatorDir);
-                queue.start();
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-            try {
-                Thread.sleep(Long.MAX_VALUE);
-            } catch (InterruptedException e) {
-            }
-        } else {
-            embedder.runStoriesAsPaths(storyPaths());
-        }
+        embedder.runStoriesAsPaths(storyPaths());
 
     }
 
@@ -157,9 +124,6 @@ public class EtsyDotComStories extends JUnitStories {
 
     @Override
     protected List<String> storyPaths() {
-        if (System.getProperty("WEB_QUEUE") != null) {
-            return new ArrayList<String>();
-        }
         return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/stories/**/"
                 + storyFilter() + ".story"), null);
     }
