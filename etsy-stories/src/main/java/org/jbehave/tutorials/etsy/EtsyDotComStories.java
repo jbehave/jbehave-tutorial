@@ -8,7 +8,6 @@ import java.util.concurrent.Future;
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.embedder.Embedder;
-import org.jbehave.core.embedder.EmbedderControls;
 import org.jbehave.core.failures.BatchFailures;
 import org.jbehave.core.failures.FailingUponPendingStep;
 import org.jbehave.core.io.CodeLocations;
@@ -107,7 +106,7 @@ public class EtsyDotComStories extends JUnitStories {
 
         Embedder embedder = configuredEmbedder();
         if (System.getProperty("WEB_QUEUE") != null) {
-            List<Future<Throwable>> futures = new ArrayList<Future<Throwable>>();
+            List<Future<Embedder.ThrowableStory>> futures = new ArrayList<Future<Embedder.ThrowableStory>>();
             BatchFailures batchFailures = new BatchFailures();
             String path = codeLocationFromClass(EtsyDotComStories.class).getPath();
             WebQueue queue = null;
