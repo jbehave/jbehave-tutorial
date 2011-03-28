@@ -1,17 +1,17 @@
 package org.jbehave.tutorials.etsy;
 
+import org.jbehave.core.embedder.Embedder;
+import org.jbehave.core.failures.BatchFailures;
+import org.jbehave.web.queue.WebQueue;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 
-import org.jbehave.core.embedder.Embedder;
-import org.jbehave.core.failures.BatchFailures;
-import org.jbehave.web.queue.WebQueue;
-
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 
-public class WebQueueEtsyStories extends EtsyDotComStories {
+public class WebQueueEtsyStories extends SauceLabsEtsyDotComStories {
 
     public WebQueueEtsyStories() {
     }
@@ -22,7 +22,7 @@ public class WebQueueEtsyStories extends EtsyDotComStories {
         Embedder embedder = configuredEmbedder();
         List<Future<Embedder.ThrowableStory>> futures = new ArrayList<Future<Embedder.ThrowableStory>>();
         BatchFailures batchFailures = new BatchFailures();
-        String path = codeLocationFromClass(WebQueueEtsyStories.class).getPath();
+        String path = codeLocationFromClass(SauceLabsEtsyDotComStories.class).getPath();
         WebQueue queue = null;
         try {
             File navigatorDir = new File(new File(path).getParentFile().getParentFile(), "src/main/storynavigator");

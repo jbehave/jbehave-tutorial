@@ -49,15 +49,32 @@ public class EtsyDotComStories extends JUnitStories {
     private ContextView contextView;
     private SeleniumContext seleniumContext = new SeleniumContext();
     private Format[] outputFormats;
-    private final CrossReference crossReference = new CrossReference().withJsonOnly()
-            .writeCrossReferenceAfterEachStory();
+    private final CrossReference crossReference = new CrossReference()
+            .withJsonOnly()
+            .writeCrossReferenceAfterEachStory()
+            .excludeStoriesWithoutExecutedScenarios(true);
     private List<CandidateSteps> steps = new ArrayList<CandidateSteps>();
 
     public EtsyDotComStories() {
-        outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
-        driverProvider = new TypeWebDriverProvider();
-        contextView = new LocalFrameContextView().sized(640, 120);
-        crossReference.excludeStoriesWithoutExecutedScenarios(true);
+        outputFormats = createOutputFormats();
+        driverProvider = createWebDriverProvider();
+        contextView = createContextView();
+        decorateCrossReference(crossReference);
+    }
+
+    protected void decorateCrossReference(CrossReference crossReference) {
+    }
+
+    protected ContextView createContextView() {
+        return new LocalFrameContextView().sized(640, 120);
+    }
+
+    protected WebDriverProvider createWebDriverProvider() {
+        return new TypeWebDriverProvider();
+    }
+
+    protected Format[] createOutputFormats() {
+        return new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
     }
 
     @Override
