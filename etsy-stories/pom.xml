@@ -296,17 +296,6 @@
         <threads>5</threads>
       </properties>
     </profile>
-    <profile>
-      <id>web-queue</id>
-      <activation>
-        <property>
-          <name>WEB_QUEUE</name>
-        </property>
-      </activation>
-      <properties>
-        <stories>**/WebQueueEtsyStories.java</stories>
-      </properties>
-    </profile>
   </profiles>
 
 </project>
