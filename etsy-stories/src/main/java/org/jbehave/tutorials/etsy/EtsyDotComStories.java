@@ -73,24 +73,21 @@ public class EtsyDotComStories extends JUnitStories {
 
         crossReference.excludingStoriesWithNoExecutedScenarios(true);
 
-    }
-
-    @Override
-    public Configuration configuration() {
-        Class<?> embeddableClass = this.getClass();
-
         StoryReporterBuilder storyReporterBuilder = new StoryReporterBuilder()
-                .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass)).withFailureTrace(true)
+                .withCodeLocation(CodeLocations.codeLocationFromClass(EtsyDotComStories.class)).withFailureTrace(true)
                 .withFailureTraceCompression(true).withDefaultFormats().withFormats(outputFormats)
                 .withCrossReference(crossReference);
+
         addCrossReference(storyReporterBuilder, crossReference);
 
         configuration = new SeleniumConfiguration().useWebDriverProvider(driverProvider)
                 .useSeleniumContext(seleniumContext).useFailureStrategy(new FailingUponPendingStep())
                 .useStepMonitor(createStepMonitor())
-                .useStoryLoader(new LoadFromClasspath(embeddableClass.getClassLoader()))
+                .useStoryLoader(new LoadFromClasspath(EtsyDotComStories.class.getClassLoader()))
                 .useStoryReporterBuilder(storyReporterBuilder);
-        return configuration;
+
+        useConfiguration(configuration);
+
     }
 
     protected StepMonitor createStepMonitor() {
