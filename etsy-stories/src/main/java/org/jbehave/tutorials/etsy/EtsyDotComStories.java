@@ -142,7 +142,7 @@ public class EtsyDotComStories extends JUnitStories {
             String path = codeLocationFromClass(EtsyDotComStories.class).getPath();
             WebQueue queue = null;
             try {
-                File navigatorDir = new File(new File(path).getParentFile().getParentFile(), "src/main/storynavigator");
+                File navigatorDir = new File(new File(path).getParentFile().getParentFile(), "target/jbehave/view");
                 WebQueueConfiguration webConfiguration = new WebQueueConfiguration();
                 webConfiguration.useNavigatorDirectory(navigatorDir);
                 queue = new WebQueue(embedder, batchFailures, futures, webConfiguration);
