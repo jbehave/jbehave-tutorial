@@ -22,6 +22,7 @@ import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.StepMonitor;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.queue.WebQueue;
+import org.jbehave.web.queue.WebQueueConfiguration;
 import org.jbehave.web.selenium.ContextView;
 import org.jbehave.web.selenium.LocalFrameContextView;
 import org.jbehave.web.selenium.PerStoryWebDriverSteps;
@@ -108,7 +109,7 @@ public class EtsyDotComStories extends JUnitStories {
         // This loads all the Groovy classes in the 'pages' package
         container.visit(new ClassName("pages.Home"), ".*\\.class", true,
                 new DefaultClassLoadingPicoContainer.ClassVisitor() {
-                    public void classFound(Class clazz) {
+                    public void classFound(@SuppressWarnings("rawtypes") Class clazz) {
                         container.addComponent(clazz);
                     }
                 });
@@ -142,7 +143,9 @@ public class EtsyDotComStories extends JUnitStories {
             WebQueue queue = null;
             try {
                 File navigatorDir = new File(new File(path).getParentFile().getParentFile(), "src/main/storynavigator");
-                queue = new WebQueue(embedder, batchFailures, futures, navigatorDir);
+                WebQueueConfiguration webConfiguration = new WebQueueConfiguration();
+                webConfiguration.useNavigatorDirectory(navigatorDir);
+                queue = new WebQueue(embedder, batchFailures, futures, webConfiguration);
                 queue.start();
             } catch (Throwable e) {
                 e.printStackTrace();
