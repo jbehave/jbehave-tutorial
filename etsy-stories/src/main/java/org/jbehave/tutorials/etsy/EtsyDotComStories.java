@@ -145,6 +145,7 @@ public class EtsyDotComStories extends JUnitStories {
                 File navigatorDir = new File(new File(path).getParentFile().getParentFile(), "src/main/storynavigator");
                 WebQueueConfiguration webConfiguration = new WebQueueConfiguration();
                 webConfiguration.useNavigatorDirectory(navigatorDir);
+                webConfiguration.usePort(8090);
                 queue = new WebQueue(embedder, batchFailures, futures, webConfiguration);
                 queue.start();
             } catch (Throwable e) {
