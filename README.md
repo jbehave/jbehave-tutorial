@@ -28,7 +28,7 @@ This will run tests in parallel in SauceLabs' stack:
 
 ## Viewing the results
 
-In a directory etsy-stories/target/view/navigator.html
+In a directory etsy-stories/target/view, a page named 'navigator.html' has been generated.  If you open that in Firefox, Safari or Internet Explorer (but not Chrome), you can see the three stories that have run and their completion status.
 
 ## Related
 
