@@ -14,7 +14,7 @@ class SearchResults extends BasePage{
     for (int i = 0; i < elems.size(); i++) {
       def elem = elems.get(i)
       def title = elem.getAttribute("title")
-      if (title.contains(thing)) {
+      if (title.toLowerCase().contains(thing.toLowerCase())) {
         elem.click()
         def ix = getCurrentUrl().indexOf("/listing/") + 9
         def id = getCurrentUrl().substring(ix, ix + 8)
