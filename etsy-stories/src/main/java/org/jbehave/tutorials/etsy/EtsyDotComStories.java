@@ -145,7 +145,12 @@ public class EtsyDotComStories extends JUnitStories {
                 File navigatorDir = new File(new File(path).getParentFile().getParentFile(), "target/jbehave/view");
                 WebQueueConfiguration webConfiguration = new WebQueueConfiguration();
                 webConfiguration.useNavigatorDirectory(navigatorDir);
-                webConfiguration.usePort(8090);
+                String port = System.getProperty("jetty.port");
+                if (port == null) {
+                    webConfiguration.usePort(8090);
+                } else {
+                    webConfiguration.usePort(Integer.parseInt(port));
+                }
                 queue = new WebQueue(embedder, batchFailures, futures, webConfiguration);
                 queue.start();
             } catch (Throwable e) {
