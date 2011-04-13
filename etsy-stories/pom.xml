@@ -97,36 +97,13 @@
         <filtering>false</filtering>
       </resource>
       <resource>
-        <directory>${basedir}/src/main/resources/stories</directory>
+        <directory>${basedir}/src/main/stories</directory>
         <filtering>false</filtering>
       </resource>
       <resource>
         <directory>${basedir}/src/main/java</directory>
         <filtering>false</filtering>
-        <!--<excludes> -->
-        <!--<exclude>**/*.java</exclude> -->
-        <!--</excludes> -->
       </resource>
-      <resource>
-        <directory>${basedir}/src/main/resources</directory>
-        <filtering>true</filtering>
-        <excludes>
-          <exclude>**/*.gif</exclude>
-          <exclude>**/*.jpg</exclude>
-        </excludes>
-      </resource>
-      <resource>
-        <directory>${basedir}/src/main/resources</directory>
-        <filtering>false</filtering>
-        <includes>
-          <include>**/*.gif</include>
-          <include>**/*.jpg</include>
-        </includes>
-      </resource>
-      <!--<resource> -->
-      <!--<directory>${basedir}/src/main/webapp</directory> -->
-      <!--<filtering>false</filtering> -->
-      <!--</resource> -->
       <resource>
         <directory>${project.build.directory}/resources</directory>
         <filtering>false</filtering>
@@ -142,17 +119,6 @@
         <directory>${basedir}/src/main/webapp</directory>
         <filtering>false</filtering>
       </testResource>
-      <!--<testResource> -->
-      <!--<directory>${basedir}/src/test/java</directory> -->
-      <!--<filtering>false</filtering> -->
-      <!--<excludes> -->
-      <!--<exclude>**/*.java</exclude> -->
-      <!--</excludes> -->
-      <!--</testResource> -->
-      <!--<testResource> -->
-      <!--<directory>${basedir}/src/test/resources</directory> -->
-      <!--<filtering>true</filtering> -->
-      <!--</testResource> -->
     </testResources>
     <plugins>
       <plugin>

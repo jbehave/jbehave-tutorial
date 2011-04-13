@@ -171,7 +171,7 @@ public class EtsyDotComStories extends JUnitStories {
         if (System.getProperty("WEB_QUEUE") != null) {
             return new ArrayList<String>();
         }
-        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/stories/**/"
+        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/"
                 + storyFilter() + ".story"), null);
     }
 
