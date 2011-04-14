@@ -26,6 +26,7 @@ import org.jbehave.web.queue.WebQueueConfiguration;
 import org.jbehave.web.selenium.ContextView;
 import org.jbehave.web.selenium.LocalFrameContextView;
 import org.jbehave.web.selenium.PerStoryWebDriverSteps;
+import org.jbehave.web.selenium.RemoteWebDriverProvider;
 import org.jbehave.web.selenium.SauceContextOutput;
 import org.jbehave.web.selenium.SauceWebDriverProvider;
 import org.jbehave.web.selenium.SeleniumConfiguration;
@@ -61,8 +62,7 @@ public class EtsyDotComStories extends JUnitStories {
         public String getMetaFilter() {
             return metaFilter;
         }
-    }.withJsonOnly()
-            .withOutputAfterEachStory(true);
+    }.withJsonOnly().withOutputAfterEachStory(true);
 
     public EtsyDotComStories() {
 
@@ -70,6 +70,10 @@ public class EtsyDotComStories extends JUnitStories {
             driverProvider = new SauceWebDriverProvider();
             outputFormats = new Format[] { WEB_DRIVER_HTML };
             crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider));
+            contextView = new ContextView.NULL();
+        } else if (System.getProperty("REMOTE") != null) {
+            driverProvider = new RemoteWebDriverProvider();
+            outputFormats = new Format[] { WEB_DRIVER_HTML };
             contextView = new ContextView.NULL();
         } else {
             outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
@@ -80,18 +84,14 @@ public class EtsyDotComStories extends JUnitStories {
         crossReference.excludingStoriesWithNoExecutedScenarios(true);
 
         StoryReporterBuilder storyReporterBuilder = new StoryReporterBuilder()
-                .withCodeLocation(CodeLocations.codeLocationFromClass(EtsyDotComStories.class))
-                .withFailureTrace(true)
-                .withFailureTraceCompression(true)
-                .withDefaultFormats()
-                .withFormats(outputFormats)
+                .withCodeLocation(CodeLocations.codeLocationFromClass(EtsyDotComStories.class)).withFailureTrace(true)
+                .withFailureTraceCompression(true).withDefaultFormats().withFormats(outputFormats)
                 .withCrossReference(crossReference);
 
         addCrossReference(storyReporterBuilder, crossReference);
 
         configuration = new SeleniumConfiguration().useWebDriverProvider(driverProvider)
-                .useSeleniumContext(seleniumContext)
-                .useFailureStrategy(new FailingUponPendingStep())
+                .useSeleniumContext(seleniumContext).useFailureStrategy(new FailingUponPendingStep())
                 .useStepMonitor(createStepMonitor())
                 .useStoryLoader(new LoadFromClasspath(EtsyDotComStories.class.getClassLoader()))
                 .useStoryReporterBuilder(storyReporterBuilder);
@@ -137,7 +137,8 @@ public class EtsyDotComStories extends JUnitStories {
     @Override
     public void run() {
 
-        // only available post instantiation because of the way the jbehave maven plugin
+        // only available post instantiation because of the way the jbehave
+        // maven plugin
         // decorates an instance with configuration
         metaFilter = super.configuredEmbedder().metaFilters().toString();
 
