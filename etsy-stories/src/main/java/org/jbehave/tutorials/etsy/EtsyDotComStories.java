@@ -56,10 +56,13 @@ public class EtsyDotComStories extends JUnitStories {
     private ContextView contextView;
     private SeleniumContext seleniumContext = new SeleniumContext();
     private Format[] outputFormats;
-    private final CrossReference crossReference = new CrossReference()
-            .withJsonOnly()
+    private String metaFilter;
+    private final CrossReference crossReference = new CrossReference() {
+        public String getMetaFilter() {
+            return metaFilter;
+        }
+    }.withJsonOnly()
             .withOutputAfterEachStory(true);
-
 
     public EtsyDotComStories() {
 
@@ -121,7 +124,6 @@ public class EtsyDotComStories extends JUnitStories {
         steps.addAll(new PicoStepsFactory(configuration, steps1).createCandidateSteps());
         addSteps(steps);
 
-
     }
 
     protected StepMonitor createStepMonitor() {
@@ -134,6 +136,10 @@ public class EtsyDotComStories extends JUnitStories {
 
     @Override
     public void run() {
+
+        // only available post instantiation because of the way the jbehave maven plugin
+        // decorates an instance with configuration
+        metaFilter = super.configuredEmbedder().metaFilters().toString();
 
         Embedder embedder = configuredEmbedder();
         if (System.getProperty("WEB_QUEUE") != null) {
