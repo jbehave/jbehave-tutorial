@@ -8,6 +8,7 @@ import java.util.concurrent.Future;
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.embedder.Embedder;
+import org.jbehave.core.embedder.StoryControls;
 import org.jbehave.core.failures.BatchFailures;
 import org.jbehave.core.failures.FailingUponPendingStep;
 import org.jbehave.core.io.CodeLocations;
@@ -68,12 +69,12 @@ public class EtsyDotComStories extends JUnitStories {
 
         if (System.getProperty("SAUCE_USERNAME") != null) {
             driverProvider = new SauceWebDriverProvider();
-            outputFormats = new Format[] { WEB_DRIVER_HTML };
+            outputFormats = new Format[] { CONSOLE, WEB_DRIVER_HTML };
             crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider));
             contextView = new ContextView.NULL();
         } else if (System.getProperty("REMOTE") != null) {
             driverProvider = new RemoteWebDriverProvider();
-            outputFormats = new Format[] { WEB_DRIVER_HTML };
+            outputFormats = new Format[] { CONSOLE, WEB_DRIVER_HTML };
             contextView = new ContextView.NULL();
         } else {
             outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
@@ -92,6 +93,7 @@ public class EtsyDotComStories extends JUnitStories {
 
         configuration = new SeleniumConfiguration().useWebDriverProvider(driverProvider)
                 .useSeleniumContext(seleniumContext).useFailureStrategy(new FailingUponPendingStep())
+                .useStoryControls(new StoryControls().doResetStateBeforeScenario(false))
                 .useStepMonitor(createStepMonitor())
                 .useStoryLoader(new LoadFromClasspath(EtsyDotComStories.class.getClassLoader()))
                 .useStoryReporterBuilder(storyReporterBuilder);
@@ -123,6 +125,8 @@ public class EtsyDotComStories extends JUnitStories {
 
         steps.addAll(new PicoStepsFactory(configuration, steps1).createCandidateSteps());
         addSteps(steps);
+        
+        //configuredEmbedder().embedderControls().doIgnoreFailureInStories(false);
 
     }
 
