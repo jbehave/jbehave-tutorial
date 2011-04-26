@@ -2,11 +2,12 @@ package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
 import org.openqa.selenium.By
+import org.jbehave.web.selenium.LazyWebDriver
 
 class SearchResults extends BasePage{
 
-  def SearchResults(WebDriverProvider webDriverProvider) {
-    super(webDriverProvider)
+  def SearchResults(LazyWebDriver lazyWebDriver) {
+    super(lazyWebDriver)
   }
 
   def buyFirst(String thing) {

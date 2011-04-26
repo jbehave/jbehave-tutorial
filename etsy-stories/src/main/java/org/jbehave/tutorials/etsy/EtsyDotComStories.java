@@ -25,6 +25,7 @@ import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.queue.WebQueue;
 import org.jbehave.web.queue.WebQueueConfiguration;
 import org.jbehave.web.selenium.ContextView;
+import org.jbehave.web.selenium.LazyWebDriver;
 import org.jbehave.web.selenium.LocalFrameContextView;
 import org.jbehave.web.selenium.PerStoryWebDriverSteps;
 import org.jbehave.web.selenium.RemoteWebDriverProvider;
@@ -110,16 +111,17 @@ public class EtsyDotComStories extends JUnitStories {
                 new PerStoriesContextView(contextView), new WebDriverScreenshotOnFailure(driverProvider, configuration
                         .storyReporterBuilder())).createCandidateSteps());
 
-        final MutablePicoContainer stateMaintained = new PicoBuilder().withBehaviors(new ThreadCaching()).build();
-        //stateMaintained.addComponent(...);
+        final MutablePicoContainer multiThreaded = new PicoBuilder().withBehaviors(new ThreadCaching()).build();
+        multiThreaded.addComponent(WebDriverProvider.class, driverProvider);
+        //multiThreaded.addComponent(...);
 
         // Groovy Steps - all stateless (to allow multi-threading)
         final DefaultClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(
                 this.getClass().getClassLoader(),
                 new Caching().wrap(new CompositeInjection(new ConstructorInjection(), new SetterInjection()
-                        .withInjectionOptional())), stateMaintained);
+                        .withInjectionOptional())), multiThreaded);
         container.change(Characteristics.USE_NAMES);
-        container.addComponent(WebDriverProvider.class, driverProvider);
+        container.addComponent(LazyWebDriver.class);
         // This loads all the Groovy page objects - all stateless (to allow multi-threading)
         container.visit(new ClassName("pages.Home"), ".*\\.class", true,
                 new DefaultClassLoadingPicoContainer.ClassVisitor() {

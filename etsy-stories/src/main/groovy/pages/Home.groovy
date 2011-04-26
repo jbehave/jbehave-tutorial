@@ -2,11 +2,12 @@ package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
 import org.openqa.selenium.By
+import org.jbehave.web.selenium.LazyWebDriver
 
 class Home extends BasePage{
 
-  def Home(WebDriverProvider webDriverProvider) {
-    super(webDriverProvider)
+  def Home(LazyWebDriver lazyWebDriver) {
+    super(lazyWebDriver)
   }
 
   def go() {

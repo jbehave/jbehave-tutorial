@@ -2,11 +2,12 @@ package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
 import org.openqa.selenium.By
+import org.jbehave.web.selenium.LazyWebDriver
 
-class CartContents extends BasePage{
+class CartContents extends BasePage {
 
-  def CartContents(WebDriverProvider webDriverProvider) {
-    super(webDriverProvider)
+  def CartContents(LazyWebDriver lazyWebDriver) {
+    super(lazyWebDriver)
   }
 
   def hasItem(String item) {

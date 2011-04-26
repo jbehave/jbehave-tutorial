@@ -2,10 +2,12 @@ package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
 import org.openqa.selenium.By
+import org.jbehave.web.selenium.LazyWebDriver
 
 class Treasury extends BasePage{
-  def Treasury(WebDriverProvider webDriverProvider){
-    super(webDriverProvider)
+
+  def Treasury(LazyWebDriver lazyWebDriver) {
+    super(lazyWebDriver)
   }
 
   def chooseFirstGallery() {

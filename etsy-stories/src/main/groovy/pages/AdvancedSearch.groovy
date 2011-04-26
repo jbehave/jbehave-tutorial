@@ -3,11 +3,12 @@ package pages
 import org.jbehave.web.selenium.WebDriverProvider
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
+import org.jbehave.web.selenium.LazyWebDriver
 
 class AdvancedSearch extends BasePage{
 
-  def AdvancedSearch(WebDriverProvider webDriverProvider) {
-    super(webDriverProvider)
+  def AdvancedSearch(LazyWebDriver lazyWebDriver) {
+    super(lazyWebDriver)
   }
 
   def go() {
