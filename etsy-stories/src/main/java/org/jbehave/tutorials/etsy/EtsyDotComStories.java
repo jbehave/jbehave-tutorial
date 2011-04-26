@@ -38,6 +38,9 @@ import org.jbehave.web.selenium.TypeWebDriverProvider;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
 import org.picocontainer.Characteristics;
+import org.picocontainer.MutablePicoContainer;
+import org.picocontainer.PicoBuilder;
+import org.picocontainer.behaviors.Caching;
 import org.picocontainer.behaviors.ThreadCaching;
 import org.picocontainer.classname.ClassLoadingPicoContainer;
 import org.picocontainer.classname.ClassName;
@@ -45,6 +48,7 @@ import org.picocontainer.classname.DefaultClassLoadingPicoContainer;
 import org.picocontainer.injectors.CompositeInjection;
 import org.picocontainer.injectors.ConstructorInjection;
 import org.picocontainer.injectors.SetterInjection;
+import org.picocontainer.lifecycle.NullLifecycleStrategy;
 
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
@@ -105,13 +109,18 @@ public class EtsyDotComStories extends JUnitStories {
         steps.addAll(new InstanceStepsFactory(configuration, new PerStoryWebDriverSteps(driverProvider),
                 new PerStoriesContextView(contextView), new WebDriverScreenshotOnFailure(driverProvider, configuration
                         .storyReporterBuilder())).createCandidateSteps());
-        // Groovy Steps
+
+        final MutablePicoContainer stateMaintained = new PicoBuilder().withBehaviors(new ThreadCaching()).build();
+        //stateMaintained.addComponent(...);
+
+        // Groovy Steps - all stateless (to allow multi-threading)
         final DefaultClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(
-                new ThreadCaching().wrap(new CompositeInjection(new ConstructorInjection(), new SetterInjection()
-                        .withInjectionOptional())));
+                this.getClass().getClassLoader(),
+                new Caching().wrap(new CompositeInjection(new ConstructorInjection(), new SetterInjection()
+                        .withInjectionOptional())), stateMaintained);
         container.change(Characteristics.USE_NAMES);
         container.addComponent(WebDriverProvider.class, driverProvider);
-        // This loads all the Groovy classes in the 'pages' package
+        // This loads all the Groovy page objects - all stateless (to allow multi-threading)
         container.visit(new ClassName("pages.Home"), ".*\\.class", true,
                 new DefaultClassLoadingPicoContainer.ClassVisitor() {
                     public void classFound(@SuppressWarnings("rawtypes") Class clazz) {
