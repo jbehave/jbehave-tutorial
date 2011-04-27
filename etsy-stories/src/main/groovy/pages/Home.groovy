@@ -6,9 +6,10 @@ import org.jbehave.web.selenium.LazyWebDriver
 
 class Home extends BasePage{
 
-  def Home(LazyWebDriver lazyWebDriver) {
-    super(lazyWebDriver)
+  def Home(WebDriverProvider webDriverProvider) {
+    super(webDriverProvider)
   }
+
 
   def go() {
     get("http://www.etsy.com")

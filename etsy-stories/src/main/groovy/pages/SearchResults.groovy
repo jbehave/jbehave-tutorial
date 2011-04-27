@@ -6,9 +6,10 @@ import org.jbehave.web.selenium.LazyWebDriver
 
 class SearchResults extends BasePage{
 
-  def SearchResults(LazyWebDriver lazyWebDriver) {
-    super(lazyWebDriver)
+  def SearchResults(WebDriverProvider webDriverProvider) {
+    super(webDriverProvider)
   }
+
 
   def buyFirst(String thing) {
     List elems = getElems()

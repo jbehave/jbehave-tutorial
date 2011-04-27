@@ -121,7 +121,6 @@ public class EtsyDotComStories extends JUnitStories {
                 new Caching().wrap(new CompositeInjection(new ConstructorInjection(), new SetterInjection()
                         .withInjectionOptional())), multiThreaded);
         container.change(Characteristics.USE_NAMES);
-        container.addComponent(LazyWebDriver.class);
         // This loads all the Groovy page objects - all stateless (to allow multi-threading)
         container.visit(new ClassName("pages.Home"), ".*\\.class", true,
                 new DefaultClassLoadingPicoContainer.ClassVisitor() {

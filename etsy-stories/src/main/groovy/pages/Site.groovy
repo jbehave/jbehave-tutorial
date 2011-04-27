@@ -6,9 +6,10 @@ import org.jbehave.web.selenium.LazyWebDriver
 
 class Site extends BasePage{
 
-  def Site(LazyWebDriver lazyWebDriver) {
-    super(lazyWebDriver)
+  def Site(WebDriverProvider webDriverProvider) {
+    super(webDriverProvider)
   }
+
 
   def cartSize() {
       def cartSizeDivLocator = By.xpath("//div[@class='count']")

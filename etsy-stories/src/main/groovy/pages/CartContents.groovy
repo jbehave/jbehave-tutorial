@@ -6,9 +6,10 @@ import org.jbehave.web.selenium.LazyWebDriver
 
 class CartContents extends BasePage {
 
-  def CartContents(LazyWebDriver lazyWebDriver) {
-    super(lazyWebDriver)
+  def CartContents(WebDriverProvider webDriverProvider) {
+    super(webDriverProvider)
   }
+
 
   def hasItem(String item) {
     get("http://www.etsy.com/cartcheckout.php")

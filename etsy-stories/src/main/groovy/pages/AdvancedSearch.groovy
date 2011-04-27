@@ -7,8 +7,8 @@ import org.jbehave.web.selenium.LazyWebDriver
 
 class AdvancedSearch extends BasePage{
 
-  def AdvancedSearch(LazyWebDriver lazyWebDriver) {
-    super(lazyWebDriver)
+  def AdvancedSearch(WebDriverProvider webDriverProvider) {
+    super(webDriverProvider)
   }
 
   def go() {

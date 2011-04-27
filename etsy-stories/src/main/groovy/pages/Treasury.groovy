@@ -6,8 +6,8 @@ import org.jbehave.web.selenium.LazyWebDriver
 
 class Treasury extends BasePage{
 
-  def Treasury(LazyWebDriver lazyWebDriver) {
-    super(lazyWebDriver)
+  def Treasury(WebDriverProvider webDriverProvider) {
+    super(webDriverProvider)
   }
 
   def chooseFirstGallery() {

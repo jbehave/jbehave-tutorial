@@ -6,9 +6,10 @@ import org.jbehave.web.selenium.LazyWebDriver
 
 class Buy extends BasePage{
 
-  def Buy(LazyWebDriver lazyWebDriver) {
-    super(lazyWebDriver)
+  def Buy(WebDriverProvider webDriverProvider) {
+    super(webDriverProvider)
   }
+
 
   def selectTreasury() {
     findElement(By.id("treasury-panel-button")).click()

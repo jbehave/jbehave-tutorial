@@ -1,13 +1,13 @@
 package pages;
 
 import com.github.tanob.groobe.GrooBe
-import org.jbehave.web.selenium.LazyWebDriver
-import org.jbehave.web.selenium.LazyWebDriverPage
+import org.jbehave.web.selenium.WebDriverPage
+import org.jbehave.web.selenium.WebDriverProvider
 
-public class BasePage extends LazyWebDriverPage {
+public class BasePage extends WebDriverPage {
 
-  public BasePage(LazyWebDriver lazyWebDriver) {
-    super(lazyWebDriver)
+  public BasePage(WebDriverProvider webDriverProvider) {
+    super(webDriverProvider)
     GrooBe.activate()
   }
 }
