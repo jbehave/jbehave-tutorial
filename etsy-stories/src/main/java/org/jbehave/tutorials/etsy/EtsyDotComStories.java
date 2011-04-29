@@ -25,7 +25,6 @@ import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.queue.WebQueue;
 import org.jbehave.web.queue.WebQueueConfiguration;
 import org.jbehave.web.selenium.ContextView;
-import org.jbehave.web.selenium.LazyWebDriver;
 import org.jbehave.web.selenium.LocalFrameContextView;
 import org.jbehave.web.selenium.PerStoryWebDriverSteps;
 import org.jbehave.web.selenium.RemoteWebDriverProvider;
@@ -49,7 +48,6 @@ import org.picocontainer.classname.DefaultClassLoadingPicoContainer;
 import org.picocontainer.injectors.CompositeInjection;
 import org.picocontainer.injectors.ConstructorInjection;
 import org.picocontainer.injectors.SetterInjection;
-import org.picocontainer.lifecycle.NullLifecycleStrategy;
 
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
