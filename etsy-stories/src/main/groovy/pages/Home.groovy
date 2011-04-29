@@ -2,7 +2,6 @@ package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
 import org.openqa.selenium.By
-import org.jbehave.web.selenium.LazyWebDriver
 
 class Home extends BasePage{
 
