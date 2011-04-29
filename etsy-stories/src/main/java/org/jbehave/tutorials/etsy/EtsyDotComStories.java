@@ -124,13 +124,13 @@ public class EtsyDotComStories extends JUnitStories {
         ClassLoadingPicoContainer steps = container.makeChildContainer("steps");
         steps.addComponent(new ClassName("housekeeping.EmptyCartIfNotAlready"));
         steps.addComponent(new ClassName("EtsyDotComSteps"));
-        // Before And After Steps, not instantiated by PicoContainer
+        // Before And After Steps, not instantiated by PicoContainer, but in the same container
         steps.addComponent(new PerStoryWebDriverSteps(driverProvider));
         steps.addComponent(new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()));
         steps.addComponent(new PerStoriesContextView(contextView));
 
-        addSteps(new PicoStepsFactory(configuration, steps).createCandidateSteps());
-        
+        useStepsFactory(new PicoStepsFactory(configuration, steps));
+
         //configuredEmbedder().embedderControls().doIgnoreFailureInStories(false);
 
     }
