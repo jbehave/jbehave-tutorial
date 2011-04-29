@@ -103,8 +103,6 @@ public class EtsyDotComStories extends JUnitStories {
 
         useConfiguration(configuration);
 
-        List<CandidateSteps> steps = new ArrayList<CandidateSteps>();
-
         final MutablePicoContainer multiThreaded = new PicoBuilder().withBehaviors(new ThreadCaching()).build();
         multiThreaded.addComponent(WebDriverProvider.class, driverProvider);
         //multiThreaded.addComponent(...);
@@ -123,16 +121,15 @@ public class EtsyDotComStories extends JUnitStories {
                     }
                 });
 
-        ClassLoadingPicoContainer steps1 = container.makeChildContainer("steps");
-        steps1.addComponent(new ClassName("housekeeping.EmptyCartIfNotAlready"));
-        steps1.addComponent(new ClassName("EtsyDotComSteps"));
-        // Before And After Steps
-        steps1.addComponent(new PerStoryWebDriverSteps(driverProvider));
-        steps1.addComponent(new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()));
-        steps1.addComponent(new PerStoriesContextView(contextView));
+        ClassLoadingPicoContainer steps = container.makeChildContainer("steps");
+        steps.addComponent(new ClassName("housekeeping.EmptyCartIfNotAlready"));
+        steps.addComponent(new ClassName("EtsyDotComSteps"));
+        // Before And After Steps, not instantiated by PicoContainer
+        steps.addComponent(new PerStoryWebDriverSteps(driverProvider));
+        steps.addComponent(new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()));
+        steps.addComponent(new PerStoriesContextView(contextView));
 
-        steps.addAll(new PicoStepsFactory(configuration, steps1).createCandidateSteps());
-        addSteps(steps);
+        addSteps(new PicoStepsFactory(configuration, steps).createCandidateSteps());
         
         //configuredEmbedder().embedderControls().doIgnoreFailureInStories(false);
 
