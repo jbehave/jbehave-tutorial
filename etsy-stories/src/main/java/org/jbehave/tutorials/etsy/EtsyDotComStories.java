@@ -38,6 +38,7 @@ import org.jbehave.web.selenium.TypeWebDriverProvider;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
 import org.picocontainer.Characteristics;
+import org.picocontainer.ComponentFactory;
 import org.picocontainer.MutablePicoContainer;
 import org.picocontainer.PicoBuilder;
 import org.picocontainer.behaviors.Caching;
@@ -108,10 +109,10 @@ public class EtsyDotComStories extends JUnitStories {
         //multiThreaded.addComponent(...);
 
         // Groovy Steps - all stateless (to allow multi-threading)
+        ComponentFactory cf = new ThreadCaching().wrap(new CompositeInjection(new ConstructorInjection(),
+                new SetterInjection("set", "setMetaClass")));
         final DefaultClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(
-                this.getClass().getClassLoader(),
-                new Caching().wrap(new CompositeInjection(new ConstructorInjection(), new SetterInjection()
-                        .withInjectionOptional())), multiThreaded);
+                this.getClass().getClassLoader(), cf, multiThreaded);
         container.change(Characteristics.USE_NAMES);
         // This loads all the Groovy page objects - all stateless (to allow multi-threading)
         container.visit(new ClassName("pages.Home"), ".*\\.class", true,
