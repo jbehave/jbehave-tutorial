@@ -18,7 +18,8 @@ import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.CrossReference;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
-import org.jbehave.core.steps.CandidateSteps;
+import org.jbehave.core.steps.CompositeStepsFactory;
+import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.StepMonitor;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
@@ -125,12 +126,13 @@ public class EtsyDotComStories extends JUnitStories {
         ClassLoadingPicoContainer steps = container.makeChildContainer("steps");
         steps.addComponent(new ClassName("housekeeping.EmptyCartIfNotAlready"));
         steps.addComponent(new ClassName("EtsyDotComSteps"));
-        // Before And After Steps, not instantiated by PicoContainer, but in the same container
-        steps.addComponent(new PerStoryWebDriverSteps(driverProvider));
-        steps.addComponent(new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()));
-        steps.addComponent(new PerStoriesContextView(contextView));
+        InjectableStepsFactory picoStepsFactory = new PicoStepsFactory(configuration, steps);
 
-        useStepsFactory(new PicoStepsFactory(configuration, steps));
+        // Before And After Steps, not instantiated by PicoContainer
+        InjectableStepsFactory beforeAfterStepsFactory = new InstanceStepsFactory(configuration, new PerStoryWebDriverSteps(driverProvider), 
+                new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()), new PerStoriesContextView(contextView));
+
+        useStepsFactory(new CompositeStepsFactory(configuration, picoStepsFactory, beforeAfterStepsFactory));
 
         //configuredEmbedder().embedderControls().doIgnoreFailureInStories(false);
 
