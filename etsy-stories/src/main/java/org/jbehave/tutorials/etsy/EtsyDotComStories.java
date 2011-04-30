@@ -20,7 +20,6 @@ import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.CompositeStepsFactory;
 import org.jbehave.core.steps.InjectableStepsFactory;
-import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.StepMonitor;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.queue.WebQueue;
@@ -41,7 +40,6 @@ import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
 import org.picocontainer.Characteristics;
 import org.picocontainer.MutablePicoContainer;
 import org.picocontainer.PicoBuilder;
-import org.picocontainer.behaviors.Caching;
 import org.picocontainer.behaviors.ThreadCaching;
 import org.picocontainer.classname.ClassLoadingPicoContainer;
 import org.picocontainer.classname.ClassName;
@@ -111,7 +109,7 @@ public class EtsyDotComStories extends JUnitStories {
         // Groovy Steps - all stateless (to allow multi-threading)
         final DefaultClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(
                 this.getClass().getClassLoader(),
-                new Caching().wrap(new CompositeInjection(new ConstructorInjection(), new SetterInjection()
+                new ThreadCaching().wrap(new CompositeInjection(new ConstructorInjection(), new SetterInjection()
                         .withInjectionOptional())), multiThreaded);
         container.change(Characteristics.USE_NAMES);
         // This loads all the Groovy page objects - all stateless (to allow multi-threading)
@@ -125,13 +123,14 @@ public class EtsyDotComStories extends JUnitStories {
         ClassLoadingPicoContainer steps = container.makeChildContainer("steps");
         steps.addComponent(new ClassName("housekeeping.EmptyCartIfNotAlready"));
         steps.addComponent(new ClassName("EtsyDotComSteps"));
+        // Before And After Steps
+        steps.addComponent(new PerStoryWebDriverSteps(driverProvider));
+        steps.addComponent(new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()));
+        steps.addComponent(new PerStoriesContextView(contextView));
+
         InjectableStepsFactory picoStepsFactory = new PicoStepsFactory(configuration, steps);
 
-        // Before And After Steps, not instantiated by PicoContainer
-        InjectableStepsFactory beforeAfterStepsFactory = new InstanceStepsFactory(configuration, new PerStoryWebDriverSteps(driverProvider), 
-                new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()), new PerStoriesContextView(contextView));
-
-        useStepsFactory(new CompositeStepsFactory(configuration, picoStepsFactory, beforeAfterStepsFactory));
+        useStepsFactory(new CompositeStepsFactory(configuration, picoStepsFactory));
 
         //configuredEmbedder().embedderControls().doIgnoreFailureInStories(false);
 
