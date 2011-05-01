@@ -105,17 +105,16 @@ public class EtsyDotComStories extends JUnitStories {
 
         final MutablePicoContainer multiThreaded = new PicoBuilder().withBehaviors(new ThreadCaching()).build();
         multiThreaded.addComponent(WebDriverProvider.class, driverProvider);
-        //multiThreaded.addComponent(...);
+        // multiThreaded.addComponent(...);
 
         // Groovy Steps - all stateless (to allow multi-threading)
         ComponentFactory cf = new ThreadCaching().wrap(new CompositeInjection(new ConstructorInjection(),
                 new SetterInjection("set", "setMetaClass")));
-        final DefaultClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(
-                this.getClass().getClassLoader(),
-                new ThreadCaching().wrap(new CompositeInjection(new ConstructorInjection(), new SetterInjection()
-                        .withInjectionOptional())), multiThreaded);
+        final DefaultClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(this.getClass()
+                .getClassLoader(), cf, multiThreaded);
         container.change(Characteristics.USE_NAMES);
-        // This loads all the Groovy page objects - all stateless (to allow multi-threading)
+        // This loads all the Groovy page objects - all stateless (to allow
+        // multi-threading)
         container.visit(new ClassName("pages.Home"), ".*\\.class", true,
                 new DefaultClassLoadingPicoContainer.ClassVisitor() {
                     public void classFound(@SuppressWarnings("rawtypes") Class clazz) {
@@ -133,9 +132,9 @@ public class EtsyDotComStories extends JUnitStories {
 
         InjectableStepsFactory picoStepsFactory = new PicoStepsFactory(configuration, steps);
 
-        useStepsFactory(new CompositeStepsFactory(configuration, picoStepsFactory));
+        useStepsFactory(new CompositeStepsFactory(picoStepsFactory));
 
-        //configuredEmbedder().embedderControls().doIgnoreFailureInStories(false);
+        // configuredEmbedder().embedderControls().doIgnoreFailureInStories(false);
 
     }
 
