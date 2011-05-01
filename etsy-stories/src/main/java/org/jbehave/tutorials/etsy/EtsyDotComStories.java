@@ -41,6 +41,7 @@ import org.picocontainer.Characteristics;
 import org.picocontainer.ComponentFactory;
 import org.picocontainer.MutablePicoContainer;
 import org.picocontainer.PicoBuilder;
+import org.picocontainer.behaviors.Caching;
 import org.picocontainer.behaviors.ThreadCaching;
 import org.picocontainer.classname.ClassLoadingPicoContainer;
 import org.picocontainer.classname.ClassName;
@@ -108,7 +109,7 @@ public class EtsyDotComStories extends JUnitStories {
         // multiThreaded.addComponent(...);
 
         // Groovy Steps - all stateless (to allow multi-threading)
-        ComponentFactory cf = new ThreadCaching().wrap(new CompositeInjection(new ConstructorInjection(),
+        ComponentFactory cf = new Caching().wrap(new CompositeInjection(new ConstructorInjection(),
                 new SetterInjection("set", "setMetaClass")));
         final DefaultClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(this.getClass()
                 .getClassLoader(), cf, multiThreaded);
