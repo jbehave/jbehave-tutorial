@@ -104,29 +104,31 @@ public class EtsyDotComStories extends JUnitStories {
 
         useConfiguration(configuration);
 
-        final MutablePicoContainer multiThreaded = new PicoBuilder().withBehaviors(new ThreadCaching()).build();
-        multiThreaded.addComponent(WebDriverProvider.class, driverProvider);
+        final MutablePicoContainer primordial = new PicoBuilder().withBehaviors(new ThreadCaching()).build();
+        primordial.addComponent(WebDriverProvider.class, driverProvider);
         // multiThreaded.addComponent(...);
 
-        // Groovy Steps - all stateless (to allow multi-threading)
-        ComponentFactory cf = new ThreadCaching().wrap(new CompositeInjection(new ConstructorInjection(),
+        // Groovy Steps - can be stateful per story.
+        ComponentFactory cf = new ThreadCaching().wrap(
+            new CompositeInjection(
+                new ConstructorInjection(),
                 new SetterInjection("set", "setMetaClass")));
-        final DefaultClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(this.getClass()
-                .getClassLoader(), cf, multiThreaded);
-        container.change(Characteristics.USE_NAMES);
-        // This loads all the Groovy page objects - all stateless (to allow
-        // multi-threading)
-        container.visit(new ClassName("pages.Home"), ".*\\.class", true,
+        ClassLoader currentClassLoader = this.getClass()
+                .getClassLoader();
+        final DefaultClassLoadingPicoContainer pageObjects = new DefaultClassLoadingPicoContainer(currentClassLoader, cf, primordial);
+        pageObjects.change(Characteristics.USE_NAMES);
+        // This loads all the Groovy page objects - can be stateful
+        pageObjects.visit(new ClassName("pages.Home"), ".*\\.class", true,
                 new DefaultClassLoadingPicoContainer.ClassVisitor() {
                     public void classFound(@SuppressWarnings("rawtypes") Class clazz) {
-                        container.addComponent(clazz);
+                        pageObjects.addComponent(clazz);
                     }
                 });
 
-        ClassLoadingPicoContainer steps = container.makeChildContainer("steps");
+        ClassLoadingPicoContainer steps = pageObjects.makeChildContainer("steps");
         steps.addComponent(new ClassName("housekeeping.EmptyCartIfNotAlready"));
         steps.addComponent(new ClassName("EtsyDotComSteps"));
-        // Before And After Steps
+        // Before And After Steps registered by instance
         steps.addComponent(new PerStoryWebDriverSteps(driverProvider));
         steps.addComponent(new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()));
         steps.addComponent(new PerStoriesContextView(contextView));
