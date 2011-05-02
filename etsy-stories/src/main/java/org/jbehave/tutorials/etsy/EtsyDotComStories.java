@@ -109,7 +109,7 @@ public class EtsyDotComStories extends JUnitStories {
         // multiThreaded.addComponent(...);
 
         // Groovy Steps - all stateless (to allow multi-threading)
-        ComponentFactory cf = new Caching().wrap(new CompositeInjection(new ConstructorInjection(),
+        ComponentFactory cf = new ThreadCaching().wrap(new CompositeInjection(new ConstructorInjection(),
                 new SetterInjection("set", "setMetaClass")));
         final DefaultClassLoadingPicoContainer container = new DefaultClassLoadingPicoContainer(this.getClass()
                 .getClassLoader(), cf, multiThreaded);
