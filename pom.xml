@@ -26,8 +26,8 @@
     <profile>
       <id>stable</id>
       <properties>
-        <jbehave.core.version>3.4-beta-2</jbehave.core.version>
-        <jbehave.web.version>3.3.1</jbehave.web.version>
+        <jbehave.core.version>3.4-beta-4</jbehave.core.version>
+        <jbehave.web.version>3.3.2</jbehave.web.version>
       </properties>
     </profile>
   </profiles>
