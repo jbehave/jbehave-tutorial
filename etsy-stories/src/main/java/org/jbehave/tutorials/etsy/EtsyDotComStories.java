@@ -1,10 +1,5 @@
 package org.jbehave.tutorials.etsy;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Future;
-
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.embedder.Embedder;
@@ -23,6 +18,7 @@ import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.queue.WebQueue;
 import org.jbehave.web.queue.WebQueueConfiguration;
 import org.jbehave.web.selenium.ContextView;
+import org.jbehave.web.selenium.FirefoxWebDriverProvider;
 import org.jbehave.web.selenium.LocalFrameContextView;
 import org.jbehave.web.selenium.PerStoryWebDriverSteps;
 import org.jbehave.web.selenium.RemoteWebDriverProvider;
@@ -32,7 +28,6 @@ import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.SeleniumContext;
 import org.jbehave.web.selenium.SeleniumContextOutput;
 import org.jbehave.web.selenium.SeleniumStepMonitor;
-import org.jbehave.web.selenium.TypeWebDriverProvider;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
 import org.picocontainer.Characteristics;
@@ -46,6 +41,11 @@ import org.picocontainer.classname.DefaultClassLoadingPicoContainer;
 import org.picocontainer.injectors.CompositeInjection;
 import org.picocontainer.injectors.ConstructorInjection;
 import org.picocontainer.injectors.SetterInjection;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Future;
 
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
@@ -79,7 +79,7 @@ public class EtsyDotComStories extends JUnitStories {
             contextView = new ContextView.NULL();
         } else {
             outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
-            driverProvider = new TypeWebDriverProvider();
+            driverProvider = new FirefoxWebDriverProvider();
             contextView = new LocalFrameContextView().sized(640, 120);
         }
 
