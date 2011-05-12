@@ -18,8 +18,6 @@ import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.CrossReference;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
-import org.jbehave.core.steps.CompositeStepsFactory;
-import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.StepMonitor;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.queue.WebQueue;
@@ -41,7 +39,6 @@ import org.picocontainer.Characteristics;
 import org.picocontainer.ComponentFactory;
 import org.picocontainer.MutablePicoContainer;
 import org.picocontainer.PicoBuilder;
-import org.picocontainer.behaviors.Caching;
 import org.picocontainer.behaviors.ThreadCaching;
 import org.picocontainer.classname.ClassLoadingPicoContainer;
 import org.picocontainer.classname.ClassName;
@@ -109,12 +106,9 @@ public class EtsyDotComStories extends JUnitStories {
         // multiThreaded.addComponent(...);
 
         // Groovy Steps - can be stateful per story.
-        ComponentFactory cf = new ThreadCaching().wrap(
-            new CompositeInjection(
-                new ConstructorInjection(),
+        ComponentFactory cf = new ThreadCaching().wrap(new CompositeInjection(new ConstructorInjection(),
                 new SetterInjection("set", "setMetaClass")));
-        ClassLoader currentClassLoader = this.getClass()
-                .getClassLoader();
+        ClassLoader currentClassLoader = this.getClass().getClassLoader();
         final DefaultClassLoadingPicoContainer pageObjects = new DefaultClassLoadingPicoContainer(currentClassLoader, cf, primordial);
         pageObjects.change(Characteristics.USE_NAMES);
         // This loads all the Groovy page objects - can be stateful
@@ -133,9 +127,7 @@ public class EtsyDotComStories extends JUnitStories {
         steps.addComponent(new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()));
         steps.addComponent(new PerStoriesContextView(contextView));
 
-        InjectableStepsFactory picoStepsFactory = new PicoStepsFactory(configuration, steps);
-
-        useStepsFactory(new CompositeStepsFactory(picoStepsFactory));
+        useStepsFactory(new PicoStepsFactory(configuration, steps));
 
         // configuredEmbedder().embedderControls().doIgnoreFailureInStories(false);
 
