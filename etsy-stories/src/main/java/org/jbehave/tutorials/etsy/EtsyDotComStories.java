@@ -49,7 +49,6 @@ import java.util.concurrent.Future;
 
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
-import static org.jbehave.core.reporters.Format.XML;
 import static org.jbehave.core.reporters.Format.CONSOLE;
 import static org.jbehave.web.selenium.WebDriverHtmlOutput.WEB_DRIVER_HTML;
 
@@ -79,7 +78,7 @@ public class EtsyDotComStories extends JUnitStories {
             outputFormats = new Format[] { CONSOLE, WEB_DRIVER_HTML };
             contextView = new ContextView.NULL();
         } else {
-            outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, XML, WEB_DRIVER_HTML };
+            outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
             driverProvider = new FirefoxWebDriverProvider();
             contextView = new LocalFrameContextView().sized(640, 120);
         }
@@ -122,7 +121,6 @@ public class EtsyDotComStories extends JUnitStories {
 
         ClassLoadingPicoContainer steps = pageObjects.makeChildContainer("steps");
         steps.addComponent(new ClassName("housekeeping.EmptyCartIfNotAlready"));
-        steps.addComponent(new ClassName("BeforeAfterSteps"));
         steps.addComponent(new ClassName("EtsyDotComSteps"));
         // Before And After Steps registered by instance
         steps.addComponent(new PerStoryWebDriverSteps(driverProvider));
