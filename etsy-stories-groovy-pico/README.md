@@ -30,19 +30,20 @@ This will run tests in parallel in SauceLabs' stack:
 
 In a directory target/view, a page named 'navigator.html' has been generated.  If you open that in Firefox, Safari or Internet Explorer (but not Chrome), you can see the three stories that have run and their completion status.
 
-There should be three rows; One for each story.  The rows are double-clickable to see the details of the story run.
+There should be a row for each story.  The rows are double-clickable to see the details of the story run.
 
-## Using this tutorial to start your own JBehave based tests for a web-site.
+## Using this tutorial to start your own JBehave-based integration tests for a web site.
 
-While a lot of the directory structure of this tutorial will be good for you too, there are bits that are not so useful.
+The tutorial aims to provide a fully-functional project that you can use to model you own project:
 
-1) All three .story files in src/main/resources/stories/ are good for inspiration, but should not be copied into your project.
-2) src/main/java/org/jbehave/tutorials/etsy/EtsyDotComStories.java should at least be renamed before consuming into your new project
-3) The Groovy page-object classes in src/main/groovy/pages/ are good to look at only. The exception would be that BasePage might be useful in your project.
-4) The src/main/groovy/housekeeping directory contains a steps class that clears the cart between scenarios.  You may or may not need that.
-5) The src/main/groovy/EtsyDotComSteps.groovy source is again good for inspiration only.
+1. src/main/java/org/jbehave/tutorials/etsy/EtsyDotComStories.java is the entry-point that JBehave uses to run the stories.
+2. src/main/stories contains the stories run by JBehave via EtsyDotComStories.java.
+3. src/main/groovy/HousekeepingSteps.groovy contains the steps does housekeeping chores, such as emptying cart between scenarios. 
+4. src/main/groovy/EtsyDotComSteps.groovy contains the steps mapped to the textual steps.
+5. src/main/groovy/pages contains the Groovy page-objects used by steps to abstract in a more manageable and maintainable way the interaction with the web pages via Selenium WebDriver.
 
-The resulting JBehave output also contains some stuff from a related project.  The navigator.html output is actually from http://paul-hammant.github.com/StoryNavigator/downloads.html and unzipped into src/main/storynavigator/ so that it can be customized if needed.  Get a fresh copy, rather than use the one checked into the JBehave tutorial.
+The resulting JBehave output also contains some stuff from a related project.  
+The navigator.html output is actually from http://paul-hammant.github.com/StoryNavigator/downloads.html and unzipped into src/main/storynavigator/ so that it can be customized if needed.  Get a fresh copy, rather than use the one checked into the JBehave tutorial.
 
 
 
