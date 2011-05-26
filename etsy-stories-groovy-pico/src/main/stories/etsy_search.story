@@ -1,4 +1,4 @@
-Advanced Search for a hat
+Search Etsy.com by sub category
 
 Meta:
 @category advanced
