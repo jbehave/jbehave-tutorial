@@ -1,4 +1,4 @@
-package org.jbehave.tutorials.etsy.steps.pages;
+package org.jbehave.tutorials.etsy.pages;
 
 import org.jbehave.web.selenium.WebDriverPage;
 import org.jbehave.web.selenium.WebDriverProvider;

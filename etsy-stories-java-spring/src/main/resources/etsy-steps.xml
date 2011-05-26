@@ -11,7 +11,7 @@
      <constructor-arg ref="driverProvider"/>
   </bean>  
 
-  <bean id="housekeepingSteps" class="org.jbehave.tutorials.etsy.steps.housekeeping.EmptyCartIfNotAlready">
+  <bean id="housekeepingSteps" class="org.jbehave.tutorials.etsy.steps.HousekeepingSteps">
      <constructor-arg ref="driverProvider"/>
   </bean>  
   
