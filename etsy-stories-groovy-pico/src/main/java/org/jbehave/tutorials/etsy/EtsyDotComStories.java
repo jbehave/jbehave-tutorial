@@ -120,7 +120,7 @@ public class EtsyDotComStories extends JUnitStories {
                 });
 
         ClassLoadingPicoContainer steps = pageObjects.makeChildContainer("steps");
-        steps.addComponent(new ClassName("housekeeping.EmptyCartIfNotAlready"));
+        steps.addComponent(new ClassName("HousekeepingSteps"));
         steps.addComponent(new ClassName("EtsyDotComSteps"));
         // Before And After Steps registered by instance
         steps.addComponent(new PerStoryWebDriverSteps(driverProvider));

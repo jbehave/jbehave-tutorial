@@ -1,10 +1,8 @@
-package housekeeping
-
 import org.jbehave.core.annotations.BeforeScenario
 import org.jbehave.web.selenium.WebDriverProvider
 import org.openqa.selenium.WebDriverException
 
-class EmptyCartIfNotAlready {
+class HousekeepingSteps {
 
   WebDriverProvider webDriverProvider;
 
