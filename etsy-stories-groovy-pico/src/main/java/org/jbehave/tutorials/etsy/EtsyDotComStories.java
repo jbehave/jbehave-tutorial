@@ -1,5 +1,10 @@
 package org.jbehave.tutorials.etsy;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Future;
+
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.embedder.Embedder;
@@ -13,7 +18,6 @@ import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.CrossReference;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
-import org.jbehave.core.steps.StepMonitor;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.queue.WebQueue;
 import org.jbehave.web.queue.WebQueueConfiguration;
@@ -42,11 +46,6 @@ import org.picocontainer.injectors.CompositeInjection;
 import org.picocontainer.injectors.ConstructorInjection;
 import org.picocontainer.injectors.SetterInjection;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Future;
-
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 import static org.jbehave.core.reporters.Format.CONSOLE;
@@ -54,56 +53,50 @@ import static org.jbehave.web.selenium.WebDriverHtmlOutput.WEB_DRIVER_HTML;
 
 public class EtsyDotComStories extends JUnitStories {
 
-    private WebDriverProvider driverProvider;
-    private Configuration configuration;
-    private ContextView contextView;
-    private SeleniumContext seleniumContext = new SeleniumContext();
-    private Format[] outputFormats;
     private String metaFilter;
-    private final CrossReference crossReference = new CrossReference() {
-        public String getMetaFilter() {
-            return metaFilter;
-        }
-    }.withJsonOnly().withOutputAfterEachStory(true);
 
     public EtsyDotComStories() {
 
+        CrossReference crossReference = new CrossReference() {
+            public String getMetaFilter() {
+                return metaFilter;
+            }
+        }.withJsonOnly().withOutputAfterEachStory(true).excludingStoriesWithNoExecutedScenarios(true);
+
+        SeleniumContext seleniumContext = new SeleniumContext();
+        WebDriverProvider driverProvider;
+        Format[] formats;
+        ContextView contextView;
         if (System.getProperty("SAUCE_USERNAME") != null) {
             driverProvider = new SauceWebDriverProvider();
-            outputFormats = new Format[] { CONSOLE, WEB_DRIVER_HTML };
-            crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider));
+            formats = new Format[] { CONSOLE, WEB_DRIVER_HTML };
             contextView = new ContextView.NULL();
+            crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider));
         } else if (System.getProperty("REMOTE") != null) {
             driverProvider = new RemoteWebDriverProvider();
-            outputFormats = new Format[] { CONSOLE, WEB_DRIVER_HTML };
+            formats = new Format[] { CONSOLE, WEB_DRIVER_HTML };
             contextView = new ContextView.NULL();
         } else {
-            outputFormats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
             driverProvider = new FirefoxWebDriverProvider();
+            formats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
             contextView = new LocalFrameContextView().sized(640, 120);
         }
 
-        crossReference.excludingStoriesWithNoExecutedScenarios(true);
-
-        StoryReporterBuilder storyReporterBuilder = new StoryReporterBuilder()
+        StoryReporterBuilder reporterBuilder = new StoryReporterBuilder()
                 .withCodeLocation(CodeLocations.codeLocationFromClass(EtsyDotComStories.class)).withFailureTrace(true)
-                .withFailureTraceCompression(true).withDefaultFormats().withFormats(outputFormats)
+                .withFailureTraceCompression(true).withDefaultFormats().withFormats(formats)
                 .withCrossReference(crossReference);
 
-        addCrossReference(storyReporterBuilder, crossReference);
-
-        configuration = new SeleniumConfiguration().useWebDriverProvider(driverProvider)
+        Configuration configuration = new SeleniumConfiguration().useWebDriverProvider(driverProvider)
                 .useSeleniumContext(seleniumContext).useFailureStrategy(new FailingUponPendingStep())
                 .useStoryControls(new StoryControls().doResetStateBeforeScenario(false))
-                .useStepMonitor(createStepMonitor())
-                .useStoryLoader(new LoadFromClasspath(EtsyDotComStories.class.getClassLoader()))
-                .useStoryReporterBuilder(storyReporterBuilder);
-
+                .useStepMonitor(new SeleniumStepMonitor(contextView, new SeleniumContext(), crossReference.getStepMonitor()))
+                .useStoryLoader(new LoadFromClasspath(EtsyDotComStories.class))
+                .useStoryReporterBuilder(reporterBuilder);
         useConfiguration(configuration);
 
-        final MutablePicoContainer primordial = new PicoBuilder().withBehaviors(new ThreadCaching()).build();
+        MutablePicoContainer primordial = new PicoBuilder().withBehaviors(new ThreadCaching()).build();
         primordial.addComponent(WebDriverProvider.class, driverProvider);
-        // multiThreaded.addComponent(...);
 
         // Groovy Steps - can be stateful per story.
         ComponentFactory cf = new ThreadCaching().wrap(new CompositeInjection(new ConstructorInjection(),
@@ -129,24 +122,13 @@ public class EtsyDotComStories extends JUnitStories {
 
         useStepsFactory(new PicoStepsFactory(configuration, steps));
 
-        // configuredEmbedder().embedderControls().doIgnoreFailureInStories(false);
-
-    }
-
-    protected StepMonitor createStepMonitor() {
-        return new SeleniumStepMonitor(contextView, new SeleniumContext(), crossReference.getStepMonitor());
-    }
-
-    protected void addCrossReference(StoryReporterBuilder storyReporterBuilder, CrossReference crossReference) {
-        storyReporterBuilder.withCrossReference(crossReference);
     }
 
     @Override
     public void run() {
 
         // only available post instantiation because of the way the jbehave
-        // maven plugin
-        // decorates an instance with configuration
+        // maven plugin decorates an instance with configuration
         metaFilter = super.configuredEmbedder().metaFilters().toString();
 
         Embedder embedder = configuredEmbedder();
@@ -185,17 +167,8 @@ public class EtsyDotComStories extends JUnitStories {
         if (System.getProperty("WEB_QUEUE") != null) {
             return new ArrayList<String>();
         }
-        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/"
-                + storyFilter() + ".story"), null);
-    }
-
-    private String storyFilter() {
-        String storyFilter = System.getProperty("storyFilter");
-        if (storyFilter != null) {
-            return storyFilter;
-        } else {
-            return "*";
-        }
+        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/" + System.getProperty("storyFilter", "*")
+                + ".story"), null);
     }
 
     public static class PerStoriesContextView {
