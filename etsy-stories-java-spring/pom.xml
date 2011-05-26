@@ -7,9 +7,9 @@
     <artifactId>etsy</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>etsy-stories</artifactId>
-  <name>JBehave Tutorial using Etsy.com - Stories</name>
-  <packaging>jar</packaging>
+  <artifactId>etsy-stories-java-spring</artifactId>
+  <name>Etsy.com Stories with Java and Spring</name>
+  <description>JBehave stories verifying functionality of Etsy.com using Java and Spring</description>
 
   <properties>
     <meta.filter></meta.filter>
@@ -19,11 +19,6 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>com.github.tanob</groupId>
-      <artifactId>groobe</artifactId>
-      <version>1.1</version>
-    </dependency>
     <dependency>
       <groupId>org.jbehave</groupId>
       <artifactId>jbehave-core</artifactId>
@@ -54,25 +49,9 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.picocontainer</groupId>
-      <artifactId>picocontainer</artifactId>
-      <version>2.13.4</version>
-    </dependency>
-    <dependency>
       <groupId>org.jbehave</groupId>
-      <artifactId>jbehave-pico</artifactId>
+      <artifactId>jbehave-spring</artifactId>
       <version>${jbehave.core.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.picocontainer</groupId>
-          <artifactId>picocontainer</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.groovy</groupId>
-      <artifactId>groovy-all</artifactId>
-      <version>${groovy.version}</version>
     </dependency>
   </dependencies>
 
@@ -93,65 +72,19 @@
 
     <resources>
       <resource>
-        <directory>${basedir}/src/main/groovy</directory>
+        <directory>${basedir}/src/main/resources</directory>
         <filtering>false</filtering>
       </resource>
       <resource>
         <directory>${basedir}/src/main/stories</directory>
         <filtering>false</filtering>
       </resource>
-      <resource>
-        <directory>${basedir}/src/main/java</directory>
-        <filtering>false</filtering>
-      </resource>
-      <resource>
-        <directory>${project.build.directory}/resources</directory>
-        <filtering>false</filtering>
-      </resource>
-      <resource>
-        <directory>${basedir}/src/main/storynavigator</directory>
-        <targetPath>${project.build.directory}/jbehave/view</targetPath>
-        <filtering>false</filtering>
-      </resource>
     </resources>
-    <testResources>
-      <testResource>
-        <directory>${basedir}/src/main/webapp</directory>
-        <filtering>false</filtering>
-      </testResource>
-    </testResources>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <!-- Skip the normal tests, we'll run them in the integration-test 
-            phase -->
-          <skip>false</skip>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>integration-test</phase>
-            <goals>
-              <goal>test</goal>
-            </goals>
-            <configuration>
-              <skip>false</skip>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.jbehave</groupId>
         <artifactId>jbehave-maven-plugin</artifactId>
         <version>${jbehave.core.version}</version>
-        <dependencies>
-          <dependency>
-            <groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
-            <version>1.3.1</version>
-          </dependency>
-        </dependencies>
         <executions>
           <execution>
             <id>unpack-view-resources</id>
@@ -211,57 +144,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.codehaus.gmaven</groupId>
-        <artifactId>gmaven-plugin</artifactId>
-        <version>${gmaven.version}</version>
-        <configuration>
-          <providerSelection>1.7</providerSelection>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.codehaus.gmaven.runtime</groupId>
-            <artifactId>gmaven-runtime-1.7</artifactId>
-            <version>${gmaven.version}</version>
-            <exclusions>
-              <exclusion>
-                <groupId>org.codehaus.groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-              </exclusion>
-            </exclusions>
-          </dependency>
-          <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>${groovy.version}</version>
-          </dependency>
-        </dependencies>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generateStubs</goal>
-              <goal>compile</goal>
-              <goal>generateTestStubs</goal>
-              <goal>testCompile</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
-
-  <profiles>
-    <profile>
-      <id>saucelabs</id>
-      <activation>
-        <property>
-          <name>SAUCE_USERNAME</name>
-        </property>
-      </activation>
-      <properties>
-        <threads>5</threads>
-      </properties>
-    </profile>
-  </profiles>
-
 </project>

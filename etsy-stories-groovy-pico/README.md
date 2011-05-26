@@ -1,27 +1,36 @@
-# JBehave Tutorial
+# Etsy.com using Groovy and Pico
 
-JBehave is a BDD framework for Java and Groovy. Refer the [jbehave-core](jbehave-core) and [jbehave-web](jbehave-web) sister projects.
-
-This tutorial uses JBehave and Selenium2 to test [Etsy.com](http://etsy.com) (an live online shopping site).
+This tutorial uses JBehave 3.x and Selenium 2.x to test [Etsy.com](http://etsy.com) (an live online shopping site).
 
 <img src="http://jbehave.org/reference/preview/images/jbehave-logo.png" alt="JBehave logo" align="right" />
 
-## Two Modules
+## Running the stories
 
-1. The first module 'etsy-stories' is the actual tests that will run, with browsers flickering and reports that are a result.
-2. The second module 'etsy-web-runner' is an online app that allows ad-hoc stories to be run.  Note the app is not multiuser and will appear to hang for the duration of the story run in question.
+This will run the build and (after a minute or so) Firefox will open and test the etsy.com website:
 
-## Running the tests
-
-Using Maven (installed on your system), do:
-
-    mvn clean install
+    mvn install 
 
 You should see Firefox (installed on your system) flicker as it tests Etsy.com
 
-## Seeing the reports
+This will run a single story (one contained in a etsy_cart.story file):
 
-Inside a directory etsy-stories/target/jbehave/view/ there is a navigator.html page that can be loaded locally.  There should be three rows; One for each story.  The rows are double-clickable to see the details of the story run.
+    mvn install -DstoryFilter=etsy_cart
+
+This will run a suite based on the meta filters in the three story files:
+
+    mvn install -Dmeta.filter="+color red"
+
+This will run tests in parallel in SauceLabs' stack:
+
+(use YOUR details from YOUR [SauceLabs.com](http://saucelabs.com) account)
+
+    mvn install -DSAUCE_USERNAME=your_sauce_id -DSAUCE_ACCESS_KEY=your_sauce_access_key
+
+## Viewing the results
+
+In a directory target/view, a page named 'navigator.html' has been generated.  If you open that in Firefox, Safari or Internet Explorer (but not Chrome), you can see the three stories that have run and their completion status.
+
+There should be three rows; One for each story.  The rows are double-clickable to see the details of the story run.
 
 ## Using this tutorial to start your own JBehave based tests for a web-site.
 

@@ -12,7 +12,7 @@ public class EtsyDotComStoriesWebApplication extends WebRunnerApplication {
     private EtsyDotComStories stories = new EtsyDotComStories();
 
     protected List<CandidateSteps> candidateSteps() {
-        return stories.candidateSteps();
+        return stories.stepsFactory().createCandidateSteps();
     }
 
     protected Configuration configuration() {

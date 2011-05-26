@@ -9,7 +9,7 @@
   </parent>
   <artifactId>etsy-web-runner</artifactId>
   <packaging>war</packaging>
-  <name>JBehave Tutorial using Etsy.com - Stories Web Runner</name>
+  <name>Etsy.com Stories Web Runner</name>
 
   <properties>
     <!-- also check parent project for property values -->
@@ -23,7 +23,7 @@
     </dependency>
     <dependency>
       <groupId>org.jbehave.tutorials</groupId>
-      <artifactId>etsy-stories</artifactId>
+      <artifactId>etsy-stories-java-spring</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>
@@ -98,10 +98,6 @@
           <webResources>
             <resource>
               <directory>${project.build.directory}/resources</directory>
-            </resource>
-            <resource>
-              <directory>${basedir}/../etsy-stories/src/main/groovy</directory>
-              <targetPath>WEB-INF/classes</targetPath>
             </resource>
           </webResources>
         </configuration>

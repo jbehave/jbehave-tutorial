@@ -7,23 +7,36 @@
   <artifactId>etsy</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>JBehave Tutorial using Etsy.com - Parent</name>
+  <name>JBehave Tutorial using Etsy.com</name>
 
   <properties>
     <jbehave.core.version>3.5-SNAPSHOT</jbehave.core.version>
     <jbehave.web.version>3.4-SNAPSHOT</jbehave.web.version>
     <jbehave.site.version>3.1.1</jbehave.site.version>
-    <gmaven.version>1.3</gmaven.version>
-    <groovy.version>1.8.0</groovy.version>
   </properties>
 
-  <modules>
-    <module>etsy-stories</module>
-    <module>etsy-spring</module>
-    <module>etsy-web-runner</module>
-  </modules>
-
   <profiles>
+    <profile>
+      <id>groovy-pico</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>etsy-stories-groovy-pico</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>java-spring</id>
+      <modules>
+        <module>etsy-stories-java-spring</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>web-runner</id>
+      <modules>
+        <module>etsy-web-runner</module>
+      </modules>
+    </profile>
     <profile>
       <id>stable</id>
       <properties>
