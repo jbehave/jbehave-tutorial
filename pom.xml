@@ -27,6 +27,9 @@
     </profile>
     <profile>
       <id>java-spring</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
       <modules>
         <module>etsy-stories-java-spring</module>
       </modules>

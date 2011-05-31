@@ -34,11 +34,6 @@
     </dependency>
     <dependency>
       <groupId>org.jbehave.web</groupId>
-      <artifactId>jbehave-web-queue</artifactId>
-      <version>${jbehave.web.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jbehave.web</groupId>
       <artifactId>jbehave-web-selenium</artifactId>
       <version>${jbehave.web.version}</version>
       <exclusions>
@@ -146,4 +141,43 @@
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>annotated-embedder</id>
+      <properties>
+        <stories>**/AnnotatedEtsyDotComStories.java</stories>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-maven-plugin</artifactId>
+            <version>${jbehave.core.version}</version>
+            <executions>
+              <execution>
+                <id>unpack-view-resources</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>unpack-view-resources</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>embeddable-stories</id>
+                <phase>integration-test</phase>
+                <configuration>
+                  <includes>
+                    <include>${stories}</include>
+                  </includes>
+                  <excludes />
+                </configuration>
+                <goals>
+                  <goal>run-stories-with-annotated-embedder</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
