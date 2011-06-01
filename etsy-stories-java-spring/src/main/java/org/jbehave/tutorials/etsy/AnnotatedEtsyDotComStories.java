@@ -31,7 +31,7 @@ import static org.jbehave.core.reporters.Format.CONSOLE;
 import static org.jbehave.web.selenium.WebDriverHtmlOutput.WEB_DRIVER_HTML;
 
 @RunWith(SpringAnnotatedEmbedderRunner.class)
-@Configure(implementation = SeleniumConfiguration.class, pendingStepStrategy = FailingUponPendingStep.class)
+@Configure(using = SeleniumConfiguration.class, pendingStepStrategy = FailingUponPendingStep.class)
 @UsingEmbedder(embedder = Embedder.class, generateViewAfterStories = true, ignoreFailureInStories = true, ignoreFailureInView = false, storyTimeoutInSecs = 100, threads = 1, metaFilters = "-skip")
 @UsingSpring(resources = { "etsy-steps.xml" })
 public class AnnotatedEtsyDotComStories extends InjectableEmbedder {
