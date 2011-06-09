@@ -25,6 +25,12 @@
       <groupId>com.github.tanob</groupId>
       <artifactId>groobe</artifactId>
       <version>1.1</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.hamcrest</groupId>
+          <artifactId>hamcrest-all</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jbehave</groupId>
