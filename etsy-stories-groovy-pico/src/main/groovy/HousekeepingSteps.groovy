@@ -9,7 +9,7 @@ class HousekeepingSteps {
   @BeforeScenario
   def emptyCart() {
     try {
-      webDriverProvider.get().manage().deleteCookieNamed("cart")
+      webDriverProvider.get().manage().deleteCookieNamed("uaid")
     } catch (WebDriverException e) {
       // tis OK
     }

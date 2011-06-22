@@ -1,5 +1,6 @@
 package pages
 
+import java.util.concurrent.TimeUnit
 import org.jbehave.web.selenium.WebDriverProvider
 import org.openqa.selenium.By
 
@@ -20,6 +21,7 @@ class Home extends BasePage{
   }
 
   def search(String thing) {
+    manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS)
     findElement(By.id("search-facet")).click()
     findElement(By.className("all")).click()
     findElement(By.id("search-query")).sendKeys(thing)
