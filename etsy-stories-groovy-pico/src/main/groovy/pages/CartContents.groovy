@@ -12,9 +12,9 @@ class CartContents extends BasePage {
   }
 
   def hasItem(String item) {
-    get("http://www.etsy.com/cart")
+    go "http://www.etsy.com/cart"
     try {
-      findElement(By.id("listing-$item-ship"))
+      $("div#listinggg-$item")
     } catch (ex) {
       return false
     }
