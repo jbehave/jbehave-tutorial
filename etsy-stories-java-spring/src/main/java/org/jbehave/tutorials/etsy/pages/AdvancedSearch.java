@@ -34,7 +34,7 @@ public class AdvancedSearch extends BasePage {
             if (o.isSelected()) {
                 o.setSelected();
             }
-            if (o.getValue().equals(subCategory)) {
+            if (o.getAttribute("value").equals(subCategory)) {
                 o.setSelected();
                 return;
             }
