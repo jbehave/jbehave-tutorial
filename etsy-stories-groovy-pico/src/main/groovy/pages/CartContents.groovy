@@ -14,9 +14,9 @@ class CartContents extends BasePage {
   def hasItem(String item) {
     go "http://www.etsy.com/cart"
     try {
-      $("div#listinggg-$item")
+      $("div#listing-$item")
     } catch (ex) {
-      return false
+      return false // could also be that html has changed
     }
     return true
   }
