@@ -21,13 +21,10 @@ public class BasePage extends WebDriverPage {
 
     private Browser getBrowser() {
         if (browser == null) {
-            browser = createBrowser()
+            browser = new Browser()
+            browser.setDriver(webDriver())
         }
         browser
-    }
-
-    private Browser createBrowser() {
-        return new Browser(webDriver())
     }
 
 }
