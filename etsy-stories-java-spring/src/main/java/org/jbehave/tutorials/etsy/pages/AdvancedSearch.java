@@ -5,6 +5,7 @@ import java.util.List;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 public class AdvancedSearch extends BasePage {
 
@@ -31,11 +32,12 @@ public class AdvancedSearch extends BasePage {
         List<WebElement> options = select.findElements(By.tagName("option"));
         for (int i = 0; i < options.size(); i++) {
             WebElement o = options.get(i);
+            Select selected = new Select(o);
             if (o.isSelected()) {
-                o.setSelected();
+                selected.selectByIndex(i);
             }
             if (o.getAttribute("value").equals(subCategory)) {
-                o.setSelected();
+                selected.selectByValue(subCategory);
                 return;
             }
         }
