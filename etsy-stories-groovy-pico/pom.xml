@@ -16,6 +16,7 @@
     <groovy.version>1.8.0</groovy.version>
     <meta.filter></meta.filter>
     <threads>1</threads>
+    <storyTimeoutInSecs>250</storyTimeoutInSecs>
     <skip>false</skip>
     <stories>**/EtsyDotComStories.java</stories>
   </properties>
@@ -210,6 +211,7 @@
               <ignoreFailureInView>false</ignoreFailureInView>
               <threads>${threads}</threads>
               <skip>${skip}</skip>
+              <storyTimeoutInSecs>${storyTimeoutInSecs}</storyTimeoutInSecs>
               <metaFilters>
                 <metaFilter>${meta.filter}</metaFilter>
               </metaFilters>
