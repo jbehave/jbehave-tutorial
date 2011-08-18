@@ -1,8 +1,8 @@
 package org.jbehave.tutorials.etsy.pages;
 
 import org.jbehave.web.selenium.WebDriverProvider;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+
+import static org.openqa.selenium.By.xpath;
 
 public class Treasury extends BasePage {
 
@@ -11,7 +11,6 @@ public class Treasury extends BasePage {
     }
 
     public void chooseFirstGallery() {
-        WebElement element = findElement(By.xpath("//div[@class='item-treasury-info-box']/h3/a"));
-        element.click();
+        div(xpath("@class='item-treasury-info-box'")).h3().link().click();
     }
 }

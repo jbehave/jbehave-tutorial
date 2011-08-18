@@ -1,10 +1,11 @@
 package org.jbehave.tutorials.etsy.pages;
 
-import java.util.List;
-
 import org.jbehave.web.selenium.WebDriverProvider;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.seleniumhq.selenium.fluent.FluentMatcher;
+import org.seleniumhq.selenium.fluent.OngoingMultipleElements;
+
+import static org.openqa.selenium.By.xpath;
 
 public class SearchResults extends BasePage {
 
@@ -13,24 +14,23 @@ public class SearchResults extends BasePage {
     }
 
     public String buyFirst(String thing) {
-        List<WebElement> elems = getElems();
-        for (int i = 0; i < elems.size(); i++) {
-            WebElement elem = elems.get(i);
-            String title = elem.getAttribute("title");
-            if (title.toLowerCase().contains(thing.toLowerCase())) {
-                elem.click();
-                int ix = getCurrentUrl().indexOf("/listing/") + 9;
-                String id = getCurrentUrl().substring(ix, ix + 8);
-                // id.isNumber().shouldBe true, "no listing found";
-                WebElement buyButton = findElements(By.xpath("//input[@value = 'Add to Cart']")).get(0);
-                buyButton.click();
-                return id;
-            }
-        }
-        return "<not-bought>";
+        getResultElements().first(lowerCaseTitleContaining(thing)).click();
+        int ix = getCurrentUrl().indexOf("/listing/") + 9;
+        String id = getCurrentUrl().substring(ix, ix + 8);
+        // id.isNumber().shouldBe true, "no listing found";
+        input(xpath("@value = 'Add to Cart'")).click();
+        return id;
     }
 
-    public List<WebElement> getElems() {
-        return findElements(By.xpath("//a[@class = 'listing-thumb']"));
+    private FluentMatcher lowerCaseTitleContaining(final String thing) {
+        return new FluentMatcher() {
+            public boolean matches(WebElement webElement) {
+                return webElement.getAttribute("title").toLowerCase().contains(thing);
+            }
+        };
+    }
+
+    public OngoingMultipleElements getResultElements() {
+        return links(xpath("@class = 'listing-thumb'"));
     }
 }

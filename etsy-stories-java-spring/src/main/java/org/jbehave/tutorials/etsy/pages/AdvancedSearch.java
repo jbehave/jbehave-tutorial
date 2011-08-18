@@ -1,11 +1,14 @@
 package org.jbehave.tutorials.etsy.pages;
 
 import java.util.List;
-
 import org.jbehave.web.selenium.WebDriverProvider;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+
+import static org.openqa.selenium.By.className;
+import static org.openqa.selenium.By.id;
+import static org.openqa.selenium.By.tagName;
+import static org.openqa.selenium.By.xpath;
 
 public class AdvancedSearch extends BasePage {
 
@@ -19,17 +22,17 @@ public class AdvancedSearch extends BasePage {
 
     public void go(String section) {
         go();
-        findElement(By.xpath("//a[@title = '$section']")).click();
+        link(xpath("@title = '$section'")).click();
     }
 
     public void search(String thing) {
-        findElement(By.id("search-query")).sendKeys(thing);
-        findElement(By.id("search_submit")).click();
+        input(id("search-query")).sendKeys(thing);
+        input(id("search_submit")).click();
     }
 
     public void subCategory(String subCategory) {
-        WebElement select = findElement(By.className("handmade"));
-        List<WebElement> options = select.findElements(By.tagName("option"));
+        WebElement select = findElement(className("handmade"));
+        List<WebElement> options = select.findElements(tagName("option"));
         for (int i = 0; i < options.size(); i++) {
             WebElement o = options.get(i);
             Select selected = new Select(o);
@@ -44,8 +47,6 @@ public class AdvancedSearch extends BasePage {
     }
 
     public void searchFor(String thing) {
-        WebElement field = findElement(By.id("search_query"));
-        field.sendKeys(thing);
-        field.submit();
+        input(id("search_query")).sendKeys(thing).submit();
     }
 }

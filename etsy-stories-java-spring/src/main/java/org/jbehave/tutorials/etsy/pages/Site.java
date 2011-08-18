@@ -10,11 +10,12 @@ public class Site extends BasePage {
     }
 
     public int cartSize() {
-        try {
-            return Integer.parseInt(findElement(By.xpath("//div[@class='count']")).getText());
-        } catch (org.openqa.selenium.NoSuchElementException e) {
+        String cartSize = div(By.id("cart")).getText().replace("Cart", "").trim();
+        if (cartSize.equals("")) {
             return 0;
         }
+        return Integer.parseInt(cartSize);
+
 
     }
 

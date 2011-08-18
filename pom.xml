@@ -10,8 +10,8 @@
   <name>JBehave Tutorial using Etsy.com</name>
 
   <properties>
-    <jbehave.core.version>3.5-SNAPSHOT</jbehave.core.version>
-    <jbehave.web.version>3.4-SNAPSHOT</jbehave.web.version>
+    <jbehave.core.version>3.5-beta-2</jbehave.core.version>
+    <jbehave.web.version>3.4-beta-1</jbehave.web.version>
     <jbehave.site.version>3.1.1</jbehave.site.version>
   </properties>
 

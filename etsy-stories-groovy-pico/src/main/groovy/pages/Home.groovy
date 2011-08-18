@@ -17,7 +17,7 @@ class Home extends BasePage{
 
   def go(String section) {
     go()
-    findElement(By.xpath("//a[@title = '$section']")).click()
+    findElement(By.xpath("//a[@title = '" + section + "']")).click()
   }
 
   def search(String thing) {
