@@ -1,4 +1,4 @@
-package org.jbehave.tutorials.etsy.pages;
+package org.jbehave.tutorials.etsy.pages.fluent;
 
 import org.jbehave.web.selenium.WebDriverPage;
 import org.jbehave.web.selenium.WebDriverProvider;
@@ -8,9 +8,9 @@ import org.seleniumhq.selenium.fluent.FluentWebDriverImpl;
 import org.seleniumhq.selenium.fluent.OngoingMultipleElements;
 import org.seleniumhq.selenium.fluent.OngoingSingleElement;
 
-public class FluentWebDriverPage extends WebDriverPage implements FluentWebDriver {
+public class FluentPage extends WebDriverPage implements FluentWebDriver {
 
-    public FluentWebDriverPage(WebDriverProvider driverProvider) {
+    public FluentPage(WebDriverProvider driverProvider) {
         super(driverProvider);
     }
 

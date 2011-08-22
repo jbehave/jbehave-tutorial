@@ -1,5 +1,12 @@
 package org.jbehave.tutorials.etsy.pages;
 
+import org.jbehave.tutorials.etsy.pages.fluent.FluentAdvancedSearch;
+import org.jbehave.tutorials.etsy.pages.fluent.FluentBuy;
+import org.jbehave.tutorials.etsy.pages.fluent.FluentCartContents;
+import org.jbehave.tutorials.etsy.pages.fluent.FluentHome;
+import org.jbehave.tutorials.etsy.pages.fluent.FluentSearchResults;
+import org.jbehave.tutorials.etsy.pages.fluent.FluentSite;
+import org.jbehave.tutorials.etsy.pages.fluent.FluentTreasury;
 import org.jbehave.web.selenium.WebDriverProvider;
 
 public class PageFactory {
@@ -11,31 +18,31 @@ public class PageFactory {
     }
 
     public AdvancedSearch newAdvancedSearch() {
-        return new AdvancedSearch(webDriverProvider);
+        return new FluentAdvancedSearch(webDriverProvider);
     }
 
     public Home newHome() {
-        return new Home(webDriverProvider);
+        return new FluentHome(webDriverProvider);
     }
 
     public Site newSite() {
-        return new Site(webDriverProvider);
+        return new FluentSite(webDriverProvider);
     }
 
     public SearchResults newSearchResults() {
-        return new SearchResults(webDriverProvider);
+        return new FluentSearchResults(webDriverProvider);
     }
 
     public CartContents newCartContents() {
-        return new CartContents(webDriverProvider);
+        return new FluentCartContents(webDriverProvider);
     }
 
     public Buy newBuy() {
-        return new Buy(webDriverProvider);
+        return new FluentBuy(webDriverProvider);
     }
 
     public Treasury newTreasury() {
-        return new Treasury(webDriverProvider);
+        return new FluentTreasury(webDriverProvider);
     }
 
 }
