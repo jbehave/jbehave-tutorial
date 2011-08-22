@@ -20,7 +20,7 @@ public class VanillaAdvancedSearch extends VanillaPage implements AdvancedSearch
 
     public void go(String section) {
         go();
-        findElement(By.xpath("//a[@title = '$section']")).click();
+        findElement(By.xpath("//a[@title = '" + section + "']")).click();
     }
 
     public void search(String thing) {

@@ -16,7 +16,7 @@ public class VanillaHome extends VanillaPage implements Home {
 
     public void go(String section) {
         go();
-        findElement(By.xpath("//a[@title = '$section']")).click();
+        findElement(By.xpath("//a[@title = '" + section + "']")).click();
     }
 
     public void search(String thing) {

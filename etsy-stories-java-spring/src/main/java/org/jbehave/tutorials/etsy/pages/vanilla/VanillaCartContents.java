@@ -21,7 +21,7 @@ public class VanillaCartContents extends VanillaPage implements CartContents {
     }
 
     public void removeItem() {
-        get("http://www.etsy.com/cartcheckout.php");
+        get("http://www.etsy.com/cart");
         findElement(By.xpath("//a[@rel = 'remove']")).click();
     }
 

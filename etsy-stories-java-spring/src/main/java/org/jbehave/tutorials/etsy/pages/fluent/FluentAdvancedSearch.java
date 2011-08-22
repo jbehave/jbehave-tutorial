@@ -24,7 +24,7 @@ public class FluentAdvancedSearch extends FluentPage implements AdvancedSearch {
 
     public void go(String section) {
         go();
-        link(xpath("@title = '$section'")).click();
+        link(xpath("@title = '" + section + "'")).click();
     }
 
     public void search(String thing) {
