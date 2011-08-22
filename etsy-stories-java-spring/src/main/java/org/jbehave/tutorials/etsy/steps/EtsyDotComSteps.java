@@ -142,6 +142,6 @@ public class EtsyDotComSteps {
     @Then("there are search results")
     @Alias("results will be displayed in the gallery")
     public void thereAreSearchResults() {
-        assertThat(searchResults.getResultElements().isEmpty(), Matchers.is(false));
+        assertThat(searchResults.resultsFound(), Matchers.greaterThan(0));
     }
 }

@@ -23,6 +23,15 @@ public class FluentSearchResults extends FluentPage implements SearchResults {
         return id;
     }
 
+    public  int resultsFound() {
+        return getResultElements().size();
+    }
+
+
+    private OngoingMultipleElements getResultElements() {
+        return links(xpath("@class = 'listing-thumb'"));
+    }
+
     private FluentMatcher lowerCaseTitleContaining(final String thing) {
         return new FluentMatcher() {
             public boolean matches(WebElement webElement) {
@@ -31,7 +40,4 @@ public class FluentSearchResults extends FluentPage implements SearchResults {
         };
     }
 
-    public OngoingMultipleElements getResultElements() {
-        return links(xpath("@class = 'listing-thumb'"));
-    }
 }
