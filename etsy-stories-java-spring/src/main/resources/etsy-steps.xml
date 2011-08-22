@@ -7,8 +7,12 @@
   <bean id="driverProvider" class="org.jbehave.web.selenium.FirefoxWebDriverProvider" >
   </bean>
   
-  <bean id="etsySteps" class="org.jbehave.tutorials.etsy.steps.EtsyDotComSteps">
+  <bean id="pageFactory" class="org.jbehave.tutorials.etsy.pages.PageFactory">
      <constructor-arg ref="driverProvider"/>
+  </bean>  
+  
+  <bean id="etsySteps" class="org.jbehave.tutorials.etsy.steps.EtsyDotComSteps">
+     <constructor-arg ref="pageFactory"/>
   </bean>  
 
   <bean id="housekeepingSteps" class="org.jbehave.tutorials.etsy.steps.HousekeepingSteps">

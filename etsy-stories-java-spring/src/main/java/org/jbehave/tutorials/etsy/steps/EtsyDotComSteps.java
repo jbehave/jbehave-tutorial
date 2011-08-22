@@ -10,17 +10,17 @@ import org.jbehave.tutorials.etsy.pages.AdvancedSearch;
 import org.jbehave.tutorials.etsy.pages.Buy;
 import org.jbehave.tutorials.etsy.pages.CartContents;
 import org.jbehave.tutorials.etsy.pages.Home;
+import org.jbehave.tutorials.etsy.pages.PageFactory;
 import org.jbehave.tutorials.etsy.pages.SearchResults;
 import org.jbehave.tutorials.etsy.pages.Site;
 import org.jbehave.tutorials.etsy.pages.Treasury;
-import org.jbehave.web.selenium.WebDriverProvider;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import static org.hamcrest.Matchers.equalTo;
 
 public class EtsyDotComSteps {
-
+    
     private AdvancedSearch advancedSearch;
     private Home home;
     private Site site;
@@ -31,14 +31,14 @@ public class EtsyDotComSteps {
 
     private String justBought = "";
 
-    public EtsyDotComSteps(WebDriverProvider webDriverProvider){
-        advancedSearch = new AdvancedSearch(webDriverProvider);
-        home = new Home(webDriverProvider);
-        site = new Site(webDriverProvider);
-        searchResults = new SearchResults(webDriverProvider);
-        cartContents = new CartContents(webDriverProvider);
-        buy = new Buy(webDriverProvider);
-        treasury = new Treasury(webDriverProvider);
+    public EtsyDotComSteps(PageFactory pageFactory){
+        advancedSearch = pageFactory.newAdvancedSearch();
+        home = pageFactory.newHome();
+        site = pageFactory.newSite();
+        searchResults = pageFactory.newSearchResults();
+        cartContents = pageFactory.newCartContents();
+        buy = pageFactory.newBuy();
+        treasury = pageFactory.newTreasury();
     }
     
     @Given("I am shopping for a $thing in $section on Etsy.com")
