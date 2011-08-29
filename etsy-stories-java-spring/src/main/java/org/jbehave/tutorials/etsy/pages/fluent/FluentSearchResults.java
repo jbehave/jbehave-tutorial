@@ -4,8 +4,9 @@ import org.jbehave.tutorials.etsy.pages.SearchResults;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.WebElement;
 import org.seleniumhq.selenium.fluent.FluentMatcher;
-import org.seleniumhq.selenium.fluent.OngoingMultipleElements;
+import org.seleniumhq.selenium.fluent.FluentWebElements;
 
+import static org.openqa.selenium.By.className;
 import static org.openqa.selenium.By.xpath;
 
 public class FluentSearchResults extends FluentPage implements SearchResults {
@@ -28,8 +29,8 @@ public class FluentSearchResults extends FluentPage implements SearchResults {
     }
 
 
-    private OngoingMultipleElements getResultElements() {
-        return links(xpath("@class = 'listing-thumb'"));
+    private FluentWebElements getResultElements() {
+        return links(className("listing-thumb"));
     }
 
     private FluentMatcher lowerCaseTitleContaining(final String thing) {

@@ -1,7 +1,5 @@
 package org.jbehave.tutorials.etsy.pages.vanilla;
 
-import java.util.List;
-
 import org.jbehave.tutorials.etsy.pages.AdvancedSearch;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
@@ -29,19 +27,9 @@ public class VanillaAdvancedSearch extends VanillaPage implements AdvancedSearch
     }
 
     public void subCategory(String subCategory) {
-        WebElement select = findElement(By.className("handmade"));
-        List<WebElement> options = select.findElements(By.tagName("option"));
-        for (int i = 0; i < options.size(); i++) {
-            WebElement o = options.get(i);
-            Select selected = new Select(o);
-            if (o.isSelected()) {
-                selected.selectByIndex(i);
-            }
-            if (o.getAttribute("value").equals(subCategory)) {
-                selected.selectByValue(subCategory);
-                return;
-            }
-        }
+        WebElement select = findElement(By.xpath("//select[@class ='handmade']"));
+        Select selected = new Select(select);
+        selected.selectByValue(subCategory.toLowerCase());
     }
 
     public void searchFor(String thing) {

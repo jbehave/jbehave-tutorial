@@ -3,10 +3,7 @@ package org.jbehave.tutorials.etsy.pages.fluent;
 import org.jbehave.web.selenium.WebDriverPage;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
-import org.seleniumhq.selenium.fluent.FluentWebDriver;
-import org.seleniumhq.selenium.fluent.FluentWebDriverImpl;
-import org.seleniumhq.selenium.fluent.OngoingMultipleElements;
-import org.seleniumhq.selenium.fluent.OngoingSingleElement;
+import org.seleniumhq.selenium.fluent.*;
 
 public class FluentPage extends WebDriverPage implements FluentWebDriver {
 
@@ -18,355 +15,355 @@ public class FluentPage extends WebDriverPage implements FluentWebDriver {
         return new FluentWebDriverImpl(webDriver());
     }
     
-    public OngoingSingleElement span() {
+    public FluentWebElement span() {
         return fluentWebDriver().span();
     }
 
-    public OngoingSingleElement span(By by) {
+    public FluentWebElement span(By by) {
         return fluentWebDriver().span(by);
     }
 
-    public OngoingMultipleElements spans() {
+    public FluentWebElements spans() {
         return fluentWebDriver().spans();
     }
 
-    public OngoingMultipleElements spans(By by) {
+    public FluentWebElements spans(By by) {
         return fluentWebDriver().spans(by);
     }
 
-    public OngoingSingleElement div() {
+    public FluentWebElement div() {
         return fluentWebDriver().div();
     }
 
-    public OngoingSingleElement div(By by) {
+    public FluentWebElement div(By by) {
         return fluentWebDriver().div(by);
     }
 
-    public OngoingMultipleElements divs() {
+    public FluentWebElements divs() {
         return fluentWebDriver().divs();
     }
 
-    public OngoingSingleElement divs(By by) {
-        return fluentWebDriver().div(by);
+    public FluentWebElements divs(By by) {
+        return fluentWebDriver().divs(by);
     }
 
-    public OngoingSingleElement button() {
+    public FluentWebElement button() {
         return fluentWebDriver().button();
     }
 
-    public OngoingSingleElement button(By by) {
+    public FluentWebElement button(By by) {
         return fluentWebDriver().button(by);
     }
 
-    public OngoingMultipleElements buttons() {
+    public FluentWebElements buttons() {
         return fluentWebDriver().buttons();
     }
 
-    public OngoingSingleElement buttons(By by) {
-        return fluentWebDriver().button(by);
+    public FluentWebElements buttons(By by) {
+        return fluentWebDriver().buttons(by);
     }
 
-    public OngoingSingleElement link() {
+    public FluentWebElement link() {
         return fluentWebDriver().link();
     }
 
-    public OngoingSingleElement link(By by) {
+    public FluentWebElement link(By by) {
         return fluentWebDriver().link(by);
     }
 
-    public OngoingMultipleElements links() {
+    public FluentWebElements links() {
         return fluentWebDriver().links();
     }
 
-    public OngoingMultipleElements links(By by) {
+    public FluentWebElements links(By by) {
         return fluentWebDriver().links(by);
     }
 
-    public OngoingSingleElement input() {
+    public FluentWebElement input() {
         return fluentWebDriver().input();
     }
 
-    public OngoingSingleElement input(By by) {
+    public FluentWebElement input(By by) {
         return fluentWebDriver().input(by);
     }
 
-    public OngoingMultipleElements inputs() {
+    public FluentWebElements inputs() {
         return fluentWebDriver().inputs();
     }
 
-    public OngoingMultipleElements inputs(By by) {
+    public FluentWebElements inputs(By by) {
         return fluentWebDriver().inputs(by);
     }
 
-    public OngoingSingleElement select() {
+    public FluentSelect select() {
         return fluentWebDriver().select();
     }
 
-    public OngoingSingleElement select(By by) {
+    public FluentSelect select(By by) {
         return fluentWebDriver().select(by);
     }
 
-    public OngoingMultipleElements selects() {
+    public FluentWebElements selects() {
         return fluentWebDriver().selects();
     }
 
-    public OngoingMultipleElements selects(By by) {
+    public FluentWebElements selects(By by) {
         return fluentWebDriver().selects(by);
     }
 
-    public OngoingSingleElement li() {
+    public FluentWebElement li() {
         return fluentWebDriver().li();
     }
 
-    public OngoingSingleElement li(By by) {
+    public FluentWebElement li(By by) {
         return fluentWebDriver().li(by);
     }
 
-    public OngoingMultipleElements lis() {
+    public FluentWebElements lis() {
         return fluentWebDriver().lis();
     }
 
-    public OngoingMultipleElements lis(By by) {
+    public FluentWebElements lis(By by) {
         return fluentWebDriver().lis(by);
     }
 
-    public OngoingSingleElement h1() {
+    public FluentWebElement h1() {
         return fluentWebDriver().h1();
     }
 
-    public OngoingSingleElement h1(By by) {
+    public FluentWebElement h1(By by) {
         return fluentWebDriver().h1(by);
     }
 
-    public OngoingMultipleElements h1s() {
+    public FluentWebElements h1s() {
         return fluentWebDriver().h1s();
     }
 
-    public OngoingMultipleElements h1s(By by) {
+    public FluentWebElements h1s(By by) {
         return fluentWebDriver().h1s(by);
     }
 
-    public OngoingSingleElement h2() {
+    public FluentWebElement h2() {
         return fluentWebDriver().h2();
     }
 
-    public OngoingSingleElement h2(By by) {
+    public FluentWebElement h2(By by) {
         return fluentWebDriver().h2(by);
     }
 
-    public OngoingMultipleElements h2s() {
+    public FluentWebElements h2s() {
         return fluentWebDriver().h2s();
     }
 
-    public OngoingMultipleElements h2s(By by) {
+    public FluentWebElements h2s(By by) {
         return fluentWebDriver().h2s(by);
     }
 
-    public OngoingSingleElement h3() {
+    public FluentWebElement h3() {
         return fluentWebDriver().h3();
     }
 
-    public OngoingSingleElement h3(By by) {
+    public FluentWebElement h3(By by) {
         return fluentWebDriver().h3(by);
     }
 
-    public OngoingMultipleElements h3s() {
+    public FluentWebElements h3s() {
         return fluentWebDriver().h3s();
     }
 
-    public OngoingMultipleElements h3s(By by) {
+    public FluentWebElements h3s(By by) {
         return fluentWebDriver().h3s(by);
     }
 
-    public OngoingSingleElement h4() {
+    public FluentWebElement h4() {
         return fluentWebDriver().h4();
     }
 
-    public OngoingSingleElement h4(By by) {
+    public FluentWebElement h4(By by) {
         return fluentWebDriver().h4(by);
     }
 
-    public OngoingMultipleElements h4s() {
+    public FluentWebElements h4s() {
         return fluentWebDriver().h4s();
     }
 
-    public OngoingMultipleElements h4s(By by) {
+    public FluentWebElements h4s(By by) {
         return fluentWebDriver().h4s(by);
     }
 
-    public OngoingSingleElement p() {
+    public FluentWebElement p() {
         return fluentWebDriver().p();
     }
 
-    public OngoingSingleElement p(By by) {
+    public FluentWebElement p(By by) {
         return fluentWebDriver().p(by);
     }
 
-    public OngoingMultipleElements ps() {
+    public FluentWebElements ps() {
         return fluentWebDriver().ps();
     }
 
-    public OngoingMultipleElements ps(By by) {
+    public FluentWebElements ps(By by) {
         return fluentWebDriver().ps(by);
     }
 
-    public OngoingSingleElement img() {
+    public FluentWebElement img() {
         return fluentWebDriver().img();
     }
 
-    public OngoingSingleElement img(By by) {
+    public FluentWebElement img(By by) {
         return fluentWebDriver().img(by);
     }
 
-    public OngoingMultipleElements imgs() {
+    public FluentWebElements imgs() {
         return fluentWebDriver().imgs();
     }
 
-    public OngoingMultipleElements imgs(By by) {
+    public FluentWebElements imgs(By by) {
         return fluentWebDriver().imgs(by);
     }
 
-    public OngoingSingleElement table() {
+    public FluentWebElement table() {
         return fluentWebDriver().table();
     }
 
-    public OngoingSingleElement table(By by) {
+    public FluentWebElement table(By by) {
         return fluentWebDriver().table(by);
     }
 
-    public OngoingMultipleElements tables() {
+    public FluentWebElements tables() {
         return fluentWebDriver().tables();
     }
 
-    public OngoingMultipleElements tables(By by) {
+    public FluentWebElements tables(By by) {
         return fluentWebDriver().tables(by);
     }
 
-    public OngoingSingleElement tr() {
+    public FluentWebElement tr() {
         return fluentWebDriver().tr();
     }
 
-    public OngoingSingleElement tr(By by) {
+    public FluentWebElement tr(By by) {
         return fluentWebDriver().tr(by);
     }
 
-    public OngoingMultipleElements trs() {
+    public FluentWebElements trs() {
         return fluentWebDriver().trs();
     }
 
-    public OngoingMultipleElements trs(By by) {
+    public FluentWebElements trs(By by) {
         return fluentWebDriver().trs(by);
     }
 
-    public OngoingSingleElement td() {
+    public FluentWebElement td() {
         return fluentWebDriver().td();
     }
 
-    public OngoingSingleElement td(By by) {
+    public FluentWebElement td(By by) {
         return fluentWebDriver().td(by);
     }
 
-    public OngoingMultipleElements tds() {
+    public FluentWebElements tds() {
         return fluentWebDriver().tds();
     }
 
-    public OngoingMultipleElements tds(By by) {
+    public FluentWebElements tds(By by) {
         return fluentWebDriver().tds(by);
     }
 
-    public OngoingSingleElement th() {
+    public FluentWebElement th() {
         return fluentWebDriver().th();
     }
 
-    public OngoingSingleElement th(By by) {
+    public FluentWebElement th(By by) {
         return fluentWebDriver().th(by);
     }
 
-    public OngoingMultipleElements ths() {
+    public FluentWebElements ths() {
         return fluentWebDriver().ths();
     }
 
-    public OngoingMultipleElements ths(By by) {
+    public FluentWebElements ths(By by) {
         return fluentWebDriver().ths(by);
     }
 
-    public OngoingSingleElement ul() {
+    public FluentWebElement ul() {
         return fluentWebDriver().ul();
     }
 
-    public OngoingSingleElement ul(By by) {
+    public FluentWebElement ul(By by) {
         return fluentWebDriver().ul(by);
     }
 
-    public OngoingMultipleElements uls() {
+    public FluentWebElements uls() {
         return fluentWebDriver().uls();
     }
 
-    public OngoingMultipleElements uls(By by) {
+    public FluentWebElements uls(By by) {
         return fluentWebDriver().uls(by);
     }
 
-    public OngoingSingleElement ol() {
+    public FluentWebElement ol() {
         return fluentWebDriver().ol();
     }
 
-    public OngoingSingleElement ol(By by) {
+    public FluentWebElement ol(By by) {
         return fluentWebDriver().ol(by);
     }
 
-    public OngoingMultipleElements ols() {
+    public FluentWebElements ols() {
         return fluentWebDriver().ols();
     }
 
-    public OngoingMultipleElements ols(By by) {
+    public FluentWebElements ols(By by) {
         return fluentWebDriver().ols(by);
     }
 
-    public OngoingSingleElement form() {
+    public FluentWebElement form() {
         return fluentWebDriver().form();
     }
 
-    public OngoingSingleElement form(By by) {
+    public FluentWebElement form(By by) {
         return fluentWebDriver().form(by);
     }
 
-    public OngoingMultipleElements forms() {
+    public FluentWebElements forms() {
         return fluentWebDriver().forms();
     }
 
-    public OngoingMultipleElements forms(By by) {
+    public FluentWebElements forms(By by) {
         return fluentWebDriver().forms(by);
     }
 
-    public OngoingSingleElement textarea() {
+    public FluentWebElement textarea() {
         return fluentWebDriver().textarea();
     }
 
-    public OngoingSingleElement textarea(By by) {
+    public FluentWebElement textarea(By by) {
         return fluentWebDriver().textarea(by);
     }
 
-    public OngoingMultipleElements textareas() {
+    public FluentWebElements textareas() {
         return fluentWebDriver().textareas();
     }
 
-    public OngoingMultipleElements textareas(By by) {
+    public FluentWebElements textareas(By by) {
         return fluentWebDriver().textareas(by);
     }
 
-    public OngoingSingleElement option() {
+    public FluentWebElement option() {
         return fluentWebDriver().option();
     }
 
-    public OngoingSingleElement option(By by) {
+    public FluentWebElement option(By by) {
         return fluentWebDriver().option(by);
     }
 
-    public OngoingMultipleElements options() {
+    public FluentWebElements options() {
         return fluentWebDriver().options();
     }
 
-    public OngoingMultipleElements options(By by) {
+    public FluentWebElements options(By by) {
         return fluentWebDriver().options(by);
     }
 }

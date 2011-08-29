@@ -3,7 +3,7 @@ package org.jbehave.tutorials.etsy.pages.fluent;
 import org.jbehave.tutorials.etsy.pages.Treasury;
 import org.jbehave.web.selenium.WebDriverProvider;
 
-import static org.openqa.selenium.By.xpath;
+import static org.openqa.selenium.By.className;
 
 public class FluentTreasury extends FluentPage implements Treasury {
 
@@ -12,6 +12,6 @@ public class FluentTreasury extends FluentPage implements Treasury {
     }
 
     public void chooseFirstGallery() {
-        div(xpath("@class='item-treasury-info-box'")).h3().link().click();
+        div(className("item-treasury-info-box")).h3().link().click();
     }
 }

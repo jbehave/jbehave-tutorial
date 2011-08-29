@@ -13,7 +13,7 @@ public class VanillaCartContents extends VanillaPage implements CartContents {
     public boolean hasItem(String item) {
         get("http://www.etsy.com/cartcheckout.php");
         try {
-            findElement(By.id("listing-$item-ship"));
+            findElement(By.id("listing-" + item + "-ship"));
         } catch (RuntimeException ex) {
             return false;
         }

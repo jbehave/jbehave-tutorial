@@ -2,7 +2,8 @@ package org.jbehave.tutorials.etsy.pages.fluent;
 
 import org.jbehave.tutorials.etsy.pages.Site;
 import org.jbehave.web.selenium.WebDriverProvider;
-import org.openqa.selenium.By;
+
+import static org.openqa.selenium.By.id;
 
 public class FluentSite extends FluentPage implements Site {
 
@@ -11,7 +12,7 @@ public class FluentSite extends FluentPage implements Site {
     }
 
     public int cartSize() {
-        String cartSize = div(By.id("cart")).getText().replace("Cart", "").trim();
+        String cartSize = div(id("cart")).getText().replace("Cart", "").trim();
         if (cartSize.equals("")) {
             return 0;
         }

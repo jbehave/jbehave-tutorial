@@ -1,11 +1,11 @@
 package org.jbehave.tutorials.etsy.pages.vanilla;
 
-import java.util.List;
-
 import org.jbehave.tutorials.etsy.pages.SearchResults;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class VanillaSearchResults extends VanillaPage implements SearchResults {
 
@@ -15,8 +15,7 @@ public class VanillaSearchResults extends VanillaPage implements SearchResults {
 
     public String buyFirst(String thing) {
         List<WebElement> elements = getResultsElements();
-        for (int i = 0; i < elements.size(); i++) {
-            WebElement e = elements.get(i);
+        for (WebElement e : elements) {
             String title = e.getAttribute("title");
             if (title.toLowerCase().contains(thing.toLowerCase())) {
                 e.click();
