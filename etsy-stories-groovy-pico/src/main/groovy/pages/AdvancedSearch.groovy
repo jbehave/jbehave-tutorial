@@ -2,7 +2,7 @@ package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
 import org.openqa.selenium.By
-import org.openqa.selenium.WebElement
+import org.openqa.selenium.support.ui.Select
 
 class AdvancedSearch extends BasePage{
 
@@ -25,18 +25,8 @@ class AdvancedSearch extends BasePage{
   }
 
   def subCategory(String subCategory) {
-    def select = findElement(By.className("handmade"))
-    def List options = select.findElements(By.tagName("option"))
-    for (int i = 0; i < options.size(); i++) {
-      def WebElement o =  options.get(i);
-      if (o.isSelected()) {
-        o.setSelected()
-      }
-      if (o.getValue().equals(subCategory)) {
-        o.setSelected()
-        return
-      }
-    }
+    def select = findElement(By.xpath("//select[@class = 'handmade']"))
+    new Select(select).selectByValue(subCategory.toLowerCase())
   }
 
   def searchFor(String thing) {
