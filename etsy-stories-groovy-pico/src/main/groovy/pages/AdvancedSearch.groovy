@@ -1,7 +1,6 @@
 package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
-import org.openqa.selenium.By
 import org.openqa.selenium.support.ui.Select
 
 class AdvancedSearch extends BasePage{
@@ -16,22 +15,22 @@ class AdvancedSearch extends BasePage{
 
   def go(String section) {
     go()
-    findElement(By.xpath("//a[@title = '$section']")).click()
+    $("a", title : section).click()
   }
 
   def search(String thing) {
-    findElement(By.id("search-query")).sendKeys(thing)
-    findElement(By.id("search_submit")).click()
+    $("#search-query").sendKeys(thing)
+    $("#search_submit").click()
   }
 
   def subCategory(String subCategory) {
-    def select = findElement(By.xpath("//select[@class = 'handmade']"))
-    new Select(select).selectByValue(subCategory.toLowerCase())
+    def select = $("select.handmade")
+    new Select(select.getElement(0)).selectByValue(subCategory.toLowerCase())
   }
 
   def searchFor(String thing) {
-    def field = findElement(By.id("search_query"))
-    field.sendKeys thing
+    def field = $("#search_query")
+    field << thing
     field.submit()
   }
 }

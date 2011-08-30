@@ -1,7 +1,6 @@
 package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
-import org.openqa.selenium.By
 
 class CartContents extends BasePage {
 
@@ -22,8 +21,8 @@ class CartContents extends BasePage {
   }
 
   def removeItem() {
-    get("http://www.etsy.com/cart")
-    findElement(By.xpath("//a[@rel = 'remove']")).click()
+    go "http://www.etsy.com/cart"
+    $("a", rel: 'remove').click()
     while (!site.cartSize().equals("")) {
       sleep(200)
     }

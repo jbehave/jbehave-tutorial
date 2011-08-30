@@ -22,10 +22,10 @@ class Home extends BasePage{
 
   def search(String thing) {
     manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS)
-    findElement(By.id("search-facet")).click()
-    findElement(By.className("all")).click()
-    findElement(By.id("search-query")).sendKeys(thing)
-    findElement(By.id("search_submit")).click()
+    $("#search-facet").click()
+    $(".all").click()
+    $("#search-query") << thing
+    $("#search_submit").click()
   }
 
   def goToBuySection() {

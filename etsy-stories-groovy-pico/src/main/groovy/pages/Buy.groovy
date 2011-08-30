@@ -1,7 +1,6 @@
 package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
-import org.openqa.selenium.By
 
 class Buy extends BasePage{
 
@@ -9,8 +8,7 @@ class Buy extends BasePage{
     super(webDriverProvider)
   }
 
-
   def selectTreasury() {
-    findElement(By.id("treasury-panel-button")).click()
+    $("#treasury-panel-button").click()
   }
 }

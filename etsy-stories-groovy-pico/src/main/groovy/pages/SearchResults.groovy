@@ -20,7 +20,7 @@ class SearchResults extends BasePage{
         def ix = getCurrentUrl().indexOf("/listing/") + 9
         def id = getCurrentUrl().substring(ix, ix + 8)
         id.isNumber().shouldBe true, "no listing found"
-        def buyButton = findElements(By.xpath("//input[@value = 'Add to Cart']")).get(0)
+        def buyButton = $("input", value : 'Add to Cart').firstElement()
         buyButton.click()
         return id
       }
