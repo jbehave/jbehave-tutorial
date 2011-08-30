@@ -24,8 +24,7 @@ class AdvancedSearch extends BasePage{
   }
 
   def subCategory(String subCategory) {
-    def select = $("select.handmade")
-    new Select(select.getElement(0)).selectByValue(subCategory.toLowerCase())
+    new Select($("select.handmade").getElement(0)).selectByValue(subCategory.toLowerCase())
   }
 
   def searchFor(String thing) {

@@ -9,7 +9,6 @@ class Site extends BasePage{
   }
 
   def cartSize() {
-      def text = $("#cart").text()
-      return text.replace("Cart", "").trim()
+      return $("#cart").text().replace("Cart", "").trim()
   }
 }
