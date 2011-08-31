@@ -12,7 +12,8 @@ class SearchResults extends BasePage{
 
   def buyFirst(String thing) {
     List elements = getElems()
-    elements.each{ elem ->
+    for (int i = 0; i < elements.size(); i++) {
+      def elem = elements.get(i)
       def title = elem.getAttribute("title")
       if (title.toLowerCase().contains(thing.toLowerCase())) {
         // traverse into detail

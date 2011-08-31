@@ -42,7 +42,7 @@ public class EtsyDotComSteps {
 
   @Then("the cart will be empty")
   def cartIsEmpty() {
-    site.cartSize().shouldBe "", "cart not empty"
+    site.cartEmpty()
   }
 
   @Given("the cart contains one item")
@@ -95,6 +95,7 @@ public class EtsyDotComSteps {
   @When("the item is removed")
   def removeItem() {
     cartContents.removeItem()
+    site.cartEmpty()
   }
 
   @When("I specify the \$subCat sub category")

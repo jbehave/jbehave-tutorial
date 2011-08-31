@@ -11,4 +11,10 @@ class Site extends BasePage{
   def cartSize() {
       return $("#cart").text().replace("Cart", "").trim()
   }
+
+  def cartEmpty() {
+      waitFor {
+          cartSize().equals("")
+      }
+  }
 }

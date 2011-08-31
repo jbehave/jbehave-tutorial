@@ -23,8 +23,5 @@ class CartContents extends BasePage {
   def removeItem() {
     go "http://www.etsy.com/cart"
     $("a", rel: 'remove').click()
-    waitFor {
-        !site.cartSize().equals("")
-    }
   }
 }
