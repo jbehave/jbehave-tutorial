@@ -26,7 +26,7 @@ public class FluentAdvancedSearch extends FluentPage implements AdvancedSearch {
     }
 
     public void subCategory(String subCategory) {
-          select(className("handmade")).selectByValue(subCategory.toLowerCase());
+        select(className("handmade")).selectByValue(subCategory.toLowerCase());
     }
 
     public void searchFor(String thing) {
