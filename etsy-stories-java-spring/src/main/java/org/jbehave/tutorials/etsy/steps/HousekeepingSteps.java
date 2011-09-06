@@ -10,7 +10,6 @@ public class HousekeepingSteps {
     
     public HousekeepingSteps(WebDriverProvider webDriverProvider) {
         this.webDriverProvider = webDriverProvider;
-        this.webDriverProvider.initialize();
     }
 
     @BeforeScenario
@@ -18,7 +17,7 @@ public class HousekeepingSteps {
         try {
             webDriverProvider.get().manage().deleteCookieNamed("cart");
         } catch (WebDriverException e) {
-            // tis OK
+            e.printStackTrace();
         }
     }
 }

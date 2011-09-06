@@ -14,12 +14,14 @@ import org.jbehave.tutorials.etsy.pages.PageFactory;
 import org.jbehave.tutorials.etsy.pages.SearchResults;
 import org.jbehave.tutorials.etsy.pages.Site;
 import org.jbehave.tutorials.etsy.pages.Treasury;
+import org.jbehave.web.selenium.PerStoryWebDriverSteps;
+import org.jbehave.web.selenium.WebDriverProvider;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class EtsyDotComSteps {
+public class EtsyDotComSteps extends PerStoryWebDriverSteps {
     
     private AdvancedSearch advancedSearch;
     private Home home;
@@ -31,7 +33,8 @@ public class EtsyDotComSteps {
 
     private String justBought = "";
 
-    public EtsyDotComSteps(PageFactory pageFactory){
+    public EtsyDotComSteps(WebDriverProvider driverProvider, PageFactory pageFactory){
+        super(driverProvider);
         advancedSearch = pageFactory.newAdvancedSearch();
         home = pageFactory.newHome();
         site = pageFactory.newSite();
