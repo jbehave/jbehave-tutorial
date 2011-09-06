@@ -1,21 +1,20 @@
 package org.jbehave.tutorials.etsy.steps;
 
 import org.jbehave.core.annotations.BeforeScenario;
+import org.jbehave.web.selenium.PerStoryWebDriverSteps;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.WebDriverException;
 
-public class HousekeepingSteps {
+public class LifecycleSteps extends PerStoryWebDriverSteps {
 
-    private WebDriverProvider webDriverProvider;
-    
-    public HousekeepingSteps(WebDriverProvider webDriverProvider) {
-        this.webDriverProvider = webDriverProvider;
+    public LifecycleSteps(WebDriverProvider webDriverProvider) {
+        super(webDriverProvider);
     }
 
     @BeforeScenario
     public void emptyCart() {
         try {
-            webDriverProvider.get().manage().deleteCookieNamed("cart");
+            driverProvider.get().manage().deleteCookieNamed("cart");
         } catch (WebDriverException e) {
             e.printStackTrace();
         }
