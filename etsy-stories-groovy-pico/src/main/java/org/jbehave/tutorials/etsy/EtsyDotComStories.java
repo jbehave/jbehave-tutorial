@@ -69,7 +69,7 @@ public class EtsyDotComStories extends JUnitStories {
         ContextView contextView;
         if (System.getProperty("SAUCE_USERNAME") != null) {
             driverProvider = new SauceWebDriverProvider();
-            formats = new Format[] { CONSOLE, WEB_DRIVER_HTML };
+            formats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
             contextView = new ContextView.NULL();
             crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider));
         } else if (System.getProperty("REMOTE") != null) {
@@ -88,9 +88,10 @@ public class EtsyDotComStories extends JUnitStories {
                 .withCrossReference(crossReference);
 
         Configuration configuration = new SeleniumConfiguration().useWebDriverProvider(driverProvider)
-                .useSeleniumContext(seleniumContext).useFailureStrategy(new FailingUponPendingStep())
+                .useSeleniumContext(seleniumContext)
+                .useFailureStrategy(new FailingUponPendingStep())
                 .useStoryControls(new StoryControls().doResetStateBeforeScenario(false))
-                .useStepMonitor(new SeleniumStepMonitor(contextView, new SeleniumContext(), crossReference.getStepMonitor()))
+                .useStepMonitor(new SeleniumStepMonitor(contextView, seleniumContext, crossReference.getStepMonitor()))
                 .useStoryLoader(new LoadFromClasspath(EtsyDotComStories.class))
                 .useStoryReporterBuilder(reporterBuilder);
         useConfiguration(configuration);
