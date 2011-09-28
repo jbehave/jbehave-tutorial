@@ -27,6 +27,7 @@ import org.jbehave.web.selenium.LocalFrameContextView;
 import org.jbehave.web.selenium.PerStoryWebDriverSteps;
 import org.jbehave.web.selenium.RemoteWebDriverProvider;
 import org.jbehave.web.selenium.SauceContextOutput;
+import org.jbehave.web.selenium.SauceLabsContextView;
 import org.jbehave.web.selenium.SauceWebDriverProvider;
 import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.SeleniumContext;
@@ -70,8 +71,8 @@ public class EtsyDotComStories extends JUnitStories {
         if (System.getProperty("SAUCE_USERNAME") != null) {
             driverProvider = new SauceWebDriverProvider();
             formats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
-            contextView = new ContextView.NULL();
-            crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider));
+            contextView = new SauceLabsContextView(driverProvider);
+            crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider, seleniumContext));
         } else if (System.getProperty("REMOTE") != null) {
             driverProvider = new RemoteWebDriverProvider();
             formats = new Format[] { CONSOLE, WEB_DRIVER_HTML };
