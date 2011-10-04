@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.Future;
 
 import org.jbehave.core.annotations.AfterStories;
+import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.embedder.StoryControls;
@@ -39,6 +40,7 @@ import org.picocontainer.Characteristics;
 import org.picocontainer.ComponentFactory;
 import org.picocontainer.MutablePicoContainer;
 import org.picocontainer.PicoBuilder;
+import org.picocontainer.behaviors.Storing;
 import org.picocontainer.behaviors.ThreadCaching;
 import org.picocontainer.classname.ClassLoadingPicoContainer;
 import org.picocontainer.classname.ClassName;
@@ -97,14 +99,15 @@ public class EtsyDotComStories extends JUnitStories {
                 .useStoryReporterBuilder(reporterBuilder);
         useConfiguration(configuration);
 
-        MutablePicoContainer primordial = new PicoBuilder().withBehaviors(new ThreadCaching()).build();
+        final ThreadCaching primordialCaching = new ThreadCaching();
+        MutablePicoContainer primordial = new PicoBuilder().withBehaviors(primordialCaching).build();
         primordial.addComponent(WebDriverProvider.class, driverProvider);
 
         // Groovy Steps - can be stateful per story.
-        ComponentFactory cf = new ThreadCaching().wrap(new CompositeInjection(new ConstructorInjection(),
+        final Storing store = (Storing) new Storing().wrap(new CompositeInjection(new ConstructorInjection(),
                 new SetterInjection("set", "setMetaClass")));
         ClassLoader currentClassLoader = this.getClass().getClassLoader();
-        final DefaultClassLoadingPicoContainer pageObjects = new DefaultClassLoadingPicoContainer(currentClassLoader, cf, primordial);
+        final DefaultClassLoadingPicoContainer pageObjects = new DefaultClassLoadingPicoContainer(currentClassLoader, store, primordial);
         pageObjects.change(Characteristics.USE_NAMES);
         // This loads all the Groovy page objects - can be stateful
         pageObjects.visit(new ClassName("pages.Home"), ".*\\.class", true,
@@ -115,12 +118,19 @@ public class EtsyDotComStories extends JUnitStories {
                 });
 
         ClassLoadingPicoContainer steps = pageObjects.makeChildContainer("steps");
+        steps.addComponent(new Object() {
+            @BeforeStory
+            public void resetThreadLocalCaches() {
+                store.resetCacheForThread();
+            }
+        });
         steps.addComponent(new ClassName("HousekeepingSteps"));
         steps.addComponent(new ClassName("EtsyDotComSteps"));
         // Before And After Steps registered by instance
         steps.addComponent(new PerStoryWebDriverSteps(driverProvider));
         steps.addComponent(new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()));
         steps.addComponent(new PerStoriesContextView(contextView));
+
 
         useStepsFactory(new PicoStepsFactory(configuration, steps));
 
