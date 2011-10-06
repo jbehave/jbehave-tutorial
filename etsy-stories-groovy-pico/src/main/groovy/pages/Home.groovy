@@ -3,8 +3,9 @@ package pages
 import java.util.concurrent.TimeUnit
 import org.jbehave.web.selenium.WebDriverProvider
 import org.openqa.selenium.By
+import org.jbehave.web.selenium.GroovyGebFluentWebDriverPage
 
-class Home extends BasePage{
+class Home extends GroovyGebFluentWebDriverPage {
 
   def Home(WebDriverProvider webDriverProvider) {
     super(webDriverProvider)

@@ -1,8 +1,9 @@
 package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
+import org.jbehave.web.selenium.GroovyGebFluentWebDriverPage
 
-class CartContents extends BasePage {
+class CartContents extends GroovyGebFluentWebDriverPage {
 
   Site site
 

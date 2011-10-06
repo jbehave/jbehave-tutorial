@@ -2,13 +2,13 @@ package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
 import org.openqa.selenium.By
+import org.jbehave.web.selenium.GroovyGebFluentWebDriverPage
 
-class SearchResults extends BasePage{
+class SearchResults extends GroovyGebFluentWebDriverPage {
 
   def SearchResults(WebDriverProvider webDriverProvider) {
     super(webDriverProvider)
   }
-
 
   def buyFirst(String thing) {
     List elements = getElems()
@@ -21,7 +21,7 @@ class SearchResults extends BasePage{
         def ix = getCurrentUrl().indexOf("/listing/") + 9
         def id = getCurrentUrl().substring(ix, ix + 8)
         id.isNumber().shouldBe true, "no listing found"
-        def buyButton = $("input", value : 'Add to Cart').firstElement()
+        def buyButton = findElement(By.xpath("//input[@value = 'Add to Cart']"))
         buyButton.click()
         return id
       }

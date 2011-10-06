@@ -118,12 +118,7 @@ public class EtsyDotComStories extends JUnitStories {
                 });
 
         ClassLoadingPicoContainer steps = pageObjects.makeChildContainer("steps");
-        steps.addComponent(new Object() {
-            @BeforeStory
-            public void resetThreadLocalCaches() {
-                store.resetCacheForThread();
-            }
-        });
+        steps.addComponent(new CacheFlusher(store));
         steps.addComponent(new ClassName("HousekeepingSteps"));
         steps.addComponent(new ClassName("EtsyDotComSteps"));
         // Before And After Steps registered by instance
@@ -197,4 +192,16 @@ public class EtsyDotComStories extends JUnitStories {
         }
     }
 
+    public static class CacheFlusher {
+        private final Storing store;
+
+        public CacheFlusher(Storing store) {
+            this.store = store;
+        }
+
+        @BeforeStory
+        public void resetThreadLocalCaches() {
+            store.resetCacheForThread();
+        }
+    }
 }

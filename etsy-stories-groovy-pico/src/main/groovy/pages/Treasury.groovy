@@ -2,8 +2,9 @@ package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
 import org.openqa.selenium.By
+import org.jbehave.web.selenium.GroovyGebFluentWebDriverPage
 
-class Treasury extends BasePage{
+class Treasury extends GroovyGebFluentWebDriverPage {
 
   def Treasury(WebDriverProvider webDriverProvider) {
     super(webDriverProvider)

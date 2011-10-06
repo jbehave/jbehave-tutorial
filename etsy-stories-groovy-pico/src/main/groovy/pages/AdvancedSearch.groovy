@@ -2,8 +2,9 @@ package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
 import org.openqa.selenium.support.ui.Select
+import org.jbehave.web.selenium.GroovyGebFluentWebDriverPage
 
-class AdvancedSearch extends BasePage{
+class AdvancedSearch extends GroovyGebFluentWebDriverPage {
 
   def AdvancedSearch(WebDriverProvider webDriverProvider) {
     super(webDriverProvider)

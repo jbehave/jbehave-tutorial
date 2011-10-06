@@ -1,8 +1,9 @@
 package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
+import org.jbehave.web.selenium.GroovyGebFluentWebDriverPage
 
-class Site extends BasePage{
+class Site extends GroovyGebFluentWebDriverPage {
 
   def Site(WebDriverProvider webDriverProvider) {
     super(webDriverProvider)
