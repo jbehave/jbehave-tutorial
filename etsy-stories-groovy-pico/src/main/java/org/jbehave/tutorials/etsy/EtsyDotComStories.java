@@ -12,6 +12,7 @@ import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.embedder.StoryControls;
 import org.jbehave.core.failures.BatchFailures;
 import org.jbehave.core.failures.FailingUponPendingStep;
+import org.jbehave.core.failures.RethrowingFailure;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
@@ -92,7 +93,8 @@ public class EtsyDotComStories extends JUnitStories {
 
         Configuration configuration = new SeleniumConfiguration().useWebDriverProvider(driverProvider)
                 .useSeleniumContext(seleniumContext)
-                .useFailureStrategy(new FailingUponPendingStep())
+                .useFailureStrategy(new RethrowingFailure())
+                .usePendingStepStrategy(new FailingUponPendingStep())
                 .useStoryControls(new StoryControls().doResetStateBeforeScenario(false))
                 .useStepMonitor(new SeleniumStepMonitor(contextView, seleniumContext, crossReference.getStepMonitor()))
                 .useStoryLoader(new LoadFromClasspath(EtsyDotComStories.class))
