@@ -2,9 +2,11 @@ package org.jbehave.tutorials.etsy;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Future;
 
+import com.thoughtworks.xstream.XStream;
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.configuration.Configuration;
@@ -17,6 +19,7 @@ import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
+import org.jbehave.core.model.Story;
 import org.jbehave.core.reporters.CrossReference;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
@@ -38,7 +41,6 @@ import org.jbehave.web.selenium.SeleniumStepMonitor;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
 import org.picocontainer.Characteristics;
-import org.picocontainer.ComponentFactory;
 import org.picocontainer.MutablePicoContainer;
 import org.picocontainer.PicoBuilder;
 import org.picocontainer.behaviors.Storing;
@@ -61,21 +63,26 @@ public class EtsyDotComStories extends JUnitStories {
 
     public EtsyDotComStories() {
 
-        CrossReference crossReference = new CrossReference() {
+        final java.util.Map<String, String> storyToSauceUrlMap = new HashMap<String, String>();
+
+        CrossReference crossReference = new SauceContextOutput.SauceLabsCrossReference(storyToSauceUrlMap) {
             public String getMetaFilter() {
                 return metaFilter;
             }
+
         }.withJsonOnly().withOutputAfterEachStory(true).excludingStoriesWithNoExecutedScenarios(true);
 
         SeleniumContext seleniumContext = new SeleniumContext();
         WebDriverProvider driverProvider;
         Format[] formats;
         ContextView contextView;
+
+
         if (System.getProperty("SAUCE_USERNAME") != null) {
             driverProvider = new SauceWebDriverProvider();
             formats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
             contextView = new SauceLabsContextView(driverProvider);
-            crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider, seleniumContext));
+            crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider, seleniumContext, storyToSauceUrlMap));
         } else if (System.getProperty("REMOTE") != null) {
             driverProvider = new RemoteWebDriverProvider();
             formats = new Format[] { CONSOLE, WEB_DRIVER_HTML };
@@ -206,4 +213,7 @@ public class EtsyDotComStories extends JUnitStories {
             store.resetCacheForThread();
         }
     }
+
+
+
 }
