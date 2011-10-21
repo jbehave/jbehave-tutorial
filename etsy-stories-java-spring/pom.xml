@@ -12,6 +12,7 @@
   <description>JBehave stories verifying functionality of Etsy.com using Java and Spring</description>
 
   <properties>
+    <ignore.failure.in.stories>true</ignore.failure.in.stories>
     <meta.filter></meta.filter>
     <threads>1</threads>
     <skip>false</skip>
@@ -129,7 +130,7 @@
               </includes>
               <excludes />
               <generateViewAfterStories>true</generateViewAfterStories>
-              <ignoreFailureInStories>true</ignoreFailureInStories>
+              <ignoreFailureInStories>${ignore.failure.in.stories}</ignoreFailureInStories>
               <ignoreFailureInView>false</ignoreFailureInView>
               <threads>${threads}</threads>
               <skip>${skip}</skip>
@@ -210,6 +211,12 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+    <profile>
+      <id>fail-fast</id>
+      <properties>
+        <ignore.failure.in.stories>false</ignore.failure.in.stories>
+      </properties>
     </profile>
   </profiles>
 </project>
