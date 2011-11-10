@@ -13,8 +13,8 @@
 
   <properties>
     <gmaven.version>1.3</gmaven.version>
-    <groovy.version>1.8.3</groovy.version>
-    <selenium.version>2.8.0</selenium.version> <!-- See also hard coded 2.8.0 in EtsyDotcomStories for SauceLabs -->
+    <groovy.version>1.8.4</groovy.version>
+    <selenium.version>2.11.0</selenium.version> <!-- See also hard coded 2.8.0 in EtsyDotcomStories for SauceLabs -->
     <ignore.failure.in.stories>true</ignore.failure.in.stories>
     <meta.filter></meta.filter>
     <threads>1</threads>
@@ -38,7 +38,7 @@
       <dependency>
         <groupId>org.seleniumhq.selenium.fluent</groupId>
         <artifactId>fluent-selenium</artifactId>
-        <version>1.0-beta-3</version>
+        <version>1.0-beta-4</version>
         <optional>true</optional>
       </dependency>
     <dependency>
@@ -118,7 +118,7 @@
     <dependency>
       <groupId>org.codehaus.geb</groupId>
       <artifactId>geb-core</artifactId>
-      <version>0.6.0</version>
+      <version>0.6.1</version>
     </dependency>
   </dependencies>
 
