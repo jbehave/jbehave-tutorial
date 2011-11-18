@@ -2,6 +2,7 @@ package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
 import org.jbehave.web.selenium.GroovyGebFluentWebDriverPage
+import org.openqa.selenium.By
 
 class CartContents extends GroovyGebFluentWebDriverPage {
 
@@ -23,6 +24,6 @@ class CartContents extends GroovyGebFluentWebDriverPage {
 
   def removeItem() {
     go "http://www.etsy.com/cart"
-    $("a", rel: 'remove').click()
+    findElement(By.cssSelector("li.action-remove")).findElement(By.tagName("a")).click()
   }
 }

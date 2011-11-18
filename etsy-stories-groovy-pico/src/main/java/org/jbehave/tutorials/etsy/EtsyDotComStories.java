@@ -77,7 +77,6 @@ public class EtsyDotComStories extends JUnitStories {
         Format[] formats;
         ContextView contextView;
 
-
         if (System.getProperty("SAUCE_USERNAME") != null) {
             driverProvider = new SauceWebDriverProvider();
             formats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
