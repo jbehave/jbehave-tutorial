@@ -40,6 +40,7 @@ import org.jbehave.web.selenium.SeleniumContextOutput;
 import org.jbehave.web.selenium.SeleniumStepMonitor;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.picocontainer.Characteristics;
 import org.picocontainer.MutablePicoContainer;
 import org.picocontainer.PicoBuilder;
@@ -55,6 +56,7 @@ import org.picocontainer.injectors.SetterInjection;
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 import static org.jbehave.core.reporters.Format.CONSOLE;
+import static org.jbehave.web.selenium.RemoteWebDriverProvider.defaultDesiredCapabilities;
 import static org.jbehave.web.selenium.WebDriverHtmlOutput.WEB_DRIVER_HTML;
 
 public class EtsyDotComStories extends JUnitStories {
@@ -78,7 +80,9 @@ public class EtsyDotComStories extends JUnitStories {
         ContextView contextView;
 
         if (System.getProperty("SAUCE_USERNAME") != null) {
-            driverProvider = new SauceWebDriverProvider();
+            DesiredCapabilities dc = defaultDesiredCapabilities();
+            dc.setCapability("selenium-version", "2.13.0");
+            driverProvider = new SauceWebDriverProvider(dc);
             formats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
             contextView = new SauceLabsContextView(driverProvider);
             crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider, seleniumContext, storyToSauceUrlMap));
