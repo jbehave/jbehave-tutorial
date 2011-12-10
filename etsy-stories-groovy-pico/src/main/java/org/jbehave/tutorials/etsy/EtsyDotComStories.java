@@ -4,22 +4,18 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Future;
 
-import com.thoughtworks.xstream.XStream;
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.embedder.StoryControls;
-import org.jbehave.core.failures.BatchFailures;
 import org.jbehave.core.failures.FailingUponPendingStep;
 import org.jbehave.core.failures.RethrowingFailure;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
-import org.jbehave.core.model.Story;
 import org.jbehave.core.reporters.CrossReference;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
@@ -137,8 +133,6 @@ public class EtsyDotComStories extends JUnitStories {
         steps.addComponent(new PerStoryWebDriverSteps(driverProvider));
         steps.addComponent(new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()));
         steps.addComponent(new PerStoriesContextView(contextView));
-
-
         useStepsFactory(new PicoStepsFactory(configuration, steps));
 
     }
@@ -152,10 +146,7 @@ public class EtsyDotComStories extends JUnitStories {
 
         Embedder embedder = configuredEmbedder();
         if (System.getProperty("WEB_QUEUE") != null) {
-            List<Future<Embedder.ThrowableStory>> futures = new ArrayList<Future<Embedder.ThrowableStory>>();
-            BatchFailures batchFailures = new BatchFailures();
             String path = codeLocationFromClass(EtsyDotComStories.class).getPath();
-            WebQueue queue = null;
             try {
                 File navigatorDir = new File(new File(path).getParentFile().getParentFile(), "target/jbehave/view");
                 WebQueueConfiguration webConfiguration = new WebQueueConfiguration();
@@ -166,7 +157,7 @@ public class EtsyDotComStories extends JUnitStories {
                 } else {
                     webConfiguration.usePort(Integer.parseInt(port));
                 }
-                queue = new WebQueue(embedder, batchFailures, futures, webConfiguration);
+                WebQueue queue = new WebQueue(embedder, webConfiguration);
                 queue.start();
             } catch (Throwable e) {
                 e.printStackTrace();
