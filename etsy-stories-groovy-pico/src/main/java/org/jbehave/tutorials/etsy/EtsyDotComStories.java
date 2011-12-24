@@ -1,14 +1,11 @@
 package org.jbehave.tutorials.etsy;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.configuration.Configuration;
-import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.embedder.StoryControls;
 import org.jbehave.core.failures.FailingUponPendingStep;
 import org.jbehave.core.failures.RethrowingFailure;
@@ -20,8 +17,6 @@ import org.jbehave.core.reporters.CrossReference;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
-import org.jbehave.web.queue.WebQueue;
-import org.jbehave.web.queue.WebQueueConfiguration;
 import org.jbehave.web.selenium.ContextView;
 import org.jbehave.web.selenium.FirefoxWebDriverProvider;
 import org.jbehave.web.selenium.LocalFrameContextView;
@@ -52,7 +47,6 @@ import org.picocontainer.injectors.SetterInjection;
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 import static org.jbehave.core.reporters.Format.CONSOLE;
-import static org.jbehave.web.selenium.RemoteWebDriverProvider.defaultDesiredCapabilities;
 import static org.jbehave.web.selenium.WebDriverHtmlOutput.WEB_DRIVER_HTML;
 
 public class EtsyDotComStories extends JUnitStories {
@@ -76,7 +70,7 @@ public class EtsyDotComStories extends JUnitStories {
         ContextView contextView;
 
         if (System.getProperty("SAUCE_USERNAME") != null) {
-            DesiredCapabilities dc = defaultDesiredCapabilities();
+            DesiredCapabilities dc = RemoteWebDriverProvider.defaultDesiredCapabilities();
             dc.setCapability("selenium-version", "2.13.0");
             driverProvider = new SauceWebDriverProvider(dc);
             formats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
@@ -138,45 +132,7 @@ public class EtsyDotComStories extends JUnitStories {
     }
 
     @Override
-    public void run() {
-
-        // only available post instantiation because of the way the jbehave
-        // maven plugin decorates an instance with configuration
-        metaFilter = super.configuredEmbedder().metaFilters().toString();
-
-        Embedder embedder = configuredEmbedder();
-        if (System.getProperty("WEB_QUEUE") != null) {
-            String path = codeLocationFromClass(EtsyDotComStories.class).getPath();
-            try {
-                File navigatorDir = new File(new File(path).getParentFile().getParentFile(), "target/jbehave/view");
-                WebQueueConfiguration webConfiguration = new WebQueueConfiguration();
-                webConfiguration.useNavigatorDirectory(navigatorDir);
-                String port = System.getProperty("jetty.port");
-                if (port == null) {
-                    webConfiguration.usePort(8090);
-                } else {
-                    webConfiguration.usePort(Integer.parseInt(port));
-                }
-                WebQueue queue = new WebQueue(embedder, webConfiguration);
-                queue.start();
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-            try {
-                Thread.sleep(Long.MAX_VALUE);
-            } catch (InterruptedException e) {
-            }
-        } else {
-            embedder.runStoriesAsPaths(storyPaths());
-        }
-
-    }
-
-    @Override
     protected List<String> storyPaths() {
-        if (System.getProperty("WEB_QUEUE") != null) {
-            return new ArrayList<String>();
-        }
         return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/" + System.getProperty("storyFilter", "*")
                 + ".story"), null);
     }
