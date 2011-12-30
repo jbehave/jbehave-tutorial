@@ -70,9 +70,7 @@ public class EtsyDotComStories extends JUnitStories {
         ContextView contextView;
 
         if (System.getProperty("SAUCE_USERNAME") != null) {
-            DesiredCapabilities dc = RemoteWebDriverProvider.defaultDesiredCapabilities();
-            dc.setCapability("selenium-version", "2.13.0");
-            driverProvider = new SauceWebDriverProvider(dc);
+            driverProvider = new SauceWebDriverProvider();
             formats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
             contextView = new SauceLabsContextView(driverProvider);
             crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider, seleniumContext, storyToSauceUrlMap));
