@@ -35,12 +35,12 @@
         </exclusion>
       </exclusions>
     </dependency>
-      <dependency>
-        <groupId>org.seleniumhq.selenium.fluent</groupId>
-        <artifactId>fluent-selenium</artifactId>
-        <version>1.0-beta-4</version>
-        <optional>true</optional>
-      </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium.fluent</groupId>
+      <artifactId>fluent-selenium</artifactId>
+      <version>1.0-beta-4</version>
+      <optional>true</optional>
+    </dependency>
     <dependency>
       <groupId>org.jbehave</groupId>
       <artifactId>jbehave-core</artifactId>
@@ -135,6 +135,11 @@
           </configuration>
         </plugin>
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
           <groupId>org.codehaus.gmaven</groupId>
           <artifactId>gmaven-plugin</artifactId>
           <version>${gmaven.version}</version>
@@ -210,11 +215,6 @@
         <directory>${project.build.directory}/resources</directory>
         <filtering>false</filtering>
       </resource>
-      <resource>
-        <directory>${basedir}/src/main/storynavigator</directory>
-        <targetPath>${project.build.directory}/jbehave/view</targetPath>
-        <filtering>false</filtering>
-      </resource>
     </resources>
     <testResources>
       <testResource>
@@ -239,6 +239,32 @@
             </goals>
             <configuration>
               <skip>false</skip>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-resources-core</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/jbehave/view</outputDirectory>
+              <overWriteReleases>true</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+              <excludes>**/*.class</excludes>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.jbehave</groupId>
+                  <artifactId>jbehave-navigator</artifactId>
+                  <version>${jbehave.core.version}</version>
+                </artifactItem>
+              </artifactItems>
             </configuration>
           </execution>
         </executions>
@@ -344,7 +370,7 @@
       </properties>
     </profile>
     <profile>
-      <id>fail-fast</id>      
+      <id>fail-fast</id>
       <properties>
         <ignore.failure.in.stories>false</ignore.failure.in.stories>
       </properties>
