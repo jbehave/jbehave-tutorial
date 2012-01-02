@@ -56,17 +56,6 @@
     </dependency>
     <dependency>
       <groupId>org.jbehave.web</groupId>
-      <artifactId>jbehave-web-queue</artifactId>
-      <version>${jbehave.web.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.jbehave</groupId>
-          <artifactId>jbehave-core</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.jbehave.web</groupId>
       <artifactId>jbehave-web-selenium</artifactId>
       <version>${jbehave.web.version}</version>
       <exclusions>
