@@ -12,8 +12,7 @@
   <name>Etsy.com Stories Web Runner</name>
 
   <properties>
-    <!-- also check parent project for property values -->
-    <jbehave.webapp.name>runner</jbehave.webapp.name>
+    <jbehave.webrunner.name>etsy-stories-runner</jbehave.webrunner.name>
   </properties>
   <dependencies>
     <dependency>
@@ -108,7 +107,7 @@
         <version>7.3.1.v20110307</version>
         <configuration>
           <webAppConfig>
-            <contextPath>/${jbehave.webapp.name}</contextPath>
+            <contextPath>/${jbehave.webrunner.name}</contextPath>
           </webAppConfig>
         </configuration>
       </plugin>

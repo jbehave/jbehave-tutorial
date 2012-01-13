@@ -15,7 +15,7 @@
     <gmaven.version>1.3</gmaven.version>
     <groovy.version>1.8.4</groovy.version>
     <selenium.version>2.13.0</selenium.version> <!-- See also hard coded 2.13.0 in EtsyDotComStories for SauceLabs -->
-    <ignore.failure.in.stories>true</ignore.failure.in.stories>
+    <ignore.failures>true</ignore.failures>
     <meta.filter></meta.filter>
     <threads>1</threads>
     <storyTimeoutInSecs>250</storyTimeoutInSecs>
@@ -286,8 +286,8 @@
               </includes>
               <excludes />
               <generateViewAfterStories>true</generateViewAfterStories>
-              <ignoreFailureInStories>${ignore.failure.in.stories}</ignoreFailureInStories>
-              <ignoreFailureInView>false</ignoreFailureInView>
+              <ignoreFailureInStories>${ignore.failures}</ignoreFailureInStories>
+              <ignoreFailureInView>${ignore.failures}</ignoreFailureInView>
               <threads>${threads}</threads>
               <skip>${skip}</skip>
               <storyTimeoutInSecs>${storyTimeoutInSecs}</storyTimeoutInSecs>
@@ -361,7 +361,7 @@
     <profile>
       <id>fail-fast</id>
       <properties>
-        <ignore.failure.in.stories>false</ignore.failure.in.stories>
+        <ignore.failures>false</ignore.failures>
       </properties>
     </profile>
   </profiles>
