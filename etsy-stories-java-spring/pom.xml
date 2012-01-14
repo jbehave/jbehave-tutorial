@@ -12,6 +12,7 @@
   <description>JBehave stories verifying functionality of Etsy.com using Java and Spring</description>
 
   <properties>
+    <selenium.version>2.16.1</selenium.version>
     <ignore.failures>true</ignore.failures>
     <meta.filter></meta.filter>
     <threads>1</threads>
@@ -48,38 +49,32 @@
       <version>${jbehave.web.version}</version>
       <exclusions>
         <exclusion>
-          <groupId>org.jbehave</groupId>
-          <artifactId>jbehave-core</artifactId>
+          <groupId>org.seleniumhq.selenium</groupId>
+          <artifactId>selenium-java</artifactId>
         </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium.fluent</groupId>
+      <artifactId>fluent-selenium</artifactId>
+      <version>1.0-beta-4</version>
+      <optional>true</optional>
+      <exclusions>
         <exclusion>
           <groupId>org.seleniumhq.selenium</groupId>
-          <artifactId>selenium-remote-control</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.seleniumhq.selenium</groupId>
-          <artifactId>selenium-support</artifactId>
+          <artifactId>selenium-java</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
-      <version>2.5.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-support</artifactId>
-      <version>2.5.0</version>
+      <version>${selenium.version}</version>
     </dependency>
     <dependency>
       <groupId>org.jbehave</groupId>
       <artifactId>jbehave-spring</artifactId>
       <version>${jbehave.core.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.seleniumhq.selenium.fluent</groupId>
-      <artifactId>fluent-selenium</artifactId>
-      <version>1.0-alpha-2</version>
     </dependency>
   </dependencies>
 

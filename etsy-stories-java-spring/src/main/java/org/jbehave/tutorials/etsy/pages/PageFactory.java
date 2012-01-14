@@ -22,7 +22,7 @@ public class PageFactory {
     private final boolean fluentStyle;
 
     public PageFactory(WebDriverProvider webDriverProvider) {
-        this(webDriverProvider, Boolean.parseBoolean(System.getProperty("FLUENT_STYLE", "true")));
+        this(webDriverProvider, Boolean.parseBoolean(System.getProperty("FLUENT_STYLE", "false")));
     }
     
     public PageFactory(WebDriverProvider webDriverProvider, boolean fluentStyle) {
