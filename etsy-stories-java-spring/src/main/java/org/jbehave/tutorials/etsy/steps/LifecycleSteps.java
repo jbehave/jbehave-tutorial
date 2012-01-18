@@ -14,7 +14,7 @@ public class LifecycleSteps extends PerStoryWebDriverSteps {
     @BeforeScenario
     public void emptyCart() {
         try {
-            driverProvider.get().manage().deleteCookieNamed("cart");
+            driverProvider.get().manage().deleteCookieNamed("uaid");
         } catch (WebDriverException e) {
             e.printStackTrace();
         }

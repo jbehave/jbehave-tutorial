@@ -6,4 +6,6 @@ public interface CartContents {
 
     void removeItem();
 
+    int cartSize();
+    
 }

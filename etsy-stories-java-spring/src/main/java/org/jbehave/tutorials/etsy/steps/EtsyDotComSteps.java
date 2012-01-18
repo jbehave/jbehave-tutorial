@@ -68,6 +68,11 @@ public class EtsyDotComSteps {
         assertThat(site.cartSize(), equalTo(0));
     }
 
+    @Then("the cart contents is empty")
+    public void cartContentsIsEmpty() {
+        assertThat(cartContents.cartSize(), equalTo(0));
+    }
+
     @Given("the cart contains one item")
     public void anItemInTheEtsyCart() {
         shoppingForSomethingOnEtsyDotCom("hat", "Knitting");

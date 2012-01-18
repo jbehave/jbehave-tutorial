@@ -11,7 +11,7 @@ public class VanillaBuy extends VanillaPage implements Buy {
     }
 
     public void selectTreasury() {
-        findElement(By.id("treasury-panel-button")).click();
+        findElement(By.linkText("Treasury")).click();
     }
 
 }
