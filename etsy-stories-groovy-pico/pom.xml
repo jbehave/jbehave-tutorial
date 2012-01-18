@@ -13,8 +13,8 @@
 
   <properties>
     <gmaven.version>1.3</gmaven.version>
-    <groovy.version>1.8.4</groovy.version>
-    <selenium.version>2.16.1</selenium.version> <!-- See also hard coded in EtsyDotComStories for SauceLabs -->
+    <groovy.version>1.8.5</groovy.version>
+    <selenium.version>2.17.0</selenium.version> <!-- See also hard coded in EtsyDotComStories for SauceLabs -->
     <ignore.failures>true</ignore.failures>
     <meta.filter></meta.filter>
     <threads>1</threads>
