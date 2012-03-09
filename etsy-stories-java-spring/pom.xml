@@ -12,7 +12,7 @@
   <description>JBehave stories verifying functionality of Etsy.com using Java and Spring</description>
 
   <properties>
-    <selenium.version>2.19.0</selenium.version>
+    <selenium.version>2.20.0</selenium.version>
     <ignore.failures>true</ignore.failures>
     <meta.filter></meta.filter>
     <threads>1</threads>
