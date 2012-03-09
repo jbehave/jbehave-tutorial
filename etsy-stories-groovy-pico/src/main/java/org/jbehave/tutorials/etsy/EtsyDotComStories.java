@@ -30,6 +30,7 @@ import org.jbehave.web.selenium.SeleniumContext;
 import org.jbehave.web.selenium.SeleniumContextOutput;
 import org.jbehave.web.selenium.SeleniumStepMonitor;
 import org.jbehave.web.selenium.WebDriverProvider;
+import org.jbehave.web.selenium.WebDriverPageDumpOnFailure;
 import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
 import org.picocontainer.Characteristics;
 import org.picocontainer.MutablePicoContainer;
@@ -123,6 +124,7 @@ public class EtsyDotComStories extends JUnitStories {
         // Before And After Steps registered by instance
         steps.addComponent(new PerStoryWebDriverSteps(driverProvider));
         steps.addComponent(new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()));
+        steps.addComponent(new WebDriverPageDumpOnFailure(driverProvider, configuration.storyReporterBuilder()));
         steps.addComponent(new PerStoriesContextView(contextView));
         useStepsFactory(new PicoStepsFactory(configuration, steps));
 
