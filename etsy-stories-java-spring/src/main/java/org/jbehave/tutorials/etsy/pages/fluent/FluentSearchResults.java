@@ -5,9 +5,11 @@ import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.WebElement;
 import org.seleniumhq.selenium.fluent.FluentMatcher;
 import org.seleniumhq.selenium.fluent.FluentWebElements;
+import org.seleniumhq.selenium.fluent.Period;
 
 import static org.openqa.selenium.By.className;
 import static org.openqa.selenium.By.xpath;
+import static org.seleniumhq.selenium.fluent.Period.secs;
 
 public class FluentSearchResults extends FluentPage implements SearchResults {
 
@@ -30,7 +32,7 @@ public class FluentSearchResults extends FluentPage implements SearchResults {
 
 
     private FluentWebElements getResultElements() {
-        return links(className("listing-thumb"));
+        return within(secs(2)).links(className("listing-thumb"));
     }
 
     private FluentMatcher lowerCaseTitleContaining(final String thing) {
