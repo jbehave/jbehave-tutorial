@@ -14,7 +14,6 @@
   <properties>
     <gmaven.version>1.3</gmaven.version>
     <groovy.version>1.8.6</groovy.version>
-    <selenium.version>2.20.0</selenium.version> <!-- See also hard coded in EtsyDotComStories for SauceLabs -->
     <ignore.failures>true</ignore.failures>
     <meta.filter></meta.filter>
     <threads>1</threads>
@@ -51,7 +50,7 @@
     <dependency>
       <groupId>org.seleniumhq.selenium.fluent</groupId>
       <artifactId>fluent-selenium</artifactId>
-      <version>1.0-beta-4</version>
+      <version>${fluent.selenium.version}</version>
       <optional>true</optional>
       <exclusions>
         <exclusion>
@@ -244,7 +243,7 @@
                 <artifactItem>
                   <groupId>org.jbehave</groupId>
                   <artifactId>jbehave-navigator</artifactId>
-                  <version>${jbehave.core.version}</version>
+                  <version>${jbehave.navigator.version}</version>
                 </artifactItem>
               </artifactItems>
             </configuration>

@@ -11,8 +11,11 @@
 
   <properties>
     <jbehave.core.version>3.6-SNAPSHOT</jbehave.core.version>
+    <jbehave.navigator.version>3.6-SNAPSHOT</jbehave.navigator.version>
     <jbehave.web.version>3.5-SNAPSHOT</jbehave.web.version>
     <jbehave.site.version>3.1.1</jbehave.site.version>
+    <fluent.selenium.version>1.0-beta-5-SNAPSHOT</fluent.selenium.version>
+    <selenium.version>2.20.0</selenium.version>
   </properties>
 
   <build>
@@ -91,6 +94,7 @@
       <id>stable</id>
       <properties>
         <jbehave.core.version>3.5.4</jbehave.core.version>
+        <jbehave.navigator.version>3.6-beta-3</jbehave.navigator.version>		
         <jbehave.web.version>3.4.3</jbehave.web.version>
       </properties>
     </profile>

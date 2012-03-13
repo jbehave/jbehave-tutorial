@@ -12,7 +12,6 @@
   <description>JBehave stories verifying functionality of Etsy.com using Java and Spring</description>
 
   <properties>
-    <selenium.version>2.20.0</selenium.version>
     <ignore.failures>true</ignore.failures>
     <meta.filter></meta.filter>
     <threads>1</threads>
@@ -57,7 +56,7 @@
     <dependency>
       <groupId>org.seleniumhq.selenium.fluent</groupId>
       <artifactId>fluent-selenium</artifactId>
-      <version>1.0-beta-4</version>
+      <version>${fluent.selenium.version}</version>
       <optional>true</optional>
       <exclusions>
         <exclusion>
@@ -67,9 +66,31 @@
       </exclusions>
     </dependency>
     <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit-dep</artifactId>
+      <version>4.8.2</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.hamcrest</groupId>
+          <artifactId>hamcrest-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-all</artifactId>
+      <version>1.1</version>
+    </dependency>
+    <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <version>${selenium.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.hamcrest</groupId>
+          <artifactId>hamcrest-core</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jbehave</groupId>

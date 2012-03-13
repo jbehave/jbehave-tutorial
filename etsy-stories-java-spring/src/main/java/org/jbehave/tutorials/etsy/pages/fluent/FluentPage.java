@@ -5,7 +5,7 @@ import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
 import org.seleniumhq.selenium.fluent.*;
 
-public class FluentPage extends WebDriverPage implements FluentWebDriver {
+public abstract class FluentPage extends WebDriverPage implements FluentWebDriver {
 
     public FluentPage(WebDriverProvider driverProvider) {
         super(driverProvider);
@@ -365,5 +365,17 @@ public class FluentPage extends WebDriverPage implements FluentWebDriver {
 
     public FluentWebElements options(By by) {
         return fluentWebDriver().options(by);
+    }
+
+    public FluentWebDriver within(Period period) {
+        return fluentWebDriver().within(period);
+    }
+
+    public TestableString url() {
+        return fluentWebDriver().url();
+    }
+
+    public TestableString title() {
+        return fluentWebDriver().title();
     }
 }
