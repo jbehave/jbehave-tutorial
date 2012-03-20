@@ -18,5 +18,9 @@
   <bean id="lifecycleSteps" class="org.jbehave.tutorials.etsy.steps.LifecycleSteps">
      <constructor-arg ref="driverProvider"/>
   </bean>  
+
+  <bean id="journaledSteps" class="org.jbehave.tutorials.etsy.steps.JournaledStoriesSteps">
+     <constructor-arg ref="driverProvider"/>
+  </bean>  
   
 </beans>
