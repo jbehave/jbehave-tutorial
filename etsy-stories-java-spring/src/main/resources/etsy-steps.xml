@@ -6,7 +6,19 @@
 
   <bean id="driverProvider" class="org.jbehave.web.selenium.FirefoxWebDriverProvider" >
   </bean>
-  
+
+  <bean id="webDriverProvider" class="org.jbehave.web.selenium.PerStoryWebDriverSteps">
+    <constructor-arg ref="driverProvider"/>
+  </bean>
+
+  <bean id="lifecycleSteps" class="org.jbehave.tutorials.etsy.steps.LifecycleSteps">
+    <constructor-arg ref="driverProvider"/>
+  </bean>
+
+  <bean id="journaledSteps" class="org.jbehave.tutorials.etsy.steps.JournaledStoriesSteps">
+    <constructor-arg ref="driverProvider"/>
+  </bean>
+
   <bean id="pageFactory" class="org.jbehave.tutorials.etsy.pages.PageFactory">
      <constructor-arg ref="driverProvider"/>
   </bean>  
@@ -15,12 +27,5 @@
      <constructor-arg ref="pageFactory"/>
   </bean>  
 
-  <bean id="lifecycleSteps" class="org.jbehave.tutorials.etsy.steps.LifecycleSteps">
-     <constructor-arg ref="driverProvider"/>
-  </bean>  
 
-  <bean id="journaledSteps" class="org.jbehave.tutorials.etsy.steps.JournaledStoriesSteps">
-     <constructor-arg ref="driverProvider"/>
-  </bean>  
-  
 </beans>
