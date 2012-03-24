@@ -5,6 +5,9 @@ import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
 import org.seleniumhq.selenium.fluent.*;
 
+// This is a copy of FluentWebDriverPage from web-selenium.  It is copied so that you can run this tutorial \
+// with a range of web-selenium version dependencies. That version of Web-Selenium is unreleased as yet.
+
 public abstract class FluentPage extends WebDriverPage implements FluentWebDriver {
 
     public FluentPage(WebDriverProvider driverProvider) {
@@ -103,11 +106,11 @@ public abstract class FluentPage extends WebDriverPage implements FluentWebDrive
         return fluentWebDriver().select(by);
     }
 
-    public FluentWebElements selects() {
+    public FluentSelects selects() {
         return fluentWebDriver().selects();
     }
 
-    public FluentWebElements selects(By by) {
+    public FluentSelects selects(By by) {
         return fluentWebDriver().selects(by);
     }
 
@@ -365,6 +368,54 @@ public abstract class FluentPage extends WebDriverPage implements FluentWebDrive
 
     public FluentWebElements options(By by) {
         return fluentWebDriver().options(by);
+    }
+
+    public FluentWebElement fieldset() {
+        return fluentWebDriver().fieldset();
+    }
+
+    public FluentWebElements fieldsets() {
+        return fluentWebDriver().fieldsets();
+    }
+
+    public FluentWebElement fieldset(By by) {
+        return fluentWebDriver().fieldset(by);
+    }
+
+    public FluentWebElements fieldsets(By by) {
+        return fluentWebDriver().fieldsets(by);
+    }
+
+    public FluentWebElement legend() {
+        return fluentWebDriver().legend();
+    }
+
+    public FluentWebElements legends() {
+        return fluentWebDriver().legends();
+    }
+
+    public FluentWebElement legend(By by) {
+        return fluentWebDriver().legend(by);
+    }
+
+    public FluentWebElements legends(By by) {
+        return fluentWebDriver().legends(by);
+    }
+
+    public FluentWebElement map() {
+        return fluentWebDriver().map();
+    }
+
+    public FluentWebElements maps() {
+        return fluentWebDriver().maps();
+    }
+
+    public FluentWebElement map(By by) {
+        return fluentWebDriver().map(by);
+    }
+
+    public FluentWebElements maps(By by) {
+        return fluentWebDriver().maps(by);
     }
 
     public FluentWebDriver within(Period period) {
