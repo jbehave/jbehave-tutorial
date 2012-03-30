@@ -145,7 +145,6 @@
                 <include>${stories}</include>
               </includes>
               <excludes />
-              <generateViewAfterStories>true</generateViewAfterStories>
               <ignoreFailureInStories>${ignore.failures}</ignoreFailureInStories>
               <ignoreFailureInView>${ignore.failures}</ignoreFailureInView>
               <threads>${threads}</threads>
