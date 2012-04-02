@@ -10,9 +10,9 @@
   <name>JBehave Tutorial using Etsy.com</name>
 
   <properties>
-    <jbehave.core.version>3.6</jbehave.core.version>
-    <jbehave.navigator.version>3.6</jbehave.navigator.version>
-    <jbehave.web.version>3.5</jbehave.web.version>
+    <jbehave.core.version>3.7-SNAPSHOT</jbehave.core.version>
+    <jbehave.navigator.version>3.7-SNAPSHOT</jbehave.navigator.version>
+    <jbehave.web.version>3.6-SNAPSHOT</jbehave.web.version>
     <jbehave.site.version>3.1.1</jbehave.site.version>
     <fluent.selenium.version>1.5.1</fluent.selenium.version>
     <selenium.version>2.20.0</selenium.version>
@@ -94,7 +94,7 @@
       <id>stable</id>
       <properties>
         <jbehave.core.version>3.6</jbehave.core.version>
-        <jbehave.navigator.version>3.6</jbehave.navigator.version>		
+        <jbehave.navigator.version>3.6</jbehave.navigator.version>
         <jbehave.web.version>3.5</jbehave.web.version>
       </properties>
     </profile>

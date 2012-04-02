@@ -1,7 +1,18 @@
 package org.jbehave.tutorials.etsy.pages;
 
-public interface Treasury {
+import org.jbehave.web.selenium.FluentWebDriverPage;
+import org.jbehave.web.selenium.WebDriverProvider;
 
-    void chooseFirstGallery();
+import static org.openqa.selenium.By.className;
+
+public class Treasury extends FluentWebDriverPage {
+
+    public Treasury(WebDriverProvider webDriverProvider) {
+        super(webDriverProvider);
+    }
+
+    public void chooseFirstGallery() {
+        div(className("item-treasury-info-box")).h3().link().click();
+    }
 
 }

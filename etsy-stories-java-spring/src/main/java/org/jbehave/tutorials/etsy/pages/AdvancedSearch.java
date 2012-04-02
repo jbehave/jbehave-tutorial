@@ -1,15 +1,38 @@
 package org.jbehave.tutorials.etsy.pages;
 
-public interface AdvancedSearch {
+import org.jbehave.web.selenium.FluentWebDriverPage;
+import org.jbehave.web.selenium.WebDriverProvider;
 
-    void go();
+import static org.openqa.selenium.By.className;
+import static org.openqa.selenium.By.id;
+import static org.openqa.selenium.By.xpath;
 
-    void go(String section);
+public class AdvancedSearch extends FluentWebDriverPage {
 
-    void search(String thing);
+    public AdvancedSearch(WebDriverProvider webDriverProvider) {
+        super(webDriverProvider);
+    }
 
-    void subCategory(String subCategory);
+    public void go() {
+        get("http://www.etsy.com/search_advanced.php");
+    }
 
-    void searchFor(String thing);
+    public void go(String section) {
+        go();
+        link(xpath("@title = '" + section + "'")).click();
+    }
 
+    public void search(String thing) {
+        input(id("search-query")).sendKeys(thing);
+        input(id("search_submit")).click();
+    }
+
+    public void subCategory(String subCategory) {
+        select(className("handmade")).selectByValue(subCategory.toLowerCase());
+    }
+
+    public void searchFor(String thing) {
+        input(id("search_query")).sendKeys(thing).submit();
+    }
+    
 }

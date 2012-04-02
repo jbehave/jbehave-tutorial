@@ -1,7 +1,16 @@
 package org.jbehave.tutorials.etsy.pages;
 
-public interface Buy {
+import org.jbehave.web.selenium.FluentWebDriverPage;
+import org.jbehave.web.selenium.WebDriverProvider;
+import org.openqa.selenium.By;
 
-    void selectTreasury();
+public class Buy extends FluentWebDriverPage {
 
+    public Buy(WebDriverProvider webDriverProvider) {
+        super(webDriverProvider);
+    }
+
+    public void selectTreasury() {
+        link(By.linkText("Treasury")).click();
+    }
 }

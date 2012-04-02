@@ -243,7 +243,7 @@
                 <artifactItem>
                   <groupId>org.jbehave</groupId>
                   <artifactId>jbehave-navigator</artifactId>
-                  <version>${jbehave.navigator.version}</version>
+                  <version>${jbehave.core.version}</version>
                 </artifactItem>
               </artifactItems>
             </configuration>
@@ -277,7 +277,6 @@
                 <include>${stories}</include>
               </includes>
               <excludes />
-              <generateViewAfterStories>true</generateViewAfterStories>
               <ignoreFailureInStories>${ignore.failures}</ignoreFailureInStories>
               <ignoreFailureInView>${ignore.failures}</ignoreFailureInView>
               <threads>${threads}</threads>
