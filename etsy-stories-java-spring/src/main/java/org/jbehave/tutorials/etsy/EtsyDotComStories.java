@@ -1,6 +1,7 @@
 package org.jbehave.tutorials.etsy;
 
-import com.google.common.util.concurrent.MoreExecutors;
+import java.util.List;
+
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.embedder.StoryControls;
 import org.jbehave.core.failures.FailingUponPendingStep;
@@ -20,8 +21,6 @@ import org.jbehave.web.selenium.SeleniumContext;
 import org.jbehave.web.selenium.SeleniumContextOutput;
 import org.jbehave.web.selenium.SeleniumStepMonitor;
 import org.springframework.context.ApplicationContext;
-
-import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
@@ -64,9 +63,4 @@ public class EtsyDotComStories extends JUnitStories {
                 + ".story"), null);
     }
 
-    @Override
-    public void run() throws Throwable {
-        configuredEmbedder().useExecutorService(MoreExecutors.sameThreadExecutor());
-        super.run();
-    }
 }

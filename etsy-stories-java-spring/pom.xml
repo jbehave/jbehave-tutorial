@@ -152,6 +152,7 @@
               <metaFilters>
                 <metaFilter>${meta.filter}</metaFilter>
               </metaFilters>
+              <executorsClass>org.jbehave.core.embedder.executors.SameThreadExecutors</executorsClass>
             </configuration>
             <goals>
               <goal>run-stories-as-embeddables</goal>
@@ -186,6 +187,13 @@
             </goals>
           </execution>
         </executions>
+        <dependencies>
+          <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>11.0.1</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
