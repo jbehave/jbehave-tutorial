@@ -7,63 +7,8 @@
   <artifactId>etsy</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>JBehave Tutorial using Etsy.com</name>
-
-  <properties>
-    <jbehave.core.version>3.7-SNAPSHOT</jbehave.core.version>
-    <jbehave.web.version>3.6-SNAPSHOT</jbehave.web.version>
-    <jbehave.site.version>3.1.1</jbehave.site.version>
-    <fluent.selenium.version>1.5.1</fluent.selenium.version>
-    <selenium.version>2.20.0</selenium.version>
-  </properties>
-
-  <build>
-    <pluginManagement>
-      <plugins>
-        <!--This plugin's configuration is used to store Eclipse m2e settings 
-          only. It has no influence on the Maven build itself. -->
-        <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
-          <configuration>
-            <lifecycleMappingMetadata>
-              <pluginExecutions>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <versionRange>[2.1,)</versionRange>
-                    <goals>
-                      <goal>copy</goal>
-                      <goal>unpack</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore></ignore>
-                  </action>
-                </pluginExecution>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>org.jbehave</groupId>
-                    <artifactId>jbehave-maven-plugin</artifactId>
-                    <versionRange>[${jbehave.core.version},)</versionRange>
-                    <goals>
-                      <goal>unpack-view-resources</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore></ignore>
-                  </action>
-                </pluginExecution>
-              </pluginExecutions>
-            </lifecycleMappingMetadata>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-
-  </build>
+  <name>JBehave Tutorials using Etsy.com</name>
+  
   <profiles>
     <profile>
       <id>groovy-pico</id>
@@ -86,15 +31,10 @@
     <profile>
       <id>web-runner</id>
       <modules>
+        <module>etsy-stories-java-spring</module>
         <module>etsy-web-runner</module>
       </modules>
     </profile>
-    <profile>
-      <id>stable</id>
-      <properties>
-        <jbehave.core.version>3.6.1</jbehave.core.version>
-        <jbehave.web.version>3.5.1</jbehave.web.version>
-      </properties>
-    </profile>
   </profiles>
+  
 </project>

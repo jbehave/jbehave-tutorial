@@ -2,16 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.jbehave.tutorials</groupId>
-    <artifactId>etsy</artifactId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
+  <groupId>org.jbehave.tutorials</groupId>
+  <version>1.0-SNAPSHOT</version>
   <artifactId>etsy-stories-groovy-pico</artifactId>
   <name>Etsy.com Stories with Groovy and Pico</name>
   <description>JBehave stories verifying functionality of Etsy.com using Groovy and Pico</description>
 
   <properties>
+    <jbehave.core.version>3.7-SNAPSHOT</jbehave.core.version>
+    <jbehave.web.version>3.6-SNAPSHOT</jbehave.web.version>
+    <jbehave.site.version>3.1.1</jbehave.site.version>
+    <fluent.selenium.version>1.5.1</fluent.selenium.version>
+    <selenium.version>2.20.0</selenium.version>
     <gmaven.version>1.3</gmaven.version>
     <groovy.version>1.8.6</groovy.version>
     <ignore.failures>true</ignore.failures>
@@ -156,6 +158,33 @@
           <configuration>
             <lifecycleMappingMetadata>
               <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <versionRange>[2.1,)</versionRange>
+                    <goals>
+                      <goal>copy</goal>
+                      <goal>unpack</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.jbehave</groupId>
+                    <artifactId>jbehave-maven-plugin</artifactId>
+                    <versionRange>[${jbehave.core.version},)</versionRange>
+                    <goals>
+                      <goal>unpack-view-resources</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
                 <pluginExecution>
                   <pluginExecutionFilter>
                     <groupId>org.codehaus.gmaven</groupId>
@@ -338,6 +367,13 @@
   </build>
 
   <profiles>
+    <profile>
+      <id>stable</id>
+      <properties>
+        <jbehave.core.version>3.6.1</jbehave.core.version>
+        <jbehave.web.version>3.5.1</jbehave.web.version>
+      </properties>
+    </profile>
     <profile>
       <id>saucelabs</id>
       <activation>
