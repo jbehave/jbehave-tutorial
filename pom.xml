@@ -16,7 +16,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
-        <module>etsy-stories-groovy-pico</module>
+        <module>etsy-selenium/groovy-pico</module>
       </modules>
     </profile>
     <profile>
@@ -25,13 +25,13 @@
         <activeByDefault>false</activeByDefault>
       </activation>
       <modules>
-        <module>etsy-stories-java-spring</module>
+        <module>etsy-selenium/java-spring</module>
       </modules>
     </profile>
     <profile>
       <id>web-runner</id>
       <modules>
-        <module>etsy-stories-java-spring</module>
+        <module>etsy-selenium/java-spring</module>
         <module>etsy-web-runner</module>
       </modules>
     </profile>
