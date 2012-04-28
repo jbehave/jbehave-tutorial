@@ -1,6 +1,6 @@
 # JBehave Selenium Tutorials on the Etsy.com website
 
-These tutorial projects use [jbehave-core](http://github.com/jbehave/jbehave-core), [jbehave-web](http://github.com/jbehave/jbehave-web), and [Selenium2](http://seleniumhq.org/) to test the public website [etsy.com](http://etsy.com) to test it's shopping cart.
+These tutorial projects use [jbehave-core](http://github.com/jbehave/jbehave-core), [jbehave-web](http://github.com/jbehave/jbehave-web), and [Selenium](http://seleniumhq.org/) to test the public website [etsy.com](http://etsy.com) to test it's shopping cart.
 
 <img src="http://jbehave.org/reference/preview/images/jbehave-logo.png" alt="JBehave logo" align="right" />
 
