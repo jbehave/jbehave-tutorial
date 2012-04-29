@@ -30,8 +30,13 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  
+
   <dependencies>
+    <dependency>
+      <groupId>org.jbehave</groupId>
+      <artifactId>jbehave-core</artifactId>
+      <version>${jbehave.core.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.jbehave</groupId>
       <artifactId>jbehave-core</artifactId>
@@ -50,6 +55,10 @@
       <artifactId>jbehave-web-selenium</artifactId>
       <version>${jbehave.web.version}</version>
       <exclusions>
+        <exclusion>
+          <groupId>org.jbehave</groupId>
+          <artifactId>jbehave-core</artifactId>
+        </exclusion>
         <exclusion>
           <groupId>org.seleniumhq.selenium</groupId>
           <artifactId>selenium-java</artifactId>
