@@ -5,6 +5,7 @@ import java.util.List;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.embedder.StoryControls;
 import org.jbehave.core.failures.FailingUponPendingStep;
+import org.jbehave.core.failures.PendingStepStrategy;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
@@ -28,9 +29,10 @@ import static org.jbehave.core.reporters.Format.CONSOLE;
 import static org.jbehave.web.selenium.WebDriverHtmlOutput.WEB_DRIVER_HTML;
 
 public class EtsyDotComStories extends JUnitStories {
-    
-    CrossReference crossReference = new CrossReference().withJsonOnly().withOutputAfterEachStory(true)
-            .excludingStoriesWithNoExecutedScenarios(true);
+
+    PendingStepStrategy pendingStepStrategy = new FailingUponPendingStep();
+    CrossReference crossReference = new CrossReference().withJsonOnly().withPendingStepStrategy(pendingStepStrategy)
+            .withOutputAfterEachStory(true).excludingStoriesWithNoExecutedScenarios(true);
     ContextView contextView = new LocalFrameContextView().sized(640, 120);
     SeleniumContext seleniumContext = new SeleniumContext();
     SeleniumStepMonitor stepMonitor = new SeleniumStepMonitor(contextView, seleniumContext,
@@ -40,11 +42,11 @@ public class EtsyDotComStories extends JUnitStories {
             .withCodeLocation(codeLocationFromClass(EtsyDotComStories.class)).withFailureTrace(true)
             .withFailureTraceCompression(true).withDefaultFormats().withFormats(formats)
             .withCrossReference(crossReference);
-    
+
     @Override
     public Configuration configuration() {
         return new SeleniumConfiguration().useSeleniumContext(seleniumContext)
-                .useFailureStrategy(new FailingUponPendingStep())
+                .usePendingStepStrategy(pendingStepStrategy)
                 .useStoryControls(new StoryControls().doResetStateBeforeScenario(false)).useStepMonitor(stepMonitor)
                 .useStoryLoader(new LoadFromClasspath(EtsyDotComStories.class))
                 .useStoryReporterBuilder(reporterBuilder);
@@ -56,11 +58,10 @@ public class EtsyDotComStories extends JUnitStories {
         return new SpringStepsFactory(configuration(), context);
     }
 
-
     @Override
     protected List<String> storyPaths() {
-        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/" + System.getProperty("storyFilter", "*")
-                + ".story"), null);
+        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(),
+                asList("**/" + System.getProperty("storyFilter", "*") + ".story"), null);
     }
 
 }
