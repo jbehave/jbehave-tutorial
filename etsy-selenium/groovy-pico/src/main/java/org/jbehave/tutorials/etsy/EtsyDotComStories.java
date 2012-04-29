@@ -51,19 +51,16 @@ import static org.jbehave.web.selenium.WebDriverHtmlOutput.WEB_DRIVER_HTML;
 
 public class EtsyDotComStories extends JUnitStories {
 
-    private String metaFilter;
-
-    public EtsyDotComStories() {
+    @Override
+    public Configuration configuration() {
 
         PendingStepStrategy pendingStepStrategy = new FailingUponPendingStep();
-        CrossReference crossReference = new SauceContextOutput.SauceLabsCrossReference(new HashMap<String, String>()) {
-            public String getMetaFilter() {
-                return metaFilter;
-            }
-        }.withJsonOnly().withOutputAfterEachStory(true).withPendingStepStrategy(pendingStepStrategy)
+        SeleniumContext seleniumContext = new SeleniumContext();
+
+        CrossReference crossReference = new SauceContextOutput.SauceLabsCrossReference(new HashMap<String, String>())
+        .withJsonOnly().withOutputAfterEachStory(true).withPendingStepStrategy(pendingStepStrategy)
                 .excludingStoriesWithNoExecutedScenarios(true);
 
-        SeleniumContext seleniumContext = new SeleniumContext();
         WebDriverProvider driverProvider;
         Format[] formats;
         ContextView contextView;
@@ -96,7 +93,6 @@ public class EtsyDotComStories extends JUnitStories {
                 .useStepMonitor(new SeleniumStepMonitor(contextView, seleniumContext, crossReference.getStepMonitor()))
                 .useStoryLoader(new LoadFromClasspath(EtsyDotComStories.class))
                 .useStoryReporterBuilder(reporterBuilder);
-        useConfiguration(configuration);
 
         final ThreadCaching primordialCaching = new ThreadCaching();
         MutablePicoContainer primordial = new PicoBuilder().withBehaviors(primordialCaching).build();
@@ -129,8 +125,9 @@ public class EtsyDotComStories extends JUnitStories {
         steps.addComponent(new PerStoriesContextView(contextView));
         useStepsFactory(new PicoStepsFactory(configuration, steps));
 
+        return configuration;
     }
-
+    
     @Override
     protected List<String> storyPaths() {
         return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(),
