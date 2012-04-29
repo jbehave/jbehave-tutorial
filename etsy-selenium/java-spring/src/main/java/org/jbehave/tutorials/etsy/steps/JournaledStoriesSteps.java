@@ -1,12 +1,8 @@
 package org.jbehave.tutorials.etsy.steps;
 
 import org.jbehave.core.annotations.AfterStories;
-import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.web.selenium.FirefoxWebDriverProvider;
-import org.jbehave.web.selenium.PerStoriesWebDriverSteps;
 import org.jbehave.web.selenium.WebDriverProvider;
-import org.openqa.selenium.WebDriver;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class JournaledStoriesSteps {
 
