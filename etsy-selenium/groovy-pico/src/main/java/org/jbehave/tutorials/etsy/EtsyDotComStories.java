@@ -1,8 +1,5 @@
 package org.jbehave.tutorials.etsy;
 
-import java.util.HashMap;
-import java.util.List;
-
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.configuration.Configuration;
@@ -30,7 +27,6 @@ import org.jbehave.web.selenium.SeleniumContext;
 import org.jbehave.web.selenium.SeleniumContextOutput;
 import org.jbehave.web.selenium.SeleniumStepMonitor;
 import org.jbehave.web.selenium.WebDriverProvider;
-//import org.jbehave.web.selenium.WebDriverPageDumpOnFailure;
 import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
 import org.picocontainer.Characteristics;
 import org.picocontainer.MutablePicoContainer;
@@ -44,10 +40,15 @@ import org.picocontainer.injectors.CompositeInjection;
 import org.picocontainer.injectors.ConstructorInjection;
 import org.picocontainer.injectors.SetterInjection;
 
+import java.util.HashMap;
+import java.util.List;
+
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 import static org.jbehave.core.reporters.Format.CONSOLE;
 import static org.jbehave.web.selenium.WebDriverHtmlOutput.WEB_DRIVER_HTML;
+
+//import org.jbehave.web.selenium.WebDriverPageDumpOnFailure;
 
 public class EtsyDotComStories extends JUnitStories {
 
@@ -62,7 +63,10 @@ public class EtsyDotComStories extends JUnitStories {
                 return metaFilter;
             }
 
-        }.withJsonOnly().withOutputAfterEachStory(true).excludingStoriesWithNoExecutedScenarios(true);
+        }.withJsonOnly()
+                .withOutputAfterEachStory(true)
+                .markPendingStepsAsFailedStories()
+                .excludingStoriesWithNoExecutedScenarios(true);
 
         SeleniumContext seleniumContext = new SeleniumContext();
         WebDriverProvider driverProvider;
