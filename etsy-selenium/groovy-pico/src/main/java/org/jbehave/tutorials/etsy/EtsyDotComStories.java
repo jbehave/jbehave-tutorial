@@ -1,8 +1,5 @@
 package org.jbehave.tutorials.etsy;
 
-import java.util.HashMap;
-import java.util.List;
-
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.configuration.Configuration;
@@ -43,6 +40,9 @@ import org.picocontainer.classname.DefaultClassLoadingPicoContainer;
 import org.picocontainer.injectors.CompositeInjection;
 import org.picocontainer.injectors.ConstructorInjection;
 import org.picocontainer.injectors.SetterInjection;
+
+import java.util.HashMap;
+import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
@@ -131,7 +131,8 @@ public class EtsyDotComStories extends JUnitStories {
     @Override
     protected List<String> storyPaths() {
         return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(),
-                asList("**/" + System.getProperty("storyFilter", "*") + ".story"), null);
+                asList("**/" + System.getProperty("storyFilter", "*") + ".story"),
+                asList("**/its_a_day_with_a_y_in_it.story"));
     }
 
     public static class PerStoriesContextView {
