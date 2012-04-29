@@ -50,9 +50,9 @@ public class EtsyDotComSteps {
     cartIsEmpty();
   }
 
-  @Given("Today has a Y in its name")
-  def today_has_a_y_in_it() {
-      // all days have Y in their name
+  @Given("today has a y in its name")
+  def todayHasAYInItsName() {
+      // all days have y in their name
   }
 
   @Then("the cart will be empty")

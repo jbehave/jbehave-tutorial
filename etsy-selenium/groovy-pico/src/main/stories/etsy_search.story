@@ -12,7 +12,7 @@ I want to search for an item in a sub category
 
 Scenario: Advanced Search for a hat
 
-!-- GivenStories: its_a_day_with_a_y_in_it.story
+GivenStories: etsy_given.story
 
 Given I am searching on Etsy.com
 When I specify the Knitting sub category

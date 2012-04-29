@@ -130,7 +130,7 @@ public class EtsyDotComStories extends JUnitStories {
     protected List<String> storyPaths() {
         return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(),
                 asList("**/" + System.getProperty("storyFilter", "*") + ".story"),
-                asList("**/its_a_day_with_a_y_in_it.story"));
+                asList("**/etsy_given.story"));
     }
 
     public static class PerStoriesContextView {
