@@ -1,6 +1,16 @@
 import com.github.tanob.groobe.GrooBe
-import org.jbehave.core.annotations.*
-import pages.*
+import org.jbehave.core.annotations.Alias
+import org.jbehave.core.annotations.Composite
+import org.jbehave.core.annotations.Given
+import org.jbehave.core.annotations.Then
+import org.jbehave.core.annotations.When
+import pages.AdvancedSearch
+import pages.Buy
+import pages.CartContents
+import pages.Home
+import pages.SearchResults
+import pages.Site
+import pages.Treasury
 
 public class EtsyDotComSteps {
 
@@ -38,6 +48,11 @@ public class EtsyDotComSteps {
   def cartIsEmptyAndOnStartPage() {
     home.go()
     cartIsEmpty();
+  }
+
+  @Given("Today has a Y in its name")
+  def today_has_a_y_in_it() {
+      // all days have Y in their name
   }
 
   @Then("the cart will be empty")
