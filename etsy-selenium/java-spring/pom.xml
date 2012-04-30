@@ -285,8 +285,8 @@
     <profile>
       <id>stable</id>
       <properties>
-        <jbehave.core.version>3.6.1</jbehave.core.version>
-        <jbehave.web.version>3.5.1</jbehave.web.version>
+        <jbehave.core.version>3.6.5</jbehave.core.version>
+        <jbehave.web.version>3.5.3</jbehave.web.version>
       </properties>
     </profile>
     <profile>
