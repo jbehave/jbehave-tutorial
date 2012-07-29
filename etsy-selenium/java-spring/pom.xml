@@ -12,8 +12,8 @@
     <jbehave.core.version>3.7-SNAPSHOT</jbehave.core.version>
     <jbehave.web.version>3.6-SNAPSHOT</jbehave.web.version>
     <jbehave.site.version>3.1.1</jbehave.site.version>
-    <fluent.selenium.version>1.5.1</fluent.selenium.version>
-    <selenium.version>2.21.0</selenium.version>
+    <fluent.selenium.version>1.6.3</fluent.selenium.version>
+    <selenium.version>2.25.0</selenium.version>
     <ignore.failures>true</ignore.failures>
     <meta.filter></meta.filter>
     <threads>1</threads>
