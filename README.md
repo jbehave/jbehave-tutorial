@@ -11,6 +11,26 @@ depending on the language and dependency injection framework used:  Groovy compo
 2. The module 'etsy-web-runner' is a simple webapp that allows generic stories to be run.  Note the app is not multiuser and not does support asynchronous 
 execution.   It is not appropriate to run long-running stories.  It is also useful as a web front-end to the DSL syntax defined in your steps.
 
-## License
+# JBehave Web Runner for Etsy.com
+
+1. Uses the 'etsy-selenium/java-spring' steps and makes them available via the JBehave Web Runner.
+
+# Building with Maven 
+
+The tutorial modules can be built using the following Maven profiles: 
+
+1. groovy-pico
+2. java-spring
+3. web-runner
+
+To run: 
+
+$ mvn clean install -P<profile-id>
+
+To use access the latest snapshot from codehaus: 
+
+$ mvn clean install -s settings.xml -P<profile-id>,codehaus
+
+# License
 
 See LICENSE.txt in the source root (BSD).

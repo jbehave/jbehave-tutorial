@@ -1,0 +1,63 @@
+<settings>
+  <pluginGroups>
+    <pluginGroup>org.jbehave</pluginGroup>
+    <pluginGroup>org.sonatype.plugins</pluginGroup>
+  </pluginGroups>
+  <profiles>
+    <profile>
+      <!-- Required for dependencies of JBehave snapshots -->
+      <id>codehaus</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <repositories>
+        <repository>
+          <id>codehaus-public-repository-group</id>
+          <name>Codehaus Public Repository Group</name>
+          <url>https://nexus.codehaus.org/content/groups/public/</url>
+          <layout>default</layout>
+          <releases>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+          </snapshots>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>codehaus-public-repository-group</id>
+          <name>Codehaus Public Repository Group</name>
+          <url>https://nexus.codehaus.org/content/groups/public/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+    <profile>
+      <!-- Required for dependencies of Google module -->
+      <id>atlassian</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <repositories>
+        <repository>
+          <id>atlassian</id>
+          <url>http://maven.atlassian.com/public</url>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>atlassian</id>
+          <url>http://maven.atlassian.com/public</url>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+</settings>
