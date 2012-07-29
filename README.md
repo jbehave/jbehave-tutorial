@@ -25,11 +25,15 @@ The tutorial modules can be built using the following Maven profiles:
 
 To run: 
 
-$ mvn clean install -P<profile-id>
+$ mvn clean install -P[profile]
+
+To use latest stable versions:
+
+$ mvn clean install -P[profile],stable
 
 To use access the latest snapshot from codehaus: 
 
-$ mvn clean install -s settings.xml -P<profile-id>,codehaus
+$ mvn clean install -s settings.xml -P[profile],codehaus
 
 # License
 
