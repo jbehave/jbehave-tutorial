@@ -13,8 +13,10 @@ execution.   It is not appropriate to run long-running stories.  It is also usef
 
 # JBehave Web Runner for Etsy.com
 
-1. Uses the 'etsy-selenium/java-spring' steps and makes them available via the JBehave Web Runner.
+Uses the 'etsy-selenium/java-spring' steps and makes them available via the [JBehave Web Runner](http://jbehave.org/reference/web/stable/using-web-runner.html).
 
+NOTE:  The Web Runner is a standalone web application that provides a simple web interface for running the Etsy stories via the Java steps.   It does not run the (web) stories by command line.
+ 
 # Building with Maven 
 
 The tutorial modules can be built using the following Maven profiles: 
