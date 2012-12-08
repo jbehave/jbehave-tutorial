@@ -15,7 +15,7 @@ Scenario: Advanced Search for a hat
 GivenStories: etsy_given.story
 
 Given I am searching on Etsy.com
-When I specify the Knitting sub category
+When I specify the Vintage sub category
 And I search for hat
 Then there are search results
 

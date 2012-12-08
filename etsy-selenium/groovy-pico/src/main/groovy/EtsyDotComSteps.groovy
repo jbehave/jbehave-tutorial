@@ -62,7 +62,7 @@ public class EtsyDotComSteps {
 
   @Given("the cart contains one item")
   def anItemInTheEtsyCart() {
-    shoppingForSomethingOnEtsyDotCom("hat", "Knitting")
+    shoppingForSomethingOnEtsyDotCom("hat", "Vintage")
     cartIsEmpty()
     putThingInCart("hat")
     cartNotEmpty("1")
@@ -80,7 +80,6 @@ public class EtsyDotComSteps {
 
   @When("I want to browse through a treasury gallery")
   @Composite(steps = [
-          "When I want to buy something from etsy.com",
           "When I want to browse the treasury",
           "When I choose the first treasury gallery"
   ])
@@ -114,7 +113,7 @@ public class EtsyDotComSteps {
   }
 
   @When("I specify the \$subCat sub category")
-  def knittingSubCategory(String subCat) {
+  def specifySubCategory(String subCat) {
     advancedSearch.subCategory(subCat)
   }
 

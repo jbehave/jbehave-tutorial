@@ -23,8 +23,6 @@ class Home extends GroovyGebFluentWebDriverPage {
 
   def search(String thing) {
     manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS)
-    $("#search-facet").click()
-    $(".all").click()
     $("#search-query") << thing
     $("#search_submit").click()
   }

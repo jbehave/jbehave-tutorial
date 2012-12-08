@@ -19,7 +19,7 @@ class SearchResults extends GroovyGebFluentWebDriverPage {
         // traverse into detail
         elem.click()
         def ix = getCurrentUrl().indexOf("/listing/") + 9
-        def id = getCurrentUrl().substring(ix, ix + 8)
+        def id = getCurrentUrl().substring(ix, ix + 9)
         id.isNumber().shouldBe true, "no listing found"
         def buyButton = findElement(By.xpath("//input[@value = 'Add to Cart']"))
         buyButton.click()
