@@ -75,7 +75,7 @@ public class EtsyDotComSteps {
 
     @Given("the cart contains one item")
     public void anItemInTheEtsyCart() {
-        shoppingForSomethingOnEtsyDotCom("hat", "Knitting");
+        shoppingForSomethingOnEtsyDotCom("hat", "Vintage");
         cartIsEmpty();
         putThingInCart("hat");
         cartNotEmpty(1);
@@ -124,7 +124,7 @@ public class EtsyDotComSteps {
     }
 
     @When("I specify the $subCat sub category")
-    public void knittingSubCategory(String subCat) {
+    public void specifiSubCategory(String subCat) {
         advancedSearch.subCategory(subCat);
     }
 

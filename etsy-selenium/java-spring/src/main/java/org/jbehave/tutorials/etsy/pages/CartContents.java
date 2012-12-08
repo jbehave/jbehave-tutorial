@@ -4,7 +4,7 @@ import org.jbehave.web.selenium.FluentWebDriverPage;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
 
-import static org.openqa.selenium.By.cssSelector;
+import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.By.xpath;
 
 public class CartContents extends FluentWebDriverPage  {
@@ -16,7 +16,7 @@ public class CartContents extends FluentWebDriverPage  {
     public boolean hasItem(String item) {
         get("http://www.etsy.com/cart");
         try {
-            div(cssSelector("div#listing-" + item));
+            div(id("listing-" + item));
         } catch (RuntimeException ex) {
             return false;
         }

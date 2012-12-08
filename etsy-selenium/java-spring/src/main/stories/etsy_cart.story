@@ -22,4 +22,4 @@ Scenario: Item can be removed from cart
 
 Given the cart contains one item
 When the item is removed
-Then the cart contents is empty
+Then the cart will be empty

@@ -13,7 +13,7 @@ I want to search for an item in a sub category
 Scenario: Advanced Search for a hat
 
 Given I am searching on Etsy.com
-When I specify the Knitting sub category
+When I specify the Vintage sub category
 And I search for hat
 Then there are search results
 

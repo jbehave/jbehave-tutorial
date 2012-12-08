@@ -19,7 +19,7 @@ public class SearchResults extends FluentWebDriverPage {
     public String buyFirst(String thing) {
         getResultElements().first(lowerCaseTitleContaining(thing)).click();
         int ix = getCurrentUrl().indexOf("/listing/") + 9;
-        String id = getCurrentUrl().substring(ix, ix + 8);
+        String id = getCurrentUrl().substring(ix, ix + 9);
         // id.isNumber().shouldBe true, "no listing found";
         input(xpath("@value = 'Add to Cart'")).click();
         return id;
