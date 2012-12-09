@@ -1,6 +1,7 @@
 # JBehave Selenium Tutorials on the Etsy.com website
 
-Using [jbehave-core](http://github.com/jbehave/jbehave-core), [jbehave-web](http://github.com/jbehave/jbehave-web), and [Selenium](http://seleniumhq.org/) against pre-existing website [etsy.com](http://etsy.com) to test it's shopping cart.
+Tutorials in using [jbehave-core](http://github.com/jbehave/jbehave-core), [jbehave-web](http://github.com/jbehave/jbehave-web), and [Selenium](http://seleniumhq.org/) 
+against pre-existing website [etsy.com](http://etsy.com) to show how BDD allows the description and test of the behaviour of a web application. 
 
 <img src="http://jbehave.org/reference/preview/images/jbehave-logo.png" alt="JBehave logo" align="right" />
 
