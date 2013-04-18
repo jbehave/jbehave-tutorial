@@ -9,11 +9,11 @@
   <description>JBehave stories verifying functionality of Etsy.com using Groovy and Pico</description>
 
   <properties>
-    <jbehave.core.version>3.8-SNAPSHOT</jbehave.core.version>
+    <jbehave.core.version>3.9-SNAPSHOT</jbehave.core.version>
     <jbehave.web.version>3.6-SNAPSHOT</jbehave.web.version>
     <jbehave.site.version>3.1.1</jbehave.site.version>
     <fluent.selenium.version>1.6.3</fluent.selenium.version>
-    <selenium.version>2.29.1</selenium.version>
+    <selenium.version>2.32.0</selenium.version>
     <gmaven.version>1.3</gmaven.version>
     <groovy.version>1.8.6</groovy.version>
     <ignore.failures>true</ignore.failures>
@@ -379,8 +379,8 @@
     <profile>
       <id>stable</id>
       <properties>
-        <jbehave.core.version>3.7</jbehave.core.version>
-        <jbehave.web.version>3.5.4</jbehave.web.version>
+        <jbehave.core.version>3.8</jbehave.core.version>
+        <jbehave.web.version>3.5.5</jbehave.web.version>
       </properties>
     </profile>
     <profile>
