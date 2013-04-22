@@ -28,6 +28,6 @@ public class Home extends FluentWebDriverPage {
     }
 
     public void goToBuySection() {
-        link(linkText("Buy")).click();
+        link(linkText("Etsy")).click();
     }
 }

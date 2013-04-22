@@ -28,6 +28,6 @@ class Home extends GroovyGebFluentWebDriverPage {
   }
 
   def goToBuySection() {
-    findElement(By.linkText("Buy")).click()
+    findElement(By.linkText("Etsy")).click()
   }
 }
