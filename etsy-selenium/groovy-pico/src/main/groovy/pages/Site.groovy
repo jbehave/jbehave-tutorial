@@ -10,7 +10,7 @@ class Site extends GroovyGebFluentWebDriverPage {
   }
 
   def cartSize() {
-      return $("#cart").text().replace("Cart", "").trim()
+      return $("#cart").text().toString().replace("Cart", "").trim()
   }
 
   def cartEmpty() {

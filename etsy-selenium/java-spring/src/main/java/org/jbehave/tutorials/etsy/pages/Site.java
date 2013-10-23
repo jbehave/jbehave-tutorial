@@ -13,7 +13,7 @@ public class Site extends FluentWebDriverPage {
     }
 
     public int cartSize() {
-        String cartSize = within(secs(2)).div(id("cart")).getText().replace("Cart", "").trim();
+        String cartSize = within(secs(2)).div(id("cart")).getText().toString().replace("Cart", "").trim();
         if (cartSize.equals("")) {
             return 0;
         }
