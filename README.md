@@ -40,7 +40,8 @@ $ mvn clean install -s settings.xml -P[profile],codehaus
 
 # Requirements 
 
-Tutorial has been tested with Maven 2.2.1 or 3.0.x and JDK 1.5 or 1.6.  
+Building the tutorial has been tested with Maven 3.0.x and JDK 1.7.   Newer versions of Maven and JDK should work but could also present issues.  
+If you find any, please report them via http://jbehave.org/reference/stable/issue-tracking.html
 
 # License
 
