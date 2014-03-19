@@ -10,7 +10,3 @@ These tutorial projects use [jbehave-core](http://github.com/jbehave/jbehave-cor
 2. The module 'java-spring' runs (via maven) stories using steps and 'page objects' written in Java and composed using the Spring Framework. 
 
 p. The two functionally test the same as each other, it's just that you may prefer Groovy or Java, and PicoContainer or Spring.
-
-## License
-
-See LICENSE.txt in the source root (BSD).
