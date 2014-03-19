@@ -6,7 +6,8 @@ These tutorial projects use [jbehave-core](http://github.com/jbehave/jbehave-cor
 
 ## Modules
 
-1. The module 'groovy-pico' runs (via maven) stories using steps and 'page objects' written in Groovy and composed using PicoContainer. 
-2. The module 'java-spring' runs (via maven) stories using steps and 'page objects' written in Java and composed using the Spring Framework. 
-
-p. The two functionally test the same as each other, it's just that you may prefer Groovy or Java, and PicoContainer or Spring.
+1. The module 'groovy-pico' runs stories using steps and 'page objects' written in Groovy and composed using PicoContainer. 
+2. The module 'java-spring' runs stories using steps and 'page objects' written in Java and composed using the Spring Framework. 
+ 
+ The two modules are functionally equivalent.  They simply show how the user may prefer the steps written in a different language (Groovy or Java) and 
+ composed using a different DI container (PicoContainer or Spring).

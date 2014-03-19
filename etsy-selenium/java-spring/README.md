@@ -6,7 +6,7 @@ This tutorial uses JBehave 3.x and Selenium 2.x to test [Etsy.com](http://etsy.c
 
 ## Running the stories
 
-This will run the build and (after a minute or so) Firefox will open and test the etsy.com website:
+This will run the build and test the etsy.com website:
 
     mvn clean install 
 
@@ -34,7 +34,7 @@ The tutorial aims to provide a fully-functional project that you can use to mode
 2. src/main/stories contains the stories run by JBehave via EtsyDotComStories.java.
 3. src/main/java/org/jbehave/tutorials/etsy/steps/HousekeepingSteps.java contains the steps does housekeeping chores, such as emptying cart between scenarios. 
 4. src/main/java/org/jbehave/tutorials/etsy/steps/EtsyDotComSteps.java contains the steps mapped to the textual steps.
-5. src/main/java/org/jbehave/tutorials/etsy/pages contains the Groovy page-objects used by steps to abstract in a more manageable and maintainable way the interaction with the web pages via Selenium WebDriver.
+5. src/main/java/org/jbehave/tutorials/etsy/pages contains the page-objects used by steps to abstract in a more manageable and maintainable way the interaction with the web pages via Selenium WebDriver.
 6. src/main/resources/etsy-steps.xml contains the Spring configuration for composition the steps
 
 

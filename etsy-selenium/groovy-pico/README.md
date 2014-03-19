@@ -6,7 +6,7 @@ This tutorial uses JBehave 3.x and Selenium 2.x to test [Etsy.com](http://etsy.c
 
 ## Running the stories
 
-This will run the build and (after a minute or so) Firefox will open and test the etsy.com website:
+This will run the build and test the etsy.com website:
 
     mvn clean install 
 
@@ -20,9 +20,7 @@ This will run a suite based on the meta filters in the three story files:
 
     mvn clean install -Dmeta.filter="+color red"
 
-This will run tests in parallel in SauceLabs' stack:
-
-(use YOUR details from YOUR [SauceLabs.com](http://saucelabs.com) account)
+To run in parallel in SauceLabs' stack (use YOUR details from YOUR [SauceLabs.com](http://saucelabs.com) account):
 
     mvn clean install -DSAUCE_USERNAME=your_sauce_id -DSAUCE_ACCESS_KEY=your_sauce_access_key
 
@@ -43,7 +41,7 @@ The tutorial aims to provide a fully-functional project that you can use to mode
 2. src/main/stories contains the stories run by JBehave via EtsyDotComStories.java.
 3. src/main/groovy/HousekeepingSteps.groovy contains the steps does housekeeping chores, such as emptying cart between scenarios. 
 4. src/main/groovy/EtsyDotComSteps.groovy contains the steps mapped to the textual steps.
-5. src/main/groovy/pages contains the Groovy page-objects used by steps to abstract in a more manageable and maintainable way the interaction with the web pages via Selenium WebDriver.
+5. src/main/groovy/pages contains the page-objects used by steps to abstract in a more manageable and maintainable way the interaction with the web pages via Selenium WebDriver.
 
 
 
