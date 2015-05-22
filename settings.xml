@@ -6,15 +6,15 @@
   <profiles>
     <profile>
       <!-- Required for dependencies of JBehave snapshots -->
-      <id>codehaus</id>
+      <id>sonatype</id>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
       <repositories>
         <repository>
-          <id>codehaus-public-repository-group</id>
-          <name>Codehaus Public Repository Group</name>
-          <url>https://nexus.codehaus.org/content/groups/public/</url>
+          <id>sonatype-public-repository-group</id>
+          <name>Sonatype Public Repository Group</name>
+          <url>https://oss.sonatype.org/content/groups/public/</url>
           <layout>default</layout>
           <releases>
             <enabled>true</enabled>
@@ -28,9 +28,9 @@
       </repositories>
       <pluginRepositories>
         <pluginRepository>
-          <id>codehaus-public-repository-group</id>
-          <name>Codehaus Public Repository Group</name>
-          <url>https://nexus.codehaus.org/content/groups/public/</url>
+          <id>sonatype-public-repository-group</id>
+          <name>Sonatype Public Repository Group</name>
+          <url>https://oss.sonatype.org/content/groups/public/</url>
           <releases>
             <enabled>true</enabled>
           </releases>
