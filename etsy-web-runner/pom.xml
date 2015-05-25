@@ -9,9 +9,9 @@
   <name>Etsy.com Stories Web Runner</name>
 
   <properties>
-    <jbehave.core.version>3.9-SNAPSHOT</jbehave.core.version>
+    <jbehave.core.version>3.10-SNAPSHOT</jbehave.core.version>
     <jbehave.web.version>3.6-SNAPSHOT</jbehave.web.version>
-    <jbehave.site.version>3.1.1</jbehave.site.version>
+    <jbehave.site.version>3.3</jbehave.site.version>
     <jbehave.webrunner.name>etsy-stories-runner</jbehave.webrunner.name>
   </properties>
 
