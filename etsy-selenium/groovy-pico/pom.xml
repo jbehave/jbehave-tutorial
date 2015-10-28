@@ -13,7 +13,7 @@
     <jbehave.web.version>3.6-SNAPSHOT</jbehave.web.version>
     <jbehave.site.version>3.3</jbehave.site.version>
     <fluent.selenium.version>1.14.5</fluent.selenium.version>
-    <selenium.version>2.40.0</selenium.version>
+    <selenium.version>2.48.2</selenium.version>
     <gmaven.version>1.3</gmaven.version>
     <groovy.version>1.8.6</groovy.version>
     <ignore.failures>true</ignore.failures>
