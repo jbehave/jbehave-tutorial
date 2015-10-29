@@ -236,7 +236,6 @@
               <metaFilters>
                 <metaFilter>${meta.filter}</metaFilter>
               </metaFilters>
-              <executorsClass>org.jbehave.core.embedder.executors.SameThreadExecutors</executorsClass>
             </configuration>
             <goals>
               <goal>run-stories-as-embeddables</goal>
