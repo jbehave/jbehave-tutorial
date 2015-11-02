@@ -3,9 +3,7 @@ package org.jbehave.tutorials.etsy.pages;
 import org.jbehave.web.selenium.FluentWebDriverPage;
 import org.jbehave.web.selenium.WebDriverProvider;
 
-import static org.openqa.selenium.By.id;
-import static org.openqa.selenium.By.linkText;
-import static org.openqa.selenium.By.xpath;
+import static org.openqa.selenium.By.*;
 
 public class Home extends FluentWebDriverPage {
 
@@ -24,7 +22,7 @@ public class Home extends FluentWebDriverPage {
 
     public void search(String thing) {
         input(id("search-query")).sendKeys(thing);
-        button(id("search_submit")).click();
+        button(className("btn")).click();
     }
 
     public void goToBuySection() {
