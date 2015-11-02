@@ -14,6 +14,7 @@ import org.jbehave.tutorials.etsy.pages.PageFactory;
 import org.jbehave.tutorials.etsy.pages.SearchResults;
 import org.jbehave.tutorials.etsy.pages.Site;
 import org.jbehave.tutorials.etsy.pages.Treasury;
+import org.junit.Assert;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -83,12 +84,12 @@ public class EtsyDotComSteps {
 
     @When("an item is added to the cart")
     public void putThingInCart() {
-        putThingInCart("hat");
+        putThingInCart("Montessori Curriculum Teaching");
     }
 
     @When("I search for an item")
     public void searchForItem() {
-        home.search("hat");
+        home.search("Montessori Curriculum Teaching");
     }
 
     @When("I want to browse through a treasury gallery")
@@ -135,7 +136,7 @@ public class EtsyDotComSteps {
 
     @Then("the cart contains that item")
     public void cartHasThatItem() {
-        assertThat(cartContents.hasItem(justBought), Matchers.is(true));
+        assertThat(site.cartSize(), Matchers.equalTo(1));
     }
 
     @Then("the cart has $num items")
@@ -147,6 +148,6 @@ public class EtsyDotComSteps {
     @Then("there are search results")
     @Alias("results will be displayed in the gallery")
     public void thereAreSearchResults() {
-        assertThat(searchResults.resultsFound(), Matchers.greaterThan(0));
+        Assert.assertNotNull(searchResults.searchResult());
     }
 }

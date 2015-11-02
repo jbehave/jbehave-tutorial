@@ -3,6 +3,7 @@ Browse Etsy.com
 Meta:
 @category browsing
 @color red
+@not_working
 
 
 Narrative: 
@@ -15,5 +16,4 @@ Scenario: Browsing around the site for items
 
 Given I am on etsy.com
 When I want to browse through a treasury gallery
-!-- We don't care for the results, just the gallery
 Then results will be displayed in the gallery
