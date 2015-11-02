@@ -1,13 +1,13 @@
 package org.jbehave.tutorials.etsy.pages;
 
-import org.jbehave.web.selenium.FluentWebDriverPage;
+import org.jbehave.web.selenium.WebDriverPage;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
 
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.By.xpath;
 
-public class CartContents extends FluentWebDriverPage  {
+public class CartContents extends WebDriverPage {
 
     public CartContents(WebDriverProvider webDriverProvider) {
         super(webDriverProvider);
@@ -15,7 +15,7 @@ public class CartContents extends FluentWebDriverPage  {
 
     public boolean hasItem(String item) {
         try {
-            div(id("listing-" + item));
+            findElement(id("listing-" + item));
         } catch (RuntimeException ex) {
             return false;
         }
@@ -24,7 +24,7 @@ public class CartContents extends FluentWebDriverPage  {
 
     public void removeItem() {
         get("http://www.etsy.com/cart");
-        link(xpath("//a[@rel = 'remove']")).click();
+        findElement(xpath("//a[@rel = 'remove']")).click();
     }
 
 
