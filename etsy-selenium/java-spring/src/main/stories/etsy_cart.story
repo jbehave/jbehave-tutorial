@@ -17,9 +17,3 @@ Given that the cart is empty
 When I search for an item
 And an item is added to the cart
 Then the cart contains that item
-
-Scenario: Item can be removed from cart
-
-Given the cart contains one item
-When the item is removed
-Then the cart will be empty

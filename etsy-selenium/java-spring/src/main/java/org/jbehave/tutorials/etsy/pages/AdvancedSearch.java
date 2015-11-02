@@ -3,7 +3,10 @@ package org.jbehave.tutorials.etsy.pages;
 import org.jbehave.web.selenium.FluentWebDriverPage;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
+import org.openqa.selenium.interactions.Actions;
+import org.seleniumhq.selenium.fluent.FluentWebElement;
 
+import static org.openqa.selenium.By.className;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.By.xpath;
 
@@ -27,7 +30,7 @@ public class AdvancedSearch extends FluentWebDriverPage {
         input(id("search_submit")).click();
     }
 
-    public void subCategory(String subCategory) {        
+    public void subCategory(String subCategory) {
         link(By.partialLinkText(subCategory)).click();
     }
 

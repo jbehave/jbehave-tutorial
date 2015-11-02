@@ -14,7 +14,6 @@ public class CartContents extends FluentWebDriverPage  {
     }
 
     public boolean hasItem(String item) {
-        get("http://www.etsy.com/cart");
         try {
             div(id("listing-" + item));
         } catch (RuntimeException ex) {

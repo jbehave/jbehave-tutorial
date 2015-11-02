@@ -1,7 +1,11 @@
 package org.jbehave.tutorials.etsy.pages;
 
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import org.jbehave.web.selenium.FluentWebDriverPage;
 import org.jbehave.web.selenium.WebDriverProvider;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
 
 import static org.openqa.selenium.By.id;
 import static org.seleniumhq.selenium.fluent.Period.secs;
@@ -13,11 +17,18 @@ public class Site extends FluentWebDriverPage {
     }
 
     public int cartSize() {
-        String cartSize = within(secs(2)).div(id("cart")).getText().toString().replace("Cart", "").trim();
-        if (cartSize.equals("")) {
-            return 0;
+        int csize = 0;
+
+        try {
+            String cartSize = findElement(By.className("count")).getText();
+            if (cartSize != null) {
+                csize = Integer.valueOf(cartSize);
+            }
+            return csize;
+        } catch (NoSuchElementException nsee) {
+            return csize;
         }
-        return Integer.parseInt(cartSize);
+
     }
 
 }
