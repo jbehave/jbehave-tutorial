@@ -12,7 +12,6 @@
     <jbehave.core.version>4.0.4</jbehave.core.version>
     <jbehave.web.version>3.6-beta-2</jbehave.web.version>
     <jbehave.site.version>3.3</jbehave.site.version>
-    <fluent.selenium.version>1.14.5</fluent.selenium.version>
     <selenium.version>2.48.2</selenium.version>
     <ignore.failures>true</ignore.failures>
     <meta.filter></meta.filter>
@@ -59,18 +58,6 @@
           <groupId>org.jbehave</groupId>
           <artifactId>jbehave-core</artifactId>
         </exclusion>
-        <exclusion>
-          <groupId>org.seleniumhq.selenium</groupId>
-          <artifactId>selenium-java</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.seleniumhq.selenium.fluent</groupId>
-      <artifactId>fluent-selenium</artifactId>
-      <version>${fluent.selenium.version}</version>
-      <optional>true</optional>
-      <exclusions>
         <exclusion>
           <groupId>org.seleniumhq.selenium</groupId>
           <artifactId>selenium-java</artifactId>

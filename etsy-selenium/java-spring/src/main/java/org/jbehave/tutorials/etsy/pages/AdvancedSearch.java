@@ -1,16 +1,14 @@
 package org.jbehave.tutorials.etsy.pages;
 
-import org.jbehave.web.selenium.FluentWebDriverPage;
+import org.jbehave.web.selenium.WebDriverPage;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
-import org.openqa.selenium.interactions.Actions;
-import org.seleniumhq.selenium.fluent.FluentWebElement;
+import org.openqa.selenium.WebElement;
 
-import static org.openqa.selenium.By.className;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.By.xpath;
 
-public class AdvancedSearch extends FluentWebDriverPage {
+public class AdvancedSearch extends WebDriverPage {
 
     public AdvancedSearch(WebDriverProvider webDriverProvider) {
         super(webDriverProvider);
@@ -22,20 +20,22 @@ public class AdvancedSearch extends FluentWebDriverPage {
 
     public void go(String section) {
         go();
-        link(xpath("@title = '" + section + "'")).click();
+        findElement(xpath("@title = '" + section + "'")).click();
     }
 
     public void search(String thing) {
-        input(id("search-query")).sendKeys(thing);
-        input(id("search_submit")).click();
+        findElement(id("search-query")).sendKeys(thing);
+        findElement(id("search_submit")).click();
     }
 
     public void subCategory(String subCategory) {
-        link(By.partialLinkText(subCategory)).click();
+        findElement(By.partialLinkText(subCategory)).click();
     }
 
     public void searchFor(String thing) {
-        input(id("search-query")).sendKeys(thing).submit();
+        WebElement searchQuery = findElement(id("search-query"));
+        searchQuery.sendKeys(thing);
+        searchQuery.submit();
     }
     
 }
