@@ -55,6 +55,11 @@ $ mvn clean install -s settings.xml -P<profile>,codehaus
 Building the tutorial has been tested with Maven 3.0.5-3.2.1 and JDK 1.6-1.7.   Newer versions of Maven and JDK should work but could also present issues.  
 If you find any, please report them via [JIRA](http://jbehave.org/reference/stable/issue-tracking.html)
 
+# Running your tests on the cloud
+
+You can run your Jbehave tests on BrowserStack infrastructure:
+Please follow the [example](https://github.com/browserstack/jbehave-browserstack) here.
+
 # License
 
 See [Licence](http://jbehave.org/license.html)
