@@ -57,8 +57,7 @@ If you find any, please report them via [JIRA](http://jbehave.org/reference/stab
 
 # Running your tests on the cloud
 
-You can run your Jbehave tests on BrowserStack infrastructure:
-Please follow the [example](https://github.com/browserstack/jbehave-browserstack) here.
+To run your tests on the BrowserStack infrastructure, follow the [example](https://github.com/browserstack/jbehave-browserstack) here.
 
 # License
 
