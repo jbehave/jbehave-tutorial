@@ -44,11 +44,11 @@ $ mvn clean install -Pstable
 
 To run another profile using latest stable versions:
 
-$ mvn clean install -P<profile>,stable
+$ mvn clean install -P\<profile\>,stable
 
 To run using latest snapshot from codehaus: 
 
-$ mvn clean install -s settings.xml -P<profile>,codehaus
+$ mvn clean install -s settings.xml -P\<profile\>,codehaus
 
 # Requirements 
 
