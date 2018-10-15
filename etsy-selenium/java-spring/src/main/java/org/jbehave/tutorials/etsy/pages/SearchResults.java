@@ -4,6 +4,7 @@ import org.jbehave.web.selenium.FluentWebDriverPage;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.WebElement;
 import org.seleniumhq.selenium.fluent.FluentMatcher;
+import org.seleniumhq.selenium.fluent.FluentWebElement;
 import org.seleniumhq.selenium.fluent.FluentWebElements;
 
 import static org.openqa.selenium.By.className;
@@ -36,8 +37,8 @@ public class SearchResults extends FluentWebDriverPage {
 
     private FluentMatcher lowerCaseTitleContaining(final String thing) {
         return new FluentMatcher() {
-            public boolean matches(WebElement webElement) {
-                return webElement.getAttribute("title").toLowerCase().contains(thing);
+            public boolean matches(FluentWebElement fluentWebElement, int i) {
+                return fluentWebElement.getAttribute("title").toString().toLowerCase().contains(thing);
             }
         };
     }
