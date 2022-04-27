@@ -32,23 +32,24 @@ It does not run the (web) stories by command line.
  
 # Building with Maven 
 
-The tutorial modules can be built using the following Maven profiles: 
+#### The tutorial modules can be built using the following Maven profiles: 
 
 1. groovy-pico
 2. java-spring (default)
 3. web-runner
 
-To run default profile using latest stable versions:
+#### To run default profile using latest stable versions:
 
-$ mvn clean install -Pstable
+    mvn clean install -Pstable
 
-To run another profile using latest stable versions:
+#### To run another profile using latest stable versions:
 
-$ mvn clean install -P\<profile\>,stable
+    mvn clean install -P\<profile\>,stable
 
-To run using latest snapshot from codehaus: 
+#### To run using latest snapshot from codehaus:
 
-$ mvn clean install -s settings.xml -P\<profile\>,codehaus
+    mvn clean install -s settings.xml -P\<profile\>,codehaus
+
 
 # Requirements 
 
