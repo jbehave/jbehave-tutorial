@@ -15,7 +15,7 @@
     <fluent.selenium.version>1.14.5</fluent.selenium.version>
     <selenium.version>2.48.2</selenium.version>
     <gmaven.version>1.3</gmaven.version>
-    <groovy.version>1.8.6</groovy.version>
+    <groovy.version>2.4.4</groovy.version>
     <ignore.failures>true</ignore.failures>
     <meta.filter></meta.filter>
     <threads>1</threads>
